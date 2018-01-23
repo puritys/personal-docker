@@ -1,3 +1,4 @@
+enableNodeDockerfileInclude=1
 setDockerMachineEnv() {
     name=$1
     if [ "x" != "x`command -v docker-machine`" ]; then
@@ -10,7 +11,9 @@ getDefaultVolume() {
 }
 
 build() {
-    dockerfile-include  -i $dockerfile -o Dockerfile
+    if [ "x1" == "x$enableNodeDockerfileInclude" ]; then
+        dockerfile-include  -i $dockerfile -o Dockerfile
+    fi
     docker build -t $imageName  .
 }
 
@@ -26,6 +29,6 @@ start() {
 }
 
 root() {
-    docker run -t -i -p $port --name $containerName $volume  $imageName  /bin/bash
+    docker run -t -i $port --name $containerName $volume  $imageName  /bin/bash
 }
 
