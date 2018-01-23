@@ -1,0 +1,6 @@
+
+include ../common/centos7.doc
+include ../common/centos_gcc.doc
+include ../common/python2.7.doc
+
+COPY files/start.sh /root/
