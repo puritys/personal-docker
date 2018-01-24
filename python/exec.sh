@@ -6,11 +6,11 @@ source ../common.sh
 # --------
 account=`whoami`
 dockerfile=python.doc
-dockername=node
+dockername=python
 imageName=$account/$dockername
 containerName=$account-$dockername
 getDefaultVolume
-#volume="-v /xx:/xx"
+volume="-v /www:/www -v /www/python2.7_modules:/usr/local/share/python2.7/lib/python2.7/site-packages"
 port=""
 
 help () {
