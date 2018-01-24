@@ -19,13 +19,15 @@ RUN ldconfig
 RUN wget https://www.python.org/ftp/python/2.7.14/Python-2.7.14.tar.xz
 RUN tar -xvf Python-2.7.14.tar.xz
 RUN cd Python-2.7.14 ; \
-    ./configure --prefix=/usr/local/share/python2.7 --enable-unicode=ucs4; \
+    ./configure --prefix=/usr/local/share/python2.7 --with-zlib=/usr/include --enable-unicode=ucs4 --enable-optimizations; \
     gmake 
-RUN cd Python-2.7.14; sudo gmake
+RUN cd Python-2.7.14; sudo gmake install
 RUN ln -sf /usr/local/share/python2.7/bin/python2.7 /usr/local/bin/python2.7
+RUN cd Python-2.7.14; python2.7 setup.py install
 RUN wget https://bootstrap.pypa.io/get-pip.py
 RUN python2.7 get-pip.py
 
 
+ENV PYTHONPATH /www/pythonModules
 
 COPY include_tmp/files/start.sh /root/

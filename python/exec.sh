@@ -6,8 +6,9 @@ source ../common.sh
 # --------
 account=`whoami`
 dockerfile=python.doc
-imageName=$account/python
-containerName=$account-python
+dockername=node
+imageName=$account/$dockername
+containerName=$account-$dockername
 getDefaultVolume
 #volume="-v /xx:/xx"
 port=""

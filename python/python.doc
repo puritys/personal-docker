@@ -3,4 +3,6 @@ include ../common/centos7.doc
 include ../common/centos_gcc.doc
 include ../common/python2.7.doc
 
+ENV PYTHONPATH /www/pythonModules
+
 COPY files/start.sh /root/

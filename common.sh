@@ -29,6 +29,7 @@ start() {
 }
 
 root() {
+    stop
     docker run -t -i $port --name $containerName $volume  $imageName  /bin/bash
 }
 
