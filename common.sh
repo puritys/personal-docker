@@ -1,3 +1,4 @@
+docker_service_ip=172.17.0.1
 enableNodeDockerfileInclude=1
 setDockerMachineEnv() {
     name=$1

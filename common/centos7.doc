@@ -1,4 +1,4 @@
-FROM centos:7
+FROM centos:7.4.1708
 
 RUN yum install -y sudo wget telnet openssh-server vim git ncurses-libs ncurses-term screen man
 RUN ldconfig
