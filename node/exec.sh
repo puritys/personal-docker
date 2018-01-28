@@ -10,8 +10,8 @@ dockername=node
 imageName=$account/$dockername
 containerName=$account-$dockername
 enableNodeDockerfileInclude=0
-getDefaultVolume
-#volume="-v /xx:/xx"
+#getDefaultVolume
+volume="-v /www:/www -v /www/node8Modules:/usr/local/lib/node_modules/"
 port=""
 
 help () {
@@ -39,6 +39,10 @@ while true; do
 done
 
 setDockerMachineEnv tool;
+
+build() {
+    docker build -t $imageName  .
+}
 
 if [ "x" != "x$command" ]; then
     $command
