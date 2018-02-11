@@ -23,6 +23,14 @@ build() {
     docker build -t $imageName  .
 }
 
+rebuild() {
+    docker_my_init
+    if [ "x1" == "x$enableNodeDockerfileInclude" ]; then
+        dockerfile-include  -i $dockerfile -o Dockerfile
+    fi
+    docker build --no-cache -t $imageName  .
+}
+
 stop() {
     docker_my_init
     docker stop $containerName || true
