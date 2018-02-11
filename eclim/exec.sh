@@ -10,7 +10,7 @@ dockerfile=$dockername.doc
 imageName=$account/$dockername
 containerName=$account-$dockername
 getDefaultVolume
-volume="-v /home/$account/.eclim:/home/$account/.eclim -v /home/$account/workspace:/home/$account/workspace -v /home/$account/.eclipse:/home/$account/.eclipse  -v /home/$account/.m2:/home/$account/.m2  -v /www:/www "
+volume="-v /home/$account/.eclim:/home/$account/.eclim -v /home/$account/workspace:/home/$account/workspace -v /home/$account/.eclipse:/home/$account/.eclipse  -v /home/$account/.m2:/home/$account/.m2 -v /home/$account/.vim/JavaImp/:/home/$account/.vim/JavaImp  -v /www:/www "
 port="-p 127.0.0.1:9091:9091"
 
 while true; do
@@ -26,7 +26,7 @@ while true; do
           echo "-d: Enable debug"
           shift 1 
           exit 0
-          ;;  
+          ;;
       --) echo "-- is not a correct option.";shift 1; ;;
       * ) echo "$1 is not a correct option.";shift 1; ;;
     esac
