@@ -1,0 +1,21 @@
+FROM centos:7
+
+RUN yum install -y epel-release
+RUN yum install -y ocserv wget telnet
+include ../common/centos_devtool.doc
+
+COPY files/genCert.sh /root/
+COPY files/genServerCert.sh /root/
+COPY files/genClientCert.sh /root/
+COPY files/ocserv.conf /etc/ocserv/
+COPY ../../common/files/vpn/ocpasswd              /etc/ocserv/
+
+# Certs
+COPY ../../common/files/vpn/certs/ca-cert.pem     /etc/ocserv/
+COPY ../../common/files/vpn/certs/server-cert.pem /etc/ocserv/
+COPY ../../common/files/vpn/certs/server-key.pem  /etc/ocserv/
+
+# system
+COPY files/sysctl.conf /etc/
+COPY files/start.sh    /root/
+
