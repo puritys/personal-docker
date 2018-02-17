@@ -5,10 +5,10 @@ ARG USER_HOME_DIR="/root"
 
 RUN yum install -y zip unzip git gzip which
 
-# install mysql client
+## install mysql client
 RUN yum install -y mariadb
 
-# install Java
+## install Java
 RUN yum install -y java-1.8.0 java-1.8.0-openjdk-devel.x86_64
 
 RUN mkdir -p /usr/share/maven /usr/share/maven/ref \
@@ -23,6 +23,8 @@ RUN mkdir -p /usr/share/maven /usr/share/maven/ref \
 #RUN cd /root/jd-cmd && /usr/bin/mvn clean package
 #RUN cd /root/jd-cmd && cp jd-cli/target/jd-cli.jar  /lib/jd-cli.jar
 
+## Install PHP
+RUN yum install -y php php-sqlite3
 
 #ARG MAVEN_VERSION=3.3.9
 ARG USER_HOME_DIR="/root"
@@ -31,7 +33,7 @@ ARG USER_HOME_DIR="/root"
 ENV MAVEN_HOME /usr/share/maven
 ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
 
-VOLUME ["/usr/src/mymaven", "/root/.m2"]
+VOLUME ["/usr/src/mymaven", "/root/.m2", "/usr/src/myphp"]
 
 
 

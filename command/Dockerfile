@@ -1,4 +1,4 @@
-FROM centos:7
+FROM centos:7.4.1708
 
 RUN yum install -y sudo wget telnet openssh-server vim git ncurses-libs ncurses-term screen man
 RUN ldconfig
@@ -20,6 +20,7 @@ RUN mkdir -p /usr/share/maven /usr/share/maven/ref \
     | tar -xzC /usr/share/maven --strip-components=1 \
   && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
 #
+RUN yum install -y php php-sqlite3
 ARG USER_HOME_DIR="/root"
 
 
