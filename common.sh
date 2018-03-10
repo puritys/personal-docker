@@ -1,10 +1,13 @@
 docker_service_ip=172.17.0.1
 enableNodeDockerfileInclude=1
+
 setDockerMachineEnv() {
     name=$1
     if [ "x" != "x`command -v docker-machine`" ]; then
         eval $(docker-machine env $name)
+        ip=`docker-machine ip $name`
     fi
+    ip="172.17.0.1"
 }
 
 getDefaultVolume() {
@@ -48,5 +51,11 @@ root() {
     docker_my_init
     stop
     docker run -t -i $port --name $containerName $volume  $imageName  /bin/bash
+}
+
+login () {
+    docker_my_init
+    account=`whoami`
+    ssh $account@$ip -p $sshPort
 }
 
