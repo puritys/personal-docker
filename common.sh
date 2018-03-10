@@ -6,6 +6,7 @@ setDockerMachineEnv() {
     if [ "x" != "x`command -v docker-machine`" ]; then
         eval $(docker-machine env $name)
         ip=`docker-machine ip $name`
+        return
     fi
     ip="172.17.0.1"
 }
