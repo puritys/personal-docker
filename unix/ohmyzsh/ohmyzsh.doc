@@ -1,0 +1,13 @@
+include ../../common/centos7.doc
+
+RUN yum install zsh -y
+
+RUN echo "v1"
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+COPY files/.zshrc /root/
+VOLUME ["/www"]
+
+
+
+
