@@ -1,16 +1,17 @@
 #!/bin/bash
-source ../common.sh
+
+source ../../common.sh
 
 # --------
 # Settings
 # --------
 account=`whoami`
-dockername=command
+dockername=ffmpeg
 dockerfile=$dockername.doc
 imageName=$account/$dockername
 containerName=$account-$dockername
 getDefaultVolume
-#volume="-v /xx:/xx"
+volume="-v /www:/www"
 port=""
 
 while true; do
@@ -34,12 +35,6 @@ done
 
 setDockerMachineEnv tool;
 
-
-connect() {
-	stop
-	docker run -d -t  --name $containerName $imageName /bin/bash
-	docker exec -t -i  $containerName bash -c "/usr/bin/mysql -h $docker_service_ip -uroot -p"
-}
 
 if [ "x" != "x$command" ]; then
     $command

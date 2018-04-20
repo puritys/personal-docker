@@ -11,4 +11,5 @@
 | eclim          | cd eclim ; ./exec.sh -c start                                                                   |
 | maven          | docker run -it --rm -v /home/puritys/.m2:/root/.m2 -v /pwd/dir:/usr/src/mymaven -w /usr/src/mymaven puritys/command mvn compile |
 | java           | docker run -it --rm -v /home/puritys/.m2:/root/.m2 -v /pwd/dir:/usr/src/mymaven -w /usr/src/mymaven puritys/command java        |
+| ffmpeg         | docker run -it --rm -w /pwd/dir:/temp_dir puritys/ffmpeg        |
 
