@@ -35,11 +35,6 @@ done
 setDockerMachineEnv tool;
 
 
-connect() {
-	stop
-	docker run -d -t  --name $containerName $imageName /bin/bash
-	docker exec -t -i  $containerName bash -c "/usr/bin/mysql -h $docker_service_ip -uroot -p"
-}
 
 if [ "x" != "x$command" ]; then
     $command
