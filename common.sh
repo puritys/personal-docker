@@ -41,6 +41,13 @@ stop() {
     docker rm -f $containerName || true
 }
 
+startDef() {
+    docker_my_init
+    stop
+    docker run  -d -ti --rm $port $volume --name $containerName $imageName /bin/bash
+    #docker exec -d $containerName bash -c "sh /root/start.sh"
+}
+
 start() {
     docker_my_init
     stop
@@ -57,6 +64,6 @@ root() {
 login () {
     docker_my_init
     account=`whoami`
-    ssh $account@$ip -p $sshPort
+    ssh root@$ip -p $sshPort
 }
 
