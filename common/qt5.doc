@@ -1,0 +1,15 @@
+
+# for centos
+RUN yum install qt5-qtquickcontrols qt5-qtdeclarative-devel  qt5-qtbase-devel -y
+RUN wget http://nchc.dl.sourceforge.net/project/pyqt/sip/sip-4.18/sip-4.18.tar.gz
+RUN wget http://nchc.dl.sourceforge.net/project/pyqt/PyQt5/PyQt-5.6/PyQt5_gpl-5.6.tar.gz
+RUN tar -zxvf sip-4.18.tar.gz; tar -zxvf PyQt5_gpl-5.6.tar.gz;
+RUN cd sip*;\
+    python configure.py;\
+    gmake;\
+    gmake install;
+
+RUN cd PyQt*;\
+    python configure.py --qmake=/usr/bin/qmake-qt5 --sip ../sip-4.18/sipgen/sip;\
+    gmake all;\
+    gmake install; 

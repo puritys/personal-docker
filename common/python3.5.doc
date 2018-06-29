@@ -1,3 +1,4 @@
+RUN yum install zlib-devel -y
 RUN wget https://www.python.org/ftp/python/3.5.0/Python-3.5.0.tgz
 RUN tar -zxvf Python-3.5.0.tgz
 RUN cd Python-3.5.0; \
