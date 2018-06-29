@@ -13,3 +13,10 @@
 | java           | docker run -it --rm -v /home/puritys/.m2:/root/.m2 -v /pwd/dir:/usr/src/mymaven -w /usr/src/mymaven puritys/command java        |
 | ffmpeg         | docker run -it --rm -w /pwd/dir:/temp_dir puritys/ffmpeg        |
 
+
+
+## mtkdocs
+- docker run -it --rm -v `pwd`:/doc elamperti/docker-mkdocs build
+
+## gitbook
+- docker run --rm -v "$PWD:/gitbook" -p 4000:4000 billryan/gitbook gitbook build
