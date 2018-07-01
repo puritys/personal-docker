@@ -7,8 +7,6 @@ RUN npm install gitbook-convert gitbook-cli -g
 RUN cd root ; gitbook init ./temp ; cd temp; gitbook build
 
 # install calibre for generate pdf
-#include ../common/python2.7.doc
-#include ../common/qt5.doc
 RUN wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin
 
 ENV DISPLAY :2
