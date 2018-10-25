@@ -49,9 +49,13 @@ startDef() {
 }
 
 start() {
+    host=""
+    if [ "X" != "X$hostname" ]; then
+        host=" -h $hostname "
+    fi
     docker_my_init
     stop
-    docker run -d -t $port $volume --name $containerName $imageName /bin/bash
+    docker run -d -t $port $volume $host --name $containerName $imageName /bin/bash
     docker exec -d $containerName bash -c "sh /root/start.sh"
 }
 
