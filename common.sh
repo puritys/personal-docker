@@ -63,7 +63,6 @@ root() {
 
 login () {
     docker_my_init
-    account=`whoami`
-    ssh root@$ip -p $sshPort
+    docker exec -ti  $containerName /bin/bash
 }
 
