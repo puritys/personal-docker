@@ -1,2 +1,21 @@
-host=VIM
+host="VIM"
+
+# ==========
+# Set default value
+# ==========
+if [ "x" == "x$VIM_THEME" ]; then
+    VIM_THEME="seoul256"
+fi
+
+
+
+if [ "x" != "x$VIMRC" ]; then
+    cp $VIMRC ~/.vimrc
+fi
+
+
+if [ "x" != "x$VIM_THEME" ]; then
+    sed "s/^colors [a-z0-9A-Z_-]*/colors $VIM_THEME/" -i ~/.vimrc_plugins
+fi
+
 #/bin/bash /root/start.sh &

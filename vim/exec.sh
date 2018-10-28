@@ -10,8 +10,8 @@ dockername=vim
 imageName=$account/$dockername
 containerName=$account-$dockername
 getDefaultVolume
-volume="-v /:/src"
-port=""
+volume="-v /:/src -v ~/docker_tmp/.bash_history:/root/.bash_history -v ~/:/puritys "
+port="-p 39901:22"
 
 help () {
     echo "Usage:"
