@@ -107,7 +107,7 @@ X11Forwarding yes
 #TCPKeepAlive yes
 #UseLogin no
 #UsePrivilegeSeparation sandbox
-#PermitUserEnvironment no
+PermitUserEnvironment yes
 #Compression delayed
 #ClientAliveInterval 0
 #ClientAliveCountMax 3

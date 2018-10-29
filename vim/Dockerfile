@@ -15,8 +15,11 @@ RUN ldconfig
 
 
 RUN yum install -y python-devel openssh-server
-RUN ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa
+RUN ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa; \
+    passwd -d root
+
 COPY include_tmp/files/sshd_config /etc/ssh/sshd_config
+COPY include_tmp/files/pam.sshd /etc/pam.d/sshd
 
 RUN cd /root ; \
     wget https://github.com/vim/vim/archive/v8.1.0479.tar.gz; \
@@ -41,7 +44,6 @@ RUN echo "update v1"; \
     git pull; \
     ./install.sh -p
 
-RUN passwd -d root
 COPY include_tmp/files/start.sh /root/start.sh
 COPY include_tmp/files/bash_customized /root/.bash_customized
 
