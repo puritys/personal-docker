@@ -1,13 +1,21 @@
-A docker image for vim-8
+# A docker image for vim-8
 
 - You could find vim settings from here https://github.com/puritys/dotfiles
 
 
-# Edit file
+## How to change setting
+
+The docker image support the following environments for customized vim.
+
+- VIMRC:  customized .vimrc , example :  -e VIMRC=/src/.vimrc
+- VIM_THEME:  change theme , example :  -e VIM_THEME=dracula ,    options: dracula, seoul256, seoul256-light
+
+
+## Direct edit file from docker
 docker run -d -t --name puritys-vim -v /:/src  -w /src puritys/vim -p xxx.filename
 
 
-# Set a alias on bash rc
+### Set a alias on bashrc for docker vim
 ```
 alias  vim="vim_fn"
 
@@ -19,20 +27,57 @@ function vim_fn() {
     echo $command
     $command
 }
+
 ```
 
-# vim a file via ssh
+## vim a file via ssh
+We could not use job-control suspend (Ctrl+z) when we edit file at docker vim, so I connect to docker vim from ssh then vim files. I change the escape character to "]" for solving the conflict of double-ssh connection. 
+
 ```
-ssh -t -e ] root@localhost -p39901 "cd /src/home/puritys/workspace && vim "
+ssh -t -e ] root@localhost -p39901 "cd /src/workspace && vim "
 ```
 
-## Environment
+### Set a Alias on bashrc for ssh vim
 
-- VIMRC:  customized .vimrc , example :  -e VIMRC=/src/.vimrc
-- VIM_THEME:  change theme , example :  -e VIM_THEME=dracula ,    options: dracula, seoul256, seoul256-light
+```
+alias dvs="vim_ssh_fn"
+
+function vim_ssh_fn() {
+    port="39901"
+    command=" $@ "
+    pwd=`pwd`
+    vim_start
+    command="ssh -t -e ] root@localhost -p$port \"cd /src$pwd && vim \"";
+
+    echo $command
+    eval $command
+}
 
 
-## Font
+function vim_start() {
+    port="39901"
+    r=`docker ps --filter="name=puritys-vim" 2>&1 | wc -l`
+    if [ "x1" == "x$r" ]; then
+        pwd=`pwd`
+        docker rm puritys-vim 2>&1
+        docker run -d -t --name puritys-vim  \
+            -e VIM_THEME=mystyle_white \
+            -p $port:22 \
+            -v $(readlink -f $SSH_AUTH_SOCK):/ssh-agent -e SSH_AUTH_SOCK=/ssh-agent \
+            -v /:/src  \
+            -v ~/:/puritys \
+            -v ~/docker_tmp:/tmp \
+            -v ~/docker_tmp/.bash_history:/root/.bash_history \
+            -v ~/.m2:/root/.m2 \
+            -w /src$pwd \
+            puritys/vim
+
+        docker exec -d puritys-vim sh /root/start.sh
+    fi
+}
+```
+
+## Fonts
 - You will need the font: https://github.com/puritys/dotfiles/blob/master/assets/CustFont-SFMono-Powerline.woff2
 
 
@@ -56,4 +101,6 @@ ssh -t -e ] root@localhost -p39901 "cd /src/home/puritys/workspace && vim "
 | shawncplus/phpcomplete.vim |               | PHP Auto Complete                         |
 | Yggdroot/indentLine        |               | Display indent line                       |
 | vim-scripts/PDV--phpDocumentor-for-Vim| doc | generate php document |
-|ale|||`
+|w0rp/ale|| Asynchronous Linting Engine|
+    
+
