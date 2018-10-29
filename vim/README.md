@@ -28,27 +28,6 @@ function vim_fn() {
     $command
 }
 
-function vim_start() {
-    port="39901"
-    r=`docker ps --filter="name=puritys-vim" 2>&1 | wc -l`
-    if [ "x1" == "x$r" ]; then
-        pwd=`pwd`
-        docker rm puritys-vim 2>&1
-        docker run -d -t --name puritys-vim  \
-            -e VIM_THEME=mystyle_white \
-            -p $port:22 \
-            -v $(readlink -f $SSH_AUTH_SOCK):/ssh-agent -e SSH_AUTH_SOCK=/ssh-agent \
-            -v /:/src  \
-            -v ~/:/puritys \
-            -v ~/docker_tmp:/tmp \
-            -v ~/docker_tmp/.bash_history:/root/.bash_history \
-            -v ~/.m2:/root/.m2 \
-            -w /src$pwd \
-            puritys/vim
-
-        docker exec -d puritys-vim sh /root/start.sh
-    fi
-}
 ```
 
 # vim a file via ssh
@@ -74,10 +53,33 @@ function vim_ssh_fn() {
     echo $command
     eval $command
 }
+
+
+function vim_start() {
+    port="39901"
+    r=`docker ps --filter="name=puritys-vim" 2>&1 | wc -l`
+    if [ "x1" == "x$r" ]; then
+        pwd=`pwd`
+        docker rm puritys-vim 2>&1
+        docker run -d -t --name puritys-vim  \
+            -e VIM_THEME=mystyle_white \
+            -p $port:22 \
+            -v $(readlink -f $SSH_AUTH_SOCK):/ssh-agent -e SSH_AUTH_SOCK=/ssh-agent \
+            -v /:/src  \
+            -v ~/:/puritys \
+            -v ~/docker_tmp:/tmp \
+            -v ~/docker_tmp/.bash_history:/root/.bash_history \
+            -v ~/.m2:/root/.m2 \
+            -w /src$pwd \
+            puritys/vim
+
+        docker exec -d puritys-vim sh /root/start.sh
+    fi
+}
 ```
 
 
-## Font
+## Fonts
 - You will need the font: https://github.com/puritys/dotfiles/blob/master/assets/CustFont-SFMono-Powerline.woff2
 
 
@@ -101,4 +103,6 @@ function vim_ssh_fn() {
 | shawncplus/phpcomplete.vim |               | PHP Auto Complete                         |
 | Yggdroot/indentLine        |               | Display indent line                       |
 | vim-scripts/PDV--phpDocumentor-for-Vim| doc | generate php document |
-|ale|||`
+|w0rp/ale|| Asynchronous Linting Engine|
+    
+
