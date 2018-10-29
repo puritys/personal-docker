@@ -31,7 +31,7 @@ function vim_fn() {
 ```
 
 ## vim a file via ssh
-We could not use job-control suspend (Ctrl+z) when we edit file at docker vim, so I connect to docker vim from ssh then vim files. I change the escape character to "]" for solve the conflict of double-ssh connection. 
+We could not use job-control suspend (Ctrl+z) when we edit file at docker vim, so I connect to docker vim from ssh then vim files. I change the escape character to "]" for solving the conflict of double-ssh connection. 
 
 ```
 ssh -t -e ] root@localhost -p39901 "cd /src/workspace && vim "
@@ -43,7 +43,6 @@ ssh -t -e ] root@localhost -p39901 "cd /src/workspace && vim "
 alias dvs="vim_ssh_fn"
 
 function vim_ssh_fn() {
-    common_docker_set_env "tool"
     port="39901"
     command=" $@ "
     pwd=`pwd`
