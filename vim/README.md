@@ -1,4 +1,4 @@
-A docker image for vim-8
+# A docker image for vim-8
 
 - You could find vim settings from here https://github.com/puritys/dotfiles
 
@@ -11,11 +11,11 @@ The docker image support the following environments for customized vim.
 - VIM_THEME:  change theme , example :  -e VIM_THEME=dracula ,    options: dracula, seoul256, seoul256-light
 
 
-# Direct edit file from docker
+## Direct edit file from docker
 docker run -d -t --name puritys-vim -v /:/src  -w /src puritys/vim -p xxx.filename
 
 
-## Set a alias on bashrc for docker vim
+### Set a alias on bashrc for docker vim
 ```
 alias  vim="vim_fn"
 
@@ -30,14 +30,14 @@ function vim_fn() {
 
 ```
 
-# vim a file via ssh
+## vim a file via ssh
 We could not use job-control suspend (Ctrl+z) when we edit file at docker vim, so I connect to docker vim from ssh then vim files. I change the escape character to "]" for solve the conflict of double-ssh connection. 
 
 ```
 ssh -t -e ] root@localhost -p39901 "cd /src/workspace && vim "
 ```
 
-## Set a Alias on bashrc for ssh vim
+### Set a Alias on bashrc for ssh vim
 
 ```
 alias dvs="vim_ssh_fn"
@@ -77,7 +77,6 @@ function vim_start() {
     fi
 }
 ```
-
 
 ## Fonts
 - You will need the font: https://github.com/puritys/dotfiles/blob/master/assets/CustFont-SFMono-Powerline.woff2
