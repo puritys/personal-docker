@@ -12,7 +12,7 @@ The docker image support the following environments for customized vim.
 - VIMRC_CUSTOMIZED:  default is 1, the .vimrc_customized has some hot plugins such as lightline, if you don't need them, just set to zero it will stop loading these plugins.
 
 
-## Direct edit file from docker
+## Directly edit file from docker
 docker run -d -t --name puritys-vim -v /:/src  -w /src puritys/vim -p xxx.filename
 
 
@@ -32,7 +32,7 @@ function vim_fn() {
 ```
 
 ## vim a file via ssh
-We could not use job-control suspend (Ctrl+z) when we edit file at docker vim, so I connect to docker vim from ssh then vim files. I change the escape character to "]" for solving the conflict of double-ssh connection. 
+We could not use job-control suspend (Ctrl+z) when we edit file at a container, one solution is connect into container from ssh then vim files. In order to solve the hotkey conflict of multiple-ssh connections I change the escape character to "]". 
 
 ```
 ssh -t -e ] root@localhost -p39901 "cd /src/workspace && vim "
