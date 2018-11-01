@@ -6,11 +6,22 @@ host="VIM"
 if [ "x" == "x$VIM_THEME" ]; then
     VIM_THEME="seoul256"
 fi
+if [ "x" == "x$VIMRC_CUSTOMIZED" ]; then
+    VIMRC_CUSTOMIZED=1
+fi
 
+# ==========
+# Set customized style by enviroment settings
+# ==========
 
 
 if [ "x" != "x$VIMRC" ]; then
     cp $VIMRC ~/.vimrc
+fi
+
+# Remove vimrc_customized 
+if [ "x1" != "x$VIMRC_CUSTOMIZED" ]; then
+    rm -f ~/.vimrc_customized
 fi
 
 
@@ -19,6 +30,6 @@ if [ "x" != "x$VIM_THEME" ] && [ ! -f "/tmp/first_setenv" ]; then
 fi
 
 # set environment for ssh login
-env="VIM_THEME=$VIM_THEME\n"
+env="VIM_THEME=$VIM_THEME\nVIMRC_CUSTOMIZED=$VIMRC_CUSTOMIZED"
 echo -e $env > /root/.ssh/environment
 

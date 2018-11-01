@@ -9,6 +9,7 @@ The docker image support the following environments for customized vim.
 
 - VIMRC:  customized .vimrc , example :  -e VIMRC=/src/.vimrc
 - VIM_THEME:  change theme , example :  -e VIM_THEME=dracula ,    options: dracula, seoul256, seoul256-light
+- VIMRC_CUSTOMIZED:  default is 1, the .vimrc_customized has some hot plugins such as lightline, if you don't need them, just set to zero it will stop loading these plugins.
 
 
 ## Direct edit file from docker
