@@ -45,7 +45,7 @@ function vim_fn() {
 ```
 
 ## vim a file via ssh
-We could not use job-control suspend (`Ctrl+z`) when we edit file at a container, one solution is connect into container from ssh then vim files. In order to solve the hotkey conflict of multiple-ssh connections I change the escape character to "]". 
+We could not use job-control suspend [`Ctrl+z`] when we edit file at a container, one solution is connect into container from ssh then vim files. In order to solve the hotkey conflict of multiple-ssh connections I change the escape character to "`]`". 
 
 ```
 ssh -t -e ] root@localhost -p39901 "cd /src/workspace && vim "
