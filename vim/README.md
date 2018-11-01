@@ -2,6 +2,11 @@
 
 - You could find vim settings from here https://github.com/puritys/dotfiles
 
+# Quick Start
+- docker pull puritys/vim
+- docker run -d -t --name puritys-vim -v /:/src  -w /src puritys/vim -p xxx.filename
+
+<img src="https://www.puritys.me/filemanage/blog_files/docker_vim.png">
 
 ## How to change setting
 
