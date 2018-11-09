@@ -1,7 +1,7 @@
 # A docker image for vim-8
 
 - You could find vim settings from here https://github.com/puritys/dotfiles
-
+- Support language: Java / PHP / Javascript / golang
 
 ## How to change setting
 

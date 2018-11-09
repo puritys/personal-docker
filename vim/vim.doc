@@ -47,16 +47,18 @@ RUN yum -y install cmake python-devel; \
 
 
 # Update dotfiles
-RUN echo "update v19";
+RUN echo "update v21";
 COPY files/vimrc_customized /root/.vimrc_customized 
 RUN cd dotfiles; \
     git pull; \
-    ./install.sh -p
+    ./install.sh -p --javaImp ;\
+    rm /root/openjdk/*.zip
 
 
 
 COPY files/start.sh /root/start.sh
 COPY files/bash_customized /root/.bash_customized
+COPY files/bash_host       /root/.bash_host
 
 ENV BASH_ENV "/root/.bashrc"
 

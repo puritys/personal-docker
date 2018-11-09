@@ -39,16 +39,18 @@ RUN yum -y install cmake python-devel; \
     git submodule update --init --recursive ; \
     python2 ./install.py --clang-completer --gocode-completer --java-completer ;
 #
-RUN echo "update v19";
+RUN echo "update v21";
 COPY include_tmp/files/vimrc_customized /root/.vimrc_customized 
 RUN cd dotfiles; \
     git pull; \
-    ./install.sh -p
+    ./install.sh -p --javaImp ;\
+    rm /root/openjdk/*.zip
 
 
 
 COPY include_tmp/files/start.sh /root/start.sh
 COPY include_tmp/files/bash_customized /root/.bash_customized
+COPY include_tmp/files/bash_host       /root/.bash_host
 
 ENV BASH_ENV "/root/.bashrc"
 
