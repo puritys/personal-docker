@@ -9,7 +9,7 @@
 
 ![vim example](https://www.puritys.me/filemanage/blog_files/docker_vim.png)
 
-## How to change setting
+## Environments
 
 The docker image support the following environments for customized vim.
 
@@ -25,6 +25,13 @@ The docker image support the following environments for customized vim.
 
     default is 1, the .vimrc_customized has some hot plugins such as lightline, if you don't need them, just set to zero it will stop loading these plugins.
 
+*   VIM_PLUGIN_Eclim
+
+    Enable eclim, example: -e VIM_PLUGIN_Eclim=1
+
+*   VIM_PLUGIN_YouCompleteMe
+
+    Enable YouCompleteMe, example: -e VIM_PLUGIN_YouCompleteMe=1
 
 ## Directly edit file from docker
 docker run -d -t --name puritys-vim -v /:/src  -w /src puritys/vim -p xxx.filename
@@ -49,7 +56,7 @@ function vim_fn() {
 We could not use job-control suspend [`Ctrl+z`] when we edit file at a container, one solution is connect into container from ssh then vim files. In order to solve the hotkey conflict of multiple-ssh connections I change the escape character to "`]`". 
 
 ```
-ssh -t -e ] root@localhost -p39901 "cd /src/workspace && vim "
+ssh -t -e ] vim@localhost -p39901 "cd /src/workspace && vim "
 ```
 
 ### Set a Alias on bashrc for ssh vim
@@ -62,7 +69,7 @@ function vim_ssh_fn() {
     command=" $@ "
     pwd=`pwd`
     vim_start
-    command="ssh -t -e ] root@localhost -p$port \"cd /src$pwd && vim \"";
+    command="ssh -t -e ] vim@localhost -p$port \"cd /src$pwd && vim \"";
 
     echo $command
     eval $command
@@ -83,6 +90,7 @@ function vim_start() {
             -v ~/:/puritys \
             -v ~/docker_tmp:/tmp \
             -v ~/docker_tmp/.bash_history:/root/.bash_history \
+            -v ~/docker_tmp/eclim_projects:/root/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects \
             -v ~/.m2:/root/.m2 \
             -w /src$pwd \
             puritys/vim

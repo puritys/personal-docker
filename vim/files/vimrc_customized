@@ -1,1 +1,3 @@
 let g:enablePluginsLightLine = 1
+let g:enablePluginYouCompleteMe = 1
+let g:enableEclim = 0

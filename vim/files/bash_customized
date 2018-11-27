@@ -16,20 +16,41 @@ fi
 
 
 if [ "x" != "x$VIMRC" ]; then
-    cp $VIMRC ~/.vimrc
+    sudo cp $VIMRC ~/.vimrc
 fi
 
-# Remove vimrc_customized 
-if [ "x1" != "x$VIMRC_CUSTOMIZED" ]; then
-    rm -f ~/.vimrc_customized
-fi
-
+## Remove vimrc_customized 
+#if [ "x1" != "x$VIMRC_CUSTOMIZED" ]; then
+#    sudo rm -f ~/.vimrc_customized
+#fi
 
 if [ "x" != "x$VIM_THEME" ] && [ ! -f "/tmp/first_setenv" ]; then
-    sed "s/^colors [a-z0-9A-Z_-]*/colors $VIM_THEME/" -i ~/.vimrc_plugins
+    sudo sed "s/^colors [a-z0-9A-Z_-]*/colors $VIM_THEME/" -i ~/.vimrc_plugins
 fi
 
+
+# ======================
+# Build vimrc customized
+# ======================
+if [ "x" == "x$VIM_PLUGIN_LightLine" ]; then
+    VIM_PLUGIN_lightline=1
+fi
+if [ "x" == "x$VIM_PLUGIN_YouCompleteMe" ]; then
+    VIM_PLUGIN_YouCompleteMe=1
+fi
+if [ "x" == "x$VIM_PLUGIN_Eclim" ]; then
+    VIM_PLUGIN_Eclim=0
+fi
+
+
+plugins="let g:enablePluginLightLine = $VIM_PLUGIN_LightLine  \n"
+plugins="$plugins let g:enablePluginYouCompleteMe = $VIM_PLUGIN_YouCompleteMe  \n"
+plugins="$plugins let g:enablePluginEclim =  $VIM_PLUGIN_Eclim  \n"
+echo -e $plugins > ~/.vimrc_customized
+
+
+
 # set environment for ssh login
-env="VIM_THEME=$VIM_THEME\nVIMRC_CUSTOMIZED=$VIMRC_CUSTOMIZED"
+env="VIM_THEME=$VIM_THEME\nVIMRC_CUSTOMIZED=$VIMRC_CUSTOMIZED\nVIM_PLUGIN_LightLine=$VIM_PLUGIN_LightLine\nVIM_PLUGIN_YouCompleteMe=$VIM_PLUGIN_YouCompleteMe\nVIM_PLUGIN_Eclim=$VIM_PLUGIN_Eclim"
 echo -e $env > /root/.ssh/environment
 
