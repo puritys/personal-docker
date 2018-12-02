@@ -5,7 +5,7 @@
 
 # Quick Start
 - docker pull puritys/vim
-- docker run -ti --name puritys-vim -v /:/src  -w /src puritys/vim vim xxx.filename
+- docker run -ti -v $(pwd):/src  -w /src puritys/vim vim xxx
 
 ![vim example](https://www.puritys.me/filemanage/blog_files/docker_vim.png)
 
@@ -23,7 +23,7 @@ The docker image support the following environments for customized vim.
 
 *   VIM_PLUGIN_Eclim
 
-    Enable eclim, example: -e VIM_PLUGIN_Eclim=1
+    Enable eclim I love eclim more than YouCompleteMe and ale, example: -e VIM_PLUGIN_Eclim=1
 
 *   VIM_PLUGIN_YouCompleteMe
 
@@ -31,8 +31,7 @@ The docker image support the following environments for customized vim.
 
 ## Directly edit file from docker
 
-docker run -ti --name puritys-vim -v /:/src  -w /src puritys/vim vim xxx.filename
-
+docker run -ti -v $(pwd):/src  -w /src puritys/vim vim backup.sh
 
 ### Set a alias on bashrc for docker vim
 ```
@@ -40,8 +39,7 @@ alias  vim="vim_fn"
 
 function vim_fn() {
     command=" $@ "
-    pwd=`pwd`
-    docker run -ti --rm -v /:/src  -w /src puritys/vim vim -p $command
+    docker run -ti -v $(pwd):/src  -w /src puritys/vim vim -p $command
     echo $command
     $command
 }
@@ -56,6 +54,8 @@ ssh -t -e ] root@localhost -p39901 "cd /src/workspace"
 ```
 
 ### Set a Alias on bashrc for ssh vim
+
+Finally, my favorite way to use docker vim is login in the docker from ssh first. Then I could use zz, fasd, vim-session and fzf to switch project and find files to edit.
 
 ```
 alias dvs="vim_ssh_fn"
