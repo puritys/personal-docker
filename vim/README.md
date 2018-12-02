@@ -30,7 +30,8 @@ The docker image support the following environments for customized vim.
     Enable YouCompleteMe, example: -e VIM_PLUGIN_YouCompleteMe=1
 
 ## Directly edit file from docker
-docker run -d -t --name puritys-vim -v /:/src  -w /src puritys/vim -p xxx.filename
+
+docker run -ti --name puritys-vim -v /:/src  -w /src puritys/vim vim xxx.filename
 
 
 ### Set a alias on bashrc for docker vim
@@ -40,8 +41,7 @@ alias  vim="vim_fn"
 function vim_fn() {
     command=" $@ "
     pwd=`pwd`
-    r=`docker inspect puritys-vim 2>&1`
-    docker run -d -t --name puritys-vim -v /:/src  -w /src puritys/vim -p $command
+    docker run -ti --rm -v /:/src  -w /src puritys/vim vim -p $command
     echo $command
     $command
 }
@@ -52,7 +52,7 @@ function vim_fn() {
 We could not use job-control suspend [`Ctrl+z`] when we edit file at a container, one solution is connect into container from ssh then vim files. In order to solve the hotkey conflict of multiple-ssh connections I change the escape character to "`]`". 
 
 ```
-ssh -t -e ] vim@localhost -p39901 "cd /src/workspace && vim "
+ssh -t -e ] root@localhost -p39901 "cd /src/workspace"
 ```
 
 ### Set a Alias on bashrc for ssh vim
@@ -61,32 +61,39 @@ ssh -t -e ] vim@localhost -p39901 "cd /src/workspace && vim "
 alias dvs="vim_ssh_fn"
 
 function vim_ssh_fn() {
+    common_docker_set_env "tool"
     port="39901"
     command=" $@ "
     pwd=`pwd`
     vim_start
-    command="ssh -t -e ] vim@localhost -p$port \"cd /src$pwd && vim \"";
+    if [ "x1" == "x$startVimDocker" ];then
+        sleep 4
+    fi
+    command="ssh -t -e ] root@localhost -p$port \"cd /src$pwd; /bin/bash\";";
 
     echo $command
     eval $command
 }
 
-
 function vim_start() {
+    startVimDocker=0
     port="39901"
     r=`docker ps --filter="name=puritys-vim" 2>&1 | wc -l`
     if [[ $r == *"1"* ]]; then
+        startVimDocker=1
+        mkdir -p ~/docker_tmp ~/docker_tmp/fzf_session ~/.m2
+        touch ~/docker_tmp/.bash_history ~/docker_tmp/ssh-agent
+
         pwd=`pwd`
         docker rm puritys-vim 2>&1
         docker run -d -t --name puritys-vim  \
-            -e VIM_THEME=mystyle_white \
+            -e VIM_PLUGIN_YouCompleteMe=1 \
             -p $port:22 \
-            -v $(readlink -f $SSH_AUTH_SOCK):/ssh-agent -e SSH_AUTH_SOCK=/ssh-agent \
+            -v ~/docker_tmp/ssh-agent:/ssh-agent \
+            -e SSH_AUTH_SOCK=/ssh-agent \
             -v /:/src  \
-            -v ~/:/puritys \
             -v ~/docker_tmp:/tmp \
             -v ~/docker_tmp/.bash_history:/root/.bash_history \
-            -v ~/docker_tmp/eclim_projects:/root/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects \
             -v ~/.m2:/root/.m2 \
             -w /src$pwd \
             puritys/vim
@@ -94,10 +101,12 @@ function vim_start() {
         docker exec -d puritys-vim sh /root/start.sh
     fi
 }
+
 ```
 
 ## Fonts
-- You will need the font: https://github.com/puritys/dotfiles/blob/master/assets/CustFont-SFMono-Powerline.woff2
+- You could install the font SFMono + Powerline
+  - https://github.com/puritys/dotfiles/blob/master/assets/CustFont-SFMono-Powerline.woff2
 
 
 ## Vim Plugins
