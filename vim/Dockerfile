@@ -51,7 +51,7 @@ RUN echo "1";cd dotfiles; \
     touch /tmp/install.log; \
     chmod 777 /tmp/install.log; \
     mkdir -p /root/workspace/.metadata/.plugins/org.eclipse.core.resources/
-RUN echo "update v23";
+RUN echo "update v24";
 COPY include_tmp/files/vimrc_customized /root/.vimrc_customized 
 RUN cd dotfiles; \
     git pull; \

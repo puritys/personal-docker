@@ -6,9 +6,6 @@ host="VIM"
 if [ "x" == "x$VIM_THEME" ]; then
     VIM_THEME="seoul256"
 fi
-if [ "x" == "x$VIMRC_CUSTOMIZED" ]; then
-    VIMRC_CUSTOMIZED=1
-fi
 
 # ==========
 # Set customized style by enviroment settings
@@ -18,11 +15,6 @@ fi
 if [ "x" != "x$VIMRC" ]; then
     sudo cp $VIMRC ~/.vimrc
 fi
-
-## Remove vimrc_customized 
-#if [ "x1" != "x$VIMRC_CUSTOMIZED" ]; then
-#    sudo rm -f ~/.vimrc_customized
-#fi
 
 if [ "x" != "x$VIM_THEME" ] && [ ! -f "/tmp/first_setenv" ]; then
     sudo sed "s/^colors [a-z0-9A-Z_-]*/colors $VIM_THEME/" -i ~/.vimrc_plugins

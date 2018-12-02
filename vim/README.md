@@ -5,7 +5,7 @@
 
 # Quick Start
 - docker pull puritys/vim
-- docker run -d -t --name puritys-vim -v /:/src  -w /src puritys/vim -p xxx.filename
+- docker run -ti --name puritys-vim -v /:/src  -w /src puritys/vim vim xxx.filename
 
 ![vim example](https://www.puritys.me/filemanage/blog_files/docker_vim.png)
 
@@ -20,10 +20,6 @@ The docker image support the following environments for customized vim.
 *   VIM_THEME
 
     change theme , example :  -e VIM_THEME=dracula ,    options: dracula, seoul256, seoul256-light
-
-*   VIMRC_CUSTOMIZED
-
-    default is 1, the .vimrc_customized has some hot plugins such as lightline, if you don't need them, just set to zero it will stop loading these plugins.
 
 *   VIM_PLUGIN_Eclim
 
@@ -79,7 +75,7 @@ function vim_ssh_fn() {
 function vim_start() {
     port="39901"
     r=`docker ps --filter="name=puritys-vim" 2>&1 | wc -l`
-    if [ "x1" == "x$r" ]; then
+    if [[ $r == *"1"* ]]; then
         pwd=`pwd`
         docker rm puritys-vim 2>&1
         docker run -d -t --name puritys-vim  \
