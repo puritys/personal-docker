@@ -111,6 +111,9 @@ function vim_start() {
 
 ## Vim Plugins
 
+Default enabled pluings: fzf, fzf-session, incsearch, snipmate, indentLine, YouCompleteMe, ALE, nerdtree
+
+### All installed plugin 
 |plugin | shortcut| description|
 |:---|:---|:---|
 | jistr/vim-nerdtree-tabs        |          | Show file tree when you call ":tabe" to open a file |

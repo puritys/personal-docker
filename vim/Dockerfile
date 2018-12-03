@@ -51,7 +51,7 @@ RUN echo "1";cd dotfiles; \
     touch /tmp/install.log; \
     chmod 777 /tmp/install.log; \
     mkdir -p /root/workspace/.metadata/.plugins/org.eclipse.core.resources/
-RUN echo "update v24";
+RUN echo "update v25";
 COPY include_tmp/files/vimrc_customized /root/.vimrc_customized 
 RUN cd dotfiles; \
     git pull; \
@@ -63,6 +63,5 @@ COPY include_tmp/files/start.sh /root/start.sh
 COPY include_tmp/files/bash_customized /root/.bash_customized
 COPY include_tmp/files/bash_host       /root/.bash_host
 
-USER vim
 ENV BASH_ENV "/root/.bashrc"
 
