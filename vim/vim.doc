@@ -1,24 +1,16 @@
 from puritys/vimbase:8
 
-# Install YouCompleteMe
-RUN npm install -g typescript
-RUN yum -y install cmake python-devel; \
-    rm -rf ~/.vim/plugged/YouCompleteMe; \
-    git clone https://github.com/Valloric/YouCompleteMe.git ~/.vim/plugged/YouCompleteMe; \
-    cd ~/.vim/plugged/YouCompleteMe; \
-    git submodule update --init --recursive ; \
-    python2 ./install.py --clang-completer --gocode-completer --java-completer ;
-
-
 #RUN     mkdir -p /root/workspace/.metadata/.plugins/org.eclipse.core.resources/
 
-
 # Update dotfiles
-RUN echo "update v25";
+RUN echo "update v26";
 COPY files/vimrc_customized /root/.vimrc_customized 
+RUN yum install unzip -y
 RUN cd dotfiles; \
+    rm -rf /root/.vim/JavaImp /root/openjdk/; \
     git pull; \
-    ./install.sh -p 
+    ./install.sh -p --javaImp ;\
+    rm /root/openjdk/*.zip
 
 COPY files/sshd_config /etc/ssh/sshd_config
 COPY files/pam.sshd /etc/pam.d/sshd

@@ -26,8 +26,7 @@ RUN wget https://dl.google.com/go/go1.11.2.linux-amd64.tar.gz; \
 
 RUN git clone https://github.com/puritys/dotfiles.git; \
     cd dotfiles; \
-    ./install.sh -i --javaImp; \
-    rm /root/openjdk/*.zip
+    ./install.sh -i; \
 
 # Download eclim
 RUN fileId="1D59_qOQzM5HQyIWqJVkUPPxFa0oTbzqS"; \
