@@ -24,6 +24,7 @@ The docker image support the following environments for customized vim.
 *   VIM_PLUGIN_Eclim
 
     Enable eclim I love eclim more than YouCompleteMe and ale, example: -e VIM_PLUGIN_Eclim=1
+    Maunal start eclim: `cd /dotfiles; sudo -u vim ./startEclim.sh `
 
 *   VIM_PLUGIN_YouCompleteMe
 
@@ -98,6 +99,7 @@ function vim_start() {
             -w /src$pwd \
             puritys/vim
 
+        # start sshd and eclim
         docker exec -d puritys-vim sh /root/start.sh
     fi
 }

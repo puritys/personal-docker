@@ -46,3 +46,20 @@ echo -e $plugins > ~/.vimrc_customized
 env="VIM_THEME=$VIM_THEME\nVIMRC_CUSTOMIZED=$VIMRC_CUSTOMIZED\nVIM_PLUGIN_LightLine=$VIM_PLUGIN_LightLine\nVIM_PLUGIN_YouCompleteMe=$VIM_PLUGIN_YouCompleteMe\nVIM_PLUGIN_Eclim=$VIM_PLUGIN_Eclim"
 echo -e $env > /root/.ssh/environment
 
+#if [ "x" != "x$USER" ]; then
+#    hasUser=`grep "/home/puritys" /etc/passwd | wc -l`
+#    if [ "x0" == "x$hasUser" ];then
+#        passwd -d $USER
+#        useradd -g root $USER
+#        passwd -d $USER
+#        sudo rm -rf /home/$USER
+#        sudo ln -sf /root /home/$USER
+#        sudo chown $USER /home/$USER/.ssh/*
+#        echo "$USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+#    fi
+#fi
+
+if [ -f /tmp/.fasd ]; then
+    sudo chmod 777 /tmp/.fasd
+fi
+
