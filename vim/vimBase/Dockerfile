@@ -1,0 +1,55 @@
+FROM centos:7.4.1708
+
+RUN yum install -y sudo wget telnet openssh-server vim git ncurses-libs ncurses-term screen man
+RUN ldconfig
+
+RUN wget http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm
+RUN rpm -ivh epel-release-7-11.noarch.rpm
+
+
+RUN yum install autoconf gcc gcc-c++ make cmake -y
+
+RUN yum install ncurses-devel -y
+RUN yum upgrade  ncurses-libs ncurses-term ncurses-devel -y
+RUN ldconfig
+
+RUN yum install ntp -y ; \
+    ntpdate -s time.stdtime.gov.tw
+
+RUN yum install -y python-devel openssh-server
+RUN ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa; \
+    passwd -d root; \
+    useradd -g root vim; \
+    passwd -d vim
+
+RUN cd /root ; \
+    wget https://github.com/vim/vim/archive/v8.1.0479.tar.gz; \
+    tar -zxvf v8.1.0479.tar.gz ; \
+    cd /root/vim-8.1.0479 ; ./configure --enable-multibyte --enable-pythoninterp=yes --prefix=/usr; \
+    cd /root/vim-8.1.0479 ; gmake ; gmake install ; cd /; rm -rf /root/vim* /root/v8*.gz
+RUN yum install php java maven nodejs-6.14.3-1.el7 npm-3.10.10-1.6.14.3.1.el7 golang-1.9.4-1.el7 ant xorg-x11-server-Xvfb gtk2 gtk2-engines PackageKit-gtk-module.x86_64 libcanberra-gtk2.x86_64 -y
+
+RUN git clone https://github.com/puritys/dotfiles.git; \
+    cd dotfiles; \
+    ./install.sh -i --javaImp; \
+    rm /root/openjdk/*.zip
+RUN fileId="1D59_qOQzM5HQyIWqJVkUPPxFa0oTbzqS"; \
+    wget --save-cookies=/tmp/cookie "https://drive.google.com/uc?export=download&id=${fileId}" --output-document /tmp/g ; \
+    confirmId=`cat /tmp/g | grep -o "confirm=[^&]*" | sed 's/confirm=//'` ; \
+    cd /dotfiles && wget --load-cookies=/tmp/cookie --no-check-certificate "https://drive.google.com/uc?export=download&confirm=${confirmId}&id=$fileId" --output-document eclim_2.8.0.bin ; \
+    chmod 777 ./eclim_2.8.0.bin
+RUN fileId="1BwNK2nAk1_EBPuCzFst3nI7jNnKKgbgV"; \
+    wget --save-cookies=/tmp/cookie "https://drive.google.com/uc?export=download&id=${fileId}" --output-document /tmp/g ; \
+    confirmId=`cat /tmp/g | grep -o "confirm=[^&]*" | sed 's/confirm=//'` ; \
+    cd /root && wget --load-cookies=/tmp/cookie --no-check-certificate "https://drive.google.com/uc?export=download&confirm=${confirmId}&id=$fileId" --output-document eclipse-java-photon-R-linux-gtk-x86_64.tar.gz ; \
+    tar -zxvf ./eclipse-java-photon-R-linux-gtk-x86_64.tar.gz
+RUN cd /dotfiles/ ;\
+    dbus-uuidgen > /etc/machine-id; \
+    USER=root ./eclim_2.8.0.bin    --yes    --eclipse=/root/eclipse/  --vimfile=/root/.vim/  --plugins=jdt,pydev; \
+    chmod -R 777 /root/eclipse/configuration 
+COPY include_tmp/___files/sudoers /etc/sudoers
+RUN sudo mkdir -p /root/.eclipse/ /root/.eclim/; \
+    sudo rm -rf /home/vim; sudo ln -sf /root /home/vim; sudo chmod -R 775 /root/; 
+
+ENV BASH_ENV "/root/.bashrc"
+
