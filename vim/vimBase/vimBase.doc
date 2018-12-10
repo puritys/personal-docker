@@ -40,7 +40,8 @@ RUN fileId="1BwNK2nAk1_EBPuCzFst3nI7jNnKKgbgV"; \
     wget --save-cookies=/tmp/cookie "https://drive.google.com/uc?export=download&id=${fileId}" --output-document /tmp/g ; \
     confirmId=`cat /tmp/g | grep -o "confirm=[^&]*" | sed 's/confirm=//'` ; \
     cd /root && wget --load-cookies=/tmp/cookie --no-check-certificate "https://drive.google.com/uc?export=download&confirm=${confirmId}&id=$fileId" --output-document eclipse-java-photon-R-linux-gtk-x86_64.tar.gz ; \
-    tar -zxvf ./eclipse-java-photon-R-linux-gtk-x86_64.tar.gz
+    tar -zxvf ./eclipse-java-photon-R-linux-gtk-x86_64.tar.gz; \
+    rm ./eclipse-java-photon-R-linux-gtk-x86_64.tar.gz
 
 # install eclim
 RUN cd /dotfiles/ ;\
