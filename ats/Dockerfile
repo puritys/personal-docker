@@ -15,9 +15,9 @@ RUN ldconfig
 
 
 RUN yum install -y bzip2 openssl-devel tcl-devel
-RUN wget http://apache.mirrors.ovh.net/ftp.apache.org/dist/trafficserver/trafficserver-7.1.3.tar.bz2
-RUN tar -jxvf trafficserver-7.1.3.tar.bz2; \
-    cd trafficserver-7.1.3; \
+RUN wget http://apache.mirrors.ovh.net/ftp.apache.org/dist/trafficserver/trafficserver-7.1.5.tar.bz2
+RUN tar -jxvf trafficserver-7.1.5.tar.bz2; \
+    cd trafficserver-7.1.5; \
     ./configure; \
     gmake install;
 
