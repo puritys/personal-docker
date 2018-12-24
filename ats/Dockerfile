@@ -32,5 +32,5 @@ RUN chmod +x /root/start.sh
 ENV ATS_REMAP="map / http://127.0.0.1:8080/"
 ENV ATS_SERVER_PORTS="80 443:ssl"
 
-ENTRYPOINT ["/root/start.sh"]
+CMD ["/root/start.sh"]
 
