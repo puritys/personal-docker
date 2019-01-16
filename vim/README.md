@@ -1,5 +1,6 @@
 # A docker image for vim-8
 
+- https://hub.docker.com/r/puritys/vim
 - You could find vim settings from here https://github.com/puritys/dotfiles
 - Support language: Java / PHP / Javascript / golang
 
@@ -21,7 +22,7 @@ The docker image support the following environments for customized vim.
 
     change theme , example :  -e VIM_THEME=dracula ,    options: dracula, seoul256, seoul256-light
 
-*   VIM_PLUGIN_Eclim
+*   VIM_PLUGIN_Eclim (only support in image vim:8.0)
 
     Enable eclim I love eclim more than YouCompleteMe and ale, example: -e VIM_PLUGIN_Eclim=1
     Maunal start eclim: `cd /dotfiles; sudo -u vim ./startEclim.sh `
