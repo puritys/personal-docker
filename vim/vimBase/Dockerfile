@@ -1,4 +1,4 @@
-FROM centos:7.4.1708
+FROM centos:7.6.1810
 
 RUN yum install -y sudo wget telnet openssh-server vim git ncurses-libs ncurses-term screen man
 RUN ldconfig
@@ -6,62 +6,50 @@ RUN ldconfig
 RUN wget http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm
 RUN rpm -ivh epel-release-7-11.noarch.rpm
 
-
-RUN yum install autoconf gcc gcc-c++ make cmake -y
-
+RUN yum install gcc gcc-c++ make cmake -y
 RUN yum install ncurses-devel -y
 RUN yum upgrade  ncurses-libs ncurses-term ncurses-devel -y
-RUN ldconfig
-
 RUN yum install ntp -y ; \
     ntpdate -s time.stdtime.gov.tw
 
 RUN yum install -y python-devel openssh-server
 RUN ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa; \
-    passwd -d root; \
-    useradd -g root vim; \
-    passwd -d vim
+    passwd -d root;
 
 RUN cd /root ; \
-    wget https://github.com/vim/vim/archive/v8.1.0479.tar.gz; \
-    tar -zxvf v8.1.0479.tar.gz ; \
-    cd /root/vim-8.1.0479 ; ./configure --enable-multibyte --enable-pythoninterp=yes --prefix=/usr; \
-    cd /root/vim-8.1.0479 ; gmake ; gmake install ; cd /; rm -rf /root/vim* /root/v8*.gz
-RUN yum install php java maven nodejs-6.14.3-1.el7 npm-3.10.10-1.6.14.3.1.el7 ant xorg-x11-server-Xvfb gtk2 gtk2-engines PackageKit-gtk-module.x86_64 libcanberra-gtk2.x86_64 -y
+    wget https://github.com/vim/vim/archive/v8.1.0757.tar.gz; \
+    tar -zxvf v8.1.0757.tar.gz ; \
+    mv /root/vim-8.1.0757 /root/vim; \
+    cd /root/vim ; ./configure --enable-multibyte --enable-pythoninterp=yes --prefix=/usr; \
+    cd /root/vim ; gmake ; gmake install ; cd /; rm -rf /root/vim* /root/v8*.gz
+RUN cd /root; \
+    wget https://download.java.net/java/GA/jdk11/13/GPL/openjdk-11.0.1_linux-x64_bin.tar.gz ;\
+    tar -zxvf openjdk-11.0.1_linux-x64_bin.tar.gz; \
+    rm *.gz; \
+    mv jdk-11.0.1 jdk; \
+    cp jdk ;\
+    alternatives --install /usr/bin/java java /root/jdk/bin/java  2 ; \
+    alternatives --install /usr/bin/javac javac /root/jdk/bin/javac  2 ; \
+    cd /root ;\
+    wget https://www-eu.apache.org/dist/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz ;\
+    tar -zxvf apache-maven-3.6.0-bin.tar.gz ; \
+    rm *.gz ; \
+    alternatives --install /usr/bin/mvn mvn /root/apache-maven-3.6.0/bin/mvn 2 ; \
+    alternatives --set mvn  /root/apache-maven-3.6.0/bin/mvn
+RUN yum install epel-release yum-utils -y ; \
+    yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm -y ; \
+    yum-config-manager --enable remi-php72 ; \
+    yum install php php-common php-opcache php-mcrypt php-cli php-gd php-curl php-mysqlnd -y ;
+RUN yum install nodejs-6.14.3-1.el7 npm-3.10.10-1.6.14.3.1.el7 -y
 
-RUN wget https://dl.google.com/go/go1.11.2.linux-amd64.tar.gz; \
-    tar -C /usr/local -zxf go1.11.2.linux-amd64.tar.gz;\
-    rm go1.11.2.linux-amd64.tar.gz
+RUN wget https://dl.google.com/go/go1.11.4.linux-amd64.tar.gz; \
+    tar -C /usr/local -zxf go1.11.4.linux-amd64.tar.gz;\
+    rm go*.linux-amd64.tar.gz
 
 RUN git clone https://github.com/puritys/dotfiles.git; \
     cd dotfiles; \
-    ./install.sh -i --javaImp; \
-    rm /root/openjdk/*.zip
-RUN fileId="1D59_qOQzM5HQyIWqJVkUPPxFa0oTbzqS"; \
-    wget --save-cookies=/tmp/cookie "https://drive.google.com/uc?export=download&id=${fileId}" --output-document /tmp/g ; \
-    confirmId=`cat /tmp/g | grep -o "confirm=[^&]*" | sed 's/confirm=//'` ; \
-    cd /dotfiles && wget --load-cookies=/tmp/cookie --no-check-certificate "https://drive.google.com/uc?export=download&confirm=${confirmId}&id=$fileId" --output-document eclim_2.8.0.bin ; \
-    chmod 777 ./eclim_2.8.0.bin
-RUN fileId="1BwNK2nAk1_EBPuCzFst3nI7jNnKKgbgV"; \
-    wget --save-cookies=/tmp/cookie "https://drive.google.com/uc?export=download&id=${fileId}" --output-document /tmp/g ; \
-    confirmId=`cat /tmp/g | grep -o "confirm=[^&]*" | sed 's/confirm=//'` ; \
-    cd /root && wget --load-cookies=/tmp/cookie --no-check-certificate "https://drive.google.com/uc?export=download&confirm=${confirmId}&id=$fileId" --output-document eclipse-java-photon-R-linux-gtk-x86_64.tar.gz ; \
-    tar -zxvf ./eclipse-java-photon-R-linux-gtk-x86_64.tar.gz
-RUN cd /dotfiles/ ;\
-    dbus-uuidgen > /etc/machine-id; \
-    USER=root ./eclim_2.8.0.bin    --yes    --eclipse=/root/eclipse/  --vimfile=/root/.vim/  --plugins=jdt,pydev; \
-    chmod -R 777 /root/eclipse/configuration 
-RUN npm install -g typescript
-RUN export PATH=$PATH:/usr/local/go/bin; \
-    yum -y install cmake python-devel; \
-    rm -rf ~/.vim/plugged/YouCompleteMe; \
-    git clone https://github.com/Valloric/YouCompleteMe.git ~/.vim/plugged/YouCompleteMe; \
-    cd ~/.vim/plugged/YouCompleteMe; \
-    git submodule update --init --recursive ; \
-    python2 ./install.py --clang-completer --gocode-completer --java-completer ;
-COPY include_tmp/___files/sudoers /etc/sudoers
-RUN sudo mkdir -p /root/.eclipse/ /root/.eclim/; \
-    sudo rm -rf /home/vim; sudo ln -sf /root /home/vim; sudo chmod -R 775 /root/; 
+    ./install.sh -i
+
 
 ENV BASH_ENV "/root/.bashrc"
 

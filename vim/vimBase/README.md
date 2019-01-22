@@ -4,8 +4,16 @@
 
 including vim8, eclim, YouCompleteMe, php, nodejs, java and golang
 
+## latest
+
+- vim 8.1.0757
+- java jdk 11
+- go 1.11.4
+- php 7.2
+
 ## vimBase:8
 
+- vim 8.1.0479
 - java 1.8
 - eclim
 - php 5.4
