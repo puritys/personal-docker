@@ -44,11 +44,21 @@ stop() {
 startDef() {
     docker_my_init
     stop
-    docker run  -d -ti --rm $port $volume --name $containerName $imageName /bin/bash
+    docker run  -dti --rm $port $volume --name $containerName $imageName /bin/bash
     #docker exec -d $containerName bash -c "sh /root/start.sh"
 }
 
 start() {
+    host=""
+    if [ "X" != "X$hostname" ]; then
+        host=" -h $hostname "
+    fi
+    docker_my_init
+    stop
+    docker run -ti $port $volume $host --name $containerName $imageName
+}
+
+myStart() {
     host=""
     if [ "X" != "X$hostname" ]; then
         host=" -h $hostname "

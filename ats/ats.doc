@@ -1,12 +1,13 @@
-include ../common/centos7.doc
+FROM centos:7.4.1708
 include ../common/centos_gcc.doc
 
-RUN yum install -y bzip2 openssl-devel tcl-devel
+RUN yum install -y bzip2 openssl-devel tcl-devel wget
 RUN wget http://apache.mirrors.ovh.net/ftp.apache.org/dist/trafficserver/trafficserver-7.1.5.tar.bz2
 RUN tar -jxvf trafficserver-7.1.5.tar.bz2; \
     cd trafficserver-7.1.5; \
     ./configure; \
-    gmake install;
+    gmake install; \
+    rm -rf trafficserver-7.1.5 /*.bz2 /tmp
 
 COPY files/start.sh     /root/
 COPY files/remap.sh     /root/
