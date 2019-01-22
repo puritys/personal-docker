@@ -4,7 +4,7 @@
 
 including vim8, eclim, YouCompleteMe, php, nodejs, java and golang
 
-## latest
+## latest (8.1)
 
 - vim 8.1.0757
 - java jdk 11
