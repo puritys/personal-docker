@@ -7,13 +7,23 @@ Quickstart
 ========
 
 - docker pull puritys/ats
-- docker run -dti -p 443:443 -h $(hostname)  -e ATS_REMAP="map / http://$(hostname):4080/" --name ats puritys/ats tail -f /dev/null
+- docker run -dti -p 443:443 -h $(hostname)  -e ATS_REMAP="map / http://$(hostname):4080/" --name ats puritys/ats
 
 Settings
 =======
 - REMAP: You can define ats remap by  setting env "ATS_REMAP"
 - Port:   You can change the port by setting env "ATS_SERVER_PORTS",   -e ATS_SERVER_PORTS="80 443:ssl"
 
+
+directory
+==========
+
+- log files: /usr/local/var/log/trafficserver
+- conf files: /usr/local/etc/trafficserver
+
+
+
+read log: docker exec -ti $container  tail -f /usr/local/var/log/trafficserver/squid.log
 
 Development
 ======

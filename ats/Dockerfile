@@ -18,12 +18,14 @@ COPY include_tmp/files/start.sh     /root/
 COPY include_tmp/files/remap.sh     /root/
 COPY include_tmp/files/records.sh   /root/
 COPY include_tmp/files/ssl_multicert.sh /root/
+COPY include_tmp/files/logging.sh /root/
+
 COPY include_tmp/files/cert.pem /usr/local/etc/trafficserver/
 COPY include_tmp/files/ip_allow.config /usr/local/etc/trafficserver/
 
 RUN chmod +x /root/start.sh
 ENV ATS_REMAP="map / http://127.0.0.1:8080/"
 ENV ATS_SERVER_PORTS="80 443:ssl"
-
+ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/bin/
 CMD ["/root/start.sh"]
 
