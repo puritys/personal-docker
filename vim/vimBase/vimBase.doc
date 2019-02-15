@@ -18,6 +18,7 @@ RUN yum install -y python-devel openssh-server
 RUN ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa; \
     passwd -d root;
 
+# vim profile --with-features=huge
 RUN cd /root ; \
     wget https://github.com/vim/vim/archive/v8.1.0757.tar.gz; \
     tar -zxvf v8.1.0757.tar.gz ; \
@@ -39,7 +40,11 @@ RUN cd /root; \
     tar -zxvf apache-maven-3.6.0-bin.tar.gz ; \
     rm *.gz ; \
     alternatives --install /usr/bin/mvn mvn /root/apache-maven-3.6.0/bin/mvn 2 ; \
-    alternatives --set mvn  /root/apache-maven-3.6.0/bin/mvn
+    alternatives --set mvn  /root/apache-maven-3.6.0/bin/mvn ; \
+    wget https://downloads.gradle.org/distributions/gradle-5.2.1-bin.zip ; \
+    unzip gradle-5.2.1-bin.zip ; \
+    rm gradle-5.2.1-bin.zip ; \
+    mv gradle-5.2.1 gradle
 
 # install php7
 RUN yum install epel-release yum-utils -y ; \
@@ -70,4 +75,4 @@ RUN git clone https://github.com/puritys/dotfiles.git; \
 
 
 ENV BASH_ENV "/root/.bashrc"
-
+ENV PATH "/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/root/gradle/bin"
