@@ -1,4 +1,4 @@
-from puritys/vimbase:8
+from puritys/vimbase:8.1
 
 # Update dotfiles
 RUN echo "update v26";
@@ -16,8 +16,8 @@ COPY files/pam.sshd /etc/pam.d/sshd
 COPY files/start.sh /root/start.sh
 COPY files/bash_customized /root/.bash_customized
 COPY files/bash_host       /root/.bash_host
-COPY files/startEclim.sh   /dotfiles/startEclim.sh
-COPY files/startEclim.sh   /root/startEclim.sh
+#COPY files/startEclim.sh   /dotfiles/startEclim.sh
+#COPY files/startEclim.sh   /root/startEclim.sh
 
 ENV BASH_ENV "/root/.bashrc"
 
