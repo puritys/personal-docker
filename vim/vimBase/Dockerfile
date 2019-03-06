@@ -1,6 +1,6 @@
 FROM centos:7.6.1810
 
-RUN yum install -y sudo wget telnet openssh-server vim git ncurses-libs ncurses-term screen man
+RUN yum install -y sudo wget telnet openssh-server vim git ncurses-libs ncurses-term screen man unzip
 RUN ldconfig
 
 RUN wget http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm
@@ -12,10 +12,9 @@ RUN yum upgrade  ncurses-libs ncurses-term ncurses-devel -y
 RUN yum install ntp -y ; \
     ntpdate -s time.stdtime.gov.tw
 
-RUN yum install -y python-devel openssh-server
+RUN yum install -y python-devel openssh-server xorg-x11-server-Xvfb
 RUN ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa; \
     passwd -d root;
-
 RUN cd /root ; \
     wget https://github.com/vim/vim/archive/v8.1.0757.tar.gz; \
     tar -zxvf v8.1.0757.tar.gz ; \
@@ -30,17 +29,23 @@ RUN cd /root; \
     cp jdk ;\
     alternatives --install /usr/bin/java java /root/jdk/bin/java  2 ; \
     alternatives --install /usr/bin/javac javac /root/jdk/bin/javac  2 ; \
+    alternatives --install /usr/bin/jar jar /root/jdk/bin/jar  2; \
+    alternatives --install /usr/bin/jlink jlink /root/jdk/bin/jlink  2; \
     cd /root ;\
     wget https://www-eu.apache.org/dist/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz ;\
     tar -zxvf apache-maven-3.6.0-bin.tar.gz ; \
     rm *.gz ; \
     alternatives --install /usr/bin/mvn mvn /root/apache-maven-3.6.0/bin/mvn 2 ; \
-    alternatives --set mvn  /root/apache-maven-3.6.0/bin/mvn
+    alternatives --set mvn  /root/apache-maven-3.6.0/bin/mvn ; \
+    wget https://downloads.gradle.org/distributions/gradle-5.2.1-bin.zip ; \
+    unzip gradle-5.2.1-bin.zip ; \
+    rm gradle-5.2.1-bin.zip ; \
+    mv gradle-5.2.1 gradle
 RUN yum install epel-release yum-utils -y ; \
     yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm -y ; \
     yum-config-manager --enable remi-php72 ; \
     yum install php php-common php-opcache php-mcrypt php-cli php-gd php-curl php-mysqlnd -y ;
-RUN yum install nodejs-6.14.3-1.el7 npm-3.10.10-1.6.14.3.1.el7 -y
+RUN yum install nodejs npm -y
 
 RUN wget https://dl.google.com/go/go1.11.4.linux-amd64.tar.gz; \
     tar -C /usr/local -zxf go1.11.4.linux-amd64.tar.gz;\
@@ -49,7 +54,15 @@ RUN wget https://dl.google.com/go/go1.11.4.linux-amd64.tar.gz; \
 RUN git clone https://github.com/puritys/dotfiles.git; \
     cd dotfiles; \
     ./install.sh -i
+RUN npm install -g typescript
+RUN export PATH=$PATH:/usr/local/go/bin; \
+    yum -y install cmake python-devel; \
+    rm -rf ~/.vim/plugged/YouCompleteMe; \
+    git clone https://github.com/Valloric/YouCompleteMe.git ~/.vim/plugged/YouCompleteMe; \
+    cd ~/.vim/plugged/YouCompleteMe; \
+    git submodule update --init --recursive ; \
+    python2 ./install.py --clang-completer --gocode-completer --java-completer --js-completer;
 
 
 ENV BASH_ENV "/root/.bashrc"
-
+ENV PATH "/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/root/gradle/bin"
