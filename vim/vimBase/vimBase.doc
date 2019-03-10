@@ -6,7 +6,7 @@ RUN ldconfig
 RUN wget http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm
 RUN rpm -ivh epel-release-7-11.noarch.rpm
 
-RUN yum install gcc gcc-c++ make cmake -y
+RUN yum install gcc gcc-c++ clang make cmake -y
 RUN yum install ncurses-devel -y
 RUN yum upgrade  ncurses-libs ncurses-term ncurses-devel -y
 
@@ -46,7 +46,7 @@ RUN cd /root; \
     wget https://downloads.gradle.org/distributions/gradle-5.2.1-bin.zip ; \
     unzip gradle-5.2.1-bin.zip ; \
     rm gradle-5.2.1-bin.zip ; \
-    mv gradle-5.2.1 gradle
+    mv gradle-5.2.1 /usr/local/gradle
 
 # install php7
 RUN yum install epel-release yum-utils -y ; \
@@ -77,4 +77,4 @@ RUN export PATH=$PATH:/usr/local/go/bin; \
 
 
 ENV BASH_ENV "/root/.bashrc"
-ENV PATH "/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/root/gradle/bin"
+ENV PATH "/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/usr/local/gradle/bin"
