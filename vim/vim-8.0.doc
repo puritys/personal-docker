@@ -9,9 +9,8 @@ RUN wget https://downloads.gradle.org/distributions/gradle-5.2.1-bin.zip ; \
     mv gradle-5.2.1 /usr/local/gradle
 
 # Update dotfiles
-RUN echo "update v31";
+RUN echo "update v32";
 COPY files/vimrc_customized /root/.vimrc_customized 
-RUN yum install unzip -y
 RUN cd dotfiles; \
     rm -rf /root/.vim/JavaImp /root/openjdk/; \
     git pull; \

@@ -2,7 +2,7 @@
 
 - https://hub.docker.com/r/puritys/vim
 - You could find vim settings from here https://github.com/puritys/dotfiles
-- Support language: Java / PHP / Javascript / golang / C
+- Support language: Java / PHP / Javascript / golang / C / CPP
 
 # Quick Start
 - docker pull puritys/vim:stable
@@ -126,7 +126,7 @@ I use Eclim for java synax check and youCompleteMe for autocomplete. You have to
 - Start gradle project: `gradle eclipse`, execute this command then create a project.
 - Update Maven Or gradle .classpath : `ecliUpdate`, execute this alias command on terminal.
     - for Maven project: You can save the pom.xml to trigger eclipse update .classpath.
-- ``:ProjectImport ./``
+- You use `:ProjectImport ./ ` command to import project after restart container.
 
 ## Quick Command
 
