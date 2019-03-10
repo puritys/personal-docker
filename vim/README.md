@@ -125,7 +125,8 @@ I use Eclim for java synax check and youCompleteMe for autocomplete. You have to
 - Start Maven Project: Just use last command to create project   will be fine.
 - Start gradle project: `gradle eclipse`, execute this command then create a project.
 - Update Maven Or gradle .classpath : `ecliUpdate`, execute this alias command on terminal.
-    - for Maven project: You can save the pom.xml to trigger eclipse update .classpath.
+    - for Maven project: You can save the pom.xml to trigger eclipse update .classpath and libraries.
+    - for Gradle proecjt: You can save the .classpath to trigger eclipse update libraries.
 - You use `:ProjectImport ./ ` command to import project after restart container.
 
 ## Quick Command
