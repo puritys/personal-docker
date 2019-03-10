@@ -1,7 +1,7 @@
 from puritys/vimbase:8.1
 
 # Update dotfiles
-RUN echo "update v26";
+RUN echo "update v29";
 COPY files/vimrc_customized /root/.vimrc_customized 
 RUN yum install unzip -y
 RUN cd dotfiles; \
@@ -20,4 +20,4 @@ COPY files/bash_host       /root/.bash_host
 #COPY files/startEclim.sh   /root/startEclim.sh
 
 ENV BASH_ENV "/root/.bashrc"
-
+ENV PATH "/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/usr/local/gradle/bin"

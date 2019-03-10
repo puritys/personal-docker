@@ -1,7 +1,15 @@
 from puritys/vimbase:8
 
+RUN yum install unzip clang -y
+
+# install gradle
+RUN wget https://downloads.gradle.org/distributions/gradle-5.2.1-bin.zip ; \
+    unzip gradle-5.2.1-bin.zip ; \
+    rm gradle-5.2.1-bin.zip ; \
+    mv gradle-5.2.1 /usr/local/gradle
+
 # Update dotfiles
-RUN echo "update v28";
+RUN echo "update v31";
 COPY files/vimrc_customized /root/.vimrc_customized 
 RUN yum install unzip -y
 RUN cd dotfiles; \
@@ -25,4 +33,4 @@ COPY files/startEclim.sh   /dotfiles/startEclim.sh
 COPY files/startEclim.sh   /root/startEclim.sh
 
 ENV BASH_ENV "/root/.bashrc"
-
+ENV PATH "/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/usr/local/gradle/bin"

@@ -2,13 +2,19 @@
 
 - https://hub.docker.com/r/puritys/vim
 - You could find vim settings from here https://github.com/puritys/dotfiles
-- Support language: Java / PHP / Javascript / golang
+- Support language: Java / PHP / Javascript / golang / C
 
 # Quick Start
-- docker pull puritys/vim
+- docker pull puritys/vim:stable
 - docker run -ti -v $(pwd):/src  -w /src puritys/vim vim xxx
 
 ![vim example](https://www.puritys.me/filemanage/blog_files/docker_vim.png)
+
+## Font
+
+You could install my customized font combined SFMono and Powerline for better experience. 
+
+- https://github.com/puritys/dotfiles/blob/master/assets/CustFont-SFMono-Powerline.woff2
 
 ## Environments
 
@@ -30,6 +36,9 @@ The docker image support the following environments for customized vim.
 *   VIM_PLUGIN_YouCompleteMe
 
     Enable YouCompleteMe, example: -e VIM_PLUGIN_YouCompleteMe=1
+
+* VIM_PLUGIN_YouCompleteMe_ENABLE_SYNTAX
+    Enable YouCompleteMe java syntax, the default value is "0".
 
 ## Directly edit file from docker
 
@@ -107,9 +116,23 @@ function vim_start() {
 
 ```
 
-## Fonts
-- You could install the font SFMono + Powerline
-  - https://github.com/puritys/dotfiles/blob/master/assets/CustFont-SFMono-Powerline.woff2
+## Java
+
+I use Eclim for java synax check and youCompleteMe for autocomplete. You have to create a project once if you want to see the synax error UI.
+
+
+- Create Eclipse Project:  `:ProjectCreate ./ -n java` , execute this command inside vim.
+- Start Maven Project: Just use last command to create project   will be fine.
+- Start gradle project: `gradle eclipse`, execute this command then create a project.
+- Update Maven Or gradle .classpath : `ecliUpdate`, execute this alias command on terminal.
+    - for Maven project: You can save the pom.xml to trigger eclipse update .classpath.
+- ``:ProjectImport ./``
+
+## Quick Command
+
+- `sc`: syntax check
+- `align|` use "|" to align all field
+
 
 
 ## Vim Plugins
