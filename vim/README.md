@@ -40,6 +40,9 @@ The docker image support the following environments for customized vim.
 * VIM_PLUGIN_YouCompleteMe_ENABLE_SYNTAX
     Enable YouCompleteMe java syntax, the default value is "0".
 
+* VIM_PLUGIN_YouCompleteMe_auto_trigger
+    Enable / Disable ycm_auto_trigger
+
 ## Directly edit file from docker
 
 docker run -ti -v $(pwd):/src  -w /src puritys/vim vim backup.sh
