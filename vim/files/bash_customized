@@ -33,7 +33,9 @@ fi
 if [ "x" == "x$VIM_PLUGIN_YouCompleteMe_ENABLE_SYNTAX" ]; then
     VIM_PLUGIN_YouCompleteMe_ENABLE_SYNTAX=1
 fi
-
+if [ "x" == "x$VIM_PLUGIN_YouCompleteMe_auto_trigger" ]; then
+    VIM_PLUGIN_YouCompleteMe_auto_trigger=1
+fi
 if [ "x" == "x$VIM_PLUGIN_Eclim" ]; then
     VIM_PLUGIN_Eclim=0
 fi
@@ -43,13 +45,14 @@ plugins="let g:enablePluginLightLine = $VIM_PLUGIN_LightLine  \n"
 plugins="$plugins let g:enablePluginYouCompleteMe = $VIM_PLUGIN_YouCompleteMe  \n"
 plugins="$plugins let g:enablePluginYouCompleteMeSyntax =  $VIM_PLUGIN_YouCompleteMe_ENABLE_SYNTAX  \n"
 plugins="$plugins let g:enablePluginEclim =  $VIM_PLUGIN_Eclim  \n"
+plugins="$plugins let g:ycm_auto_trigger =  $VIM_PLUGIN_YouCompleteMe_auto_trigger  \n"
 
 echo -e $plugins > ~/.vimrc_customized
 
 
 
 # set environment for ssh login
-env="VIM_THEME=$VIM_THEME\nVIMRC_CUSTOMIZED=$VIMRC_CUSTOMIZED\nVIM_PLUGIN_LightLine=$VIM_PLUGIN_LightLine\nVIM_PLUGIN_YouCompleteMe=$VIM_PLUGIN_YouCompleteMe\nVIM_PLUGIN_Eclim=$VIM_PLUGIN_Eclim\nVIM_PLUGIN_YouCompleteMe_ENABLE_SYNTAX=$VIM_PLUGIN_YouCompleteMe_ENABLE_SYNTAX"
+env="VIM_THEME=$VIM_THEME\nVIMRC_CUSTOMIZED=$VIMRC_CUSTOMIZED\nVIM_PLUGIN_LightLine=$VIM_PLUGIN_LightLine\nVIM_PLUGIN_YouCompleteMe=$VIM_PLUGIN_YouCompleteMe\nVIM_PLUGIN_Eclim=$VIM_PLUGIN_Eclim\nVIM_PLUGIN_YouCompleteMe_ENABLE_SYNTAX=$VIM_PLUGIN_YouCompleteMe_ENABLE_SYNTAX\nVIM_PLUGIN_YouCompleteMe_auto_trigger=$VIM_PLUGIN_YouCompleteMe_auto_trigger"
 echo -e $env > /root/.ssh/environment
 
 #if [ "x" != "x$USER" ]; then
