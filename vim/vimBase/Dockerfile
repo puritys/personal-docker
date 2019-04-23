@@ -6,7 +6,7 @@ RUN ldconfig
 RUN wget http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm
 RUN rpm -ivh epel-release-7-11.noarch.rpm
 
-RUN yum install gcc gcc-c++ make cmake -y
+RUN yum install gcc gcc-c++ clang make cmake -y
 RUN yum install ncurses-devel -y
 RUN yum upgrade  ncurses-libs ncurses-term ncurses-devel -y
 RUN yum install ntp -y ; \
@@ -40,13 +40,12 @@ RUN cd /root; \
     wget https://downloads.gradle.org/distributions/gradle-5.2.1-bin.zip ; \
     unzip gradle-5.2.1-bin.zip ; \
     rm gradle-5.2.1-bin.zip ; \
-    mv gradle-5.2.1 gradle
+    mv gradle-5.2.1 /usr/local/gradle
 RUN yum install epel-release yum-utils -y ; \
     yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm -y ; \
     yum-config-manager --enable remi-php72 ; \
     yum install php php-common php-opcache php-mcrypt php-cli php-gd php-curl php-mysqlnd -y ;
 RUN yum install nodejs npm -y
-
 RUN wget https://dl.google.com/go/go1.11.4.linux-amd64.tar.gz; \
     tar -C /usr/local -zxf go1.11.4.linux-amd64.tar.gz;\
     rm go*.linux-amd64.tar.gz
@@ -65,4 +64,4 @@ RUN export PATH=$PATH:/usr/local/go/bin; \
 
 
 ENV BASH_ENV "/root/.bashrc"
-ENV PATH "/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/root/gradle/bin"
+ENV PATH "/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/usr/local/gradle/bin"

@@ -1,13 +1,13 @@
 from puritys/vimbase:8.1
-RUN echo "update v26";
+RUN echo "update v33";
 COPY include_tmp/files/vimrc_customized /root/.vimrc_customized 
 RUN yum install unzip -y
 RUN cd dotfiles; \
-    rm -rf /root/.vim/JavaImp /root/openjdk/; \
     git pull; \
     cp vim/javaPlugin/google_checks.xml /usr/local/etc/; \
     cp vim/javaPlugin/checkstyle.xml /usr/local/etc/ ; \
-    ./install.sh -p --ctags
+    ./install.sh -p --ctags --javaImp
+
 
 COPY include_tmp/files/sshd_config /etc/ssh/sshd_config
 COPY include_tmp/files/pam.sshd /etc/pam.d/sshd
@@ -16,4 +16,4 @@ COPY include_tmp/files/bash_customized /root/.bash_customized
 COPY include_tmp/files/bash_host       /root/.bash_host
 
 ENV BASH_ENV "/root/.bashrc"
-
+ENV PATH "/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/usr/local/gradle/bin"

@@ -57,6 +57,7 @@ RUN yum install epel-release yum-utils -y ; \
 # install node
 RUN yum install nodejs npm -y
 
+# install go
 RUN wget https://dl.google.com/go/go1.11.4.linux-amd64.tar.gz; \
     tar -C /usr/local -zxf go1.11.4.linux-amd64.tar.gz;\
     rm go*.linux-amd64.tar.gz

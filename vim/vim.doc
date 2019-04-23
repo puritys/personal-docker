@@ -1,15 +1,16 @@
 from puritys/vimbase:8.1
 
 # Update dotfiles
-RUN echo "update v29";
+RUN echo "update v33";
 COPY files/vimrc_customized /root/.vimrc_customized 
 RUN yum install unzip -y
 RUN cd dotfiles; \
-    rm -rf /root/.vim/JavaImp /root/openjdk/; \
     git pull; \
     cp vim/javaPlugin/google_checks.xml /usr/local/etc/; \
     cp vim/javaPlugin/checkstyle.xml /usr/local/etc/ ; \
-    ./install.sh -p --ctags
+    ./install.sh -p --ctags --javaImp
+#    rm -rf /root/.vim/JavaImp /root/openjdk/;
+
 
 COPY files/sshd_config /etc/ssh/sshd_config
 COPY files/pam.sshd /etc/pam.d/sshd
