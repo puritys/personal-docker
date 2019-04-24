@@ -10,7 +10,7 @@ dockername=vim
 imageName=$account/$dockername
 containerName=$account-$dockername
 getDefaultVolume
-volume="-v /:/src -v ~/docker_tmp/.bash_history:/root/.bash_history -v ~/:/puritys "
+volume="-v /:/src -v /home/$account/docker_tmp/.bash_history:/root/.bash_history -v /home/$account/:/puritys "
 port="-p 39901:22"
 
 help () {

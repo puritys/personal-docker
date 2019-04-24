@@ -1,5 +1,5 @@
 from puritys/vimbase:8.1
-RUN echo "update v33";
+RUN echo "update v37";
 COPY include_tmp/files/vimrc_customized /root/.vimrc_customized 
 RUN yum install unzip -y
 RUN cd dotfiles; \

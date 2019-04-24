@@ -25,7 +25,7 @@ fi
 # Build vimrc customized
 # ======================
 if [ "x" == "x$VIM_PLUGIN_LightLine" ]; then
-    VIM_PLUGIN_lightline=1
+    VIM_PLUGIN_LightLine=1
 fi
 if [ "x" == "x$VIM_PLUGIN_YouCompleteMe" ]; then
     VIM_PLUGIN_YouCompleteMe=1

@@ -1,4 +1,4 @@
-# A docker image for vim-8
+# A docker image with vim 8
 
 - https://hub.docker.com/r/puritys/vim
 - You could find vim settings from here https://github.com/puritys/dotfiles
@@ -20,22 +20,23 @@ You could install my customized font combined SFMono and Powerline for better ex
 
 The docker image support the following environments for customized vim.
 
-*   VIMRC
+* VIMRC
 
     customized .vimrc , example :  -e VIMRC=/src/.vimrc
 
-*   VIM_THEME
+* VIM_THEME
 
     change theme , example :  -e VIM_THEME=dracula ,    options: dracula, seoul256, seoul256-light
 
-*   VIM_PLUGIN_Eclim (only support in image vim:8.0)
+* VIM_PLUGIN_Eclim (only support in image vim:8.0)
 
     Enable eclim I love eclim more than YouCompleteMe and ale, example: -e VIM_PLUGIN_Eclim=1
     Maunal start eclim: `cd /dotfiles; sudo -u vim ./startEclim.sh `
 
-*   VIM_PLUGIN_YouCompleteMe
+* VIM_PLUGIN_YouCompleteMe
 
     Enable YouCompleteMe, example: -e VIM_PLUGIN_YouCompleteMe=1
+    YouCompleteMe will be loaded when switch to insert mode.
 
 * VIM_PLUGIN_YouCompleteMe_ENABLE_SYNTAX
     Enable YouCompleteMe java syntax, the default value is "0".
