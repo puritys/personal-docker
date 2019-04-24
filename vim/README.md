@@ -120,24 +120,13 @@ function vim_start() {
 
 ```
 
-## Java
-
-I use Eclim for java synax check and youCompleteMe for autocomplete. You have to create a project once if you want to see the synax error UI.
-
-
-- Create Eclipse Project:  `:ProjectCreate ./ -n java` , execute this command inside vim.
-- Start Maven Project: Just use last command to create project   will be fine.
-- Start gradle project: `gradle eclipse`, execute this command then create a project.
-- Update Maven Or gradle .classpath : `ecliUpdate`, execute this alias command on terminal.
-    - for Maven project: You can save the pom.xml to trigger eclipse update .classpath and libraries.
-    - for Gradle proecjt: You can save the .classpath to trigger eclipse update libraries.
-- You use `:ProjectImport ./ ` command to import project after restart container.
-
 ## Quick Command
 
 - `sc`: syntax check
-- `align|` use "|" to align all field
-
+- `align|<Enter>`: use "|" to align all field, Use viual mode to select colums then type 'aling?<Enter>' to align by '?'
+- `ar`: async run
+- `Ctrl+p`: fuzzle find files
+- `Ctrl+e`: Execute this file
 
 
 ## Vim Plugins
@@ -164,5 +153,18 @@ Default enabled pluings: fzf, fzf-session, incsearch, snipmate, indentLine, YouC
 | Yggdroot/indentLine        |               | Display indent line                       |
 | vim-scripts/PDV--phpDocumentor-for-Vim| doc | generate php document |
 |w0rp/ale|| Asynchronous Linting Engine|
-    
+
+
+## Java (vim:8.0 eclim)
+
+I use Eclim for java synax check and youCompleteMe for autocomplete. You have to create a project once if you want to see the synax error UI.
+
+
+- Create Eclipse Project:  `:ProjectCreate ./ -n java` , execute this command inside vim.
+- Start Maven Project: Just use last command to create project   will be fine.
+- Start gradle project: `gradle eclipse`, execute this command then create a project.
+- Update Maven Or gradle .classpath : `ecliUpdate`, execute this alias command on terminal.
+    - for Maven project: You can save the pom.xml to trigger eclipse update .classpath and libraries.
+    - for Gradle proecjt: You can save the .classpath to trigger eclipse update libraries.
+- You use `:ProjectImport ./ ` command to import project after restart container.
 
