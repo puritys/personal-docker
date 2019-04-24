@@ -34,9 +34,9 @@ The docker image support the following environments for customized vim.
     Maunal start eclim: `cd /dotfiles; sudo -u vim ./startEclim.sh `
 
 * VIM_PLUGIN_YouCompleteMe
-
-    Enable YouCompleteMe, example: -e VIM_PLUGIN_YouCompleteMe=1
-    YouCompleteMe will be loaded when switch to insert mode.
+  * Enable YouCompleteMe, example: -e VIM_PLUGIN_YouCompleteMe=1
+  * YouCompleteMe will be loaded when switch to insert mode.
+  * To remove .project and .classpath if you used eclim to create project before.
 
 * VIM_PLUGIN_YouCompleteMe_ENABLE_SYNTAX
     Enable YouCompleteMe java syntax, the default value is "0".
@@ -123,11 +123,11 @@ function vim_start() {
 ## Quick Command
 
 - `sc`: syntax check
-- `align|<Enter>`: use "|" to align all field, Use viual mode to select colums then type 'aling?<Enter>' to align by '?'
+- `align|<Enter>`: use "|" to align all field, Use visual mode to select colums then type 'aling?<Enter>' to align by '?'
 - `ar`: async run
 - `Ctrl+p`: fuzzle find files
 - `Ctrl+e`: Execute this file
-
+- `Ctrl+g`: Goto defined function
 
 ## Vim Plugins
 
