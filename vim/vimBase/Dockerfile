@@ -16,9 +16,9 @@ RUN yum install -y python-devel openssh-server xorg-x11-server-Xvfb
 RUN ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa; \
     passwd -d root;
 RUN cd /root ; \
-    wget https://github.com/vim/vim/archive/v8.1.0757.tar.gz; \
-    tar -zxvf v8.1.0757.tar.gz ; \
-    mv /root/vim-8.1.0757 /root/vim; \
+    wget https://github.com/vim/vim/archive/v8.1.1317.tar.gz; \
+    tar -zxvf v8.1.1317.tar.gz ; \
+    mv /root/vim-8.1.1317 /root/vim; \
     cd /root/vim ; ./configure --enable-multibyte --enable-pythoninterp=yes --prefix=/usr; \
     cd /root/vim ; gmake ; gmake install ; cd /; rm -rf /root/vim* /root/v8*.gz
 RUN cd /root; \
@@ -61,6 +61,19 @@ RUN export PATH=$PATH:/usr/local/go/bin; \
     cd ~/.vim/plugged/YouCompleteMe; \
     git submodule update --init --recursive ; \
     python2 ./install.py --clang-completer --gocode-completer --java-completer --js-completer;
+RUN wget https://github.com/eclipse/eclipse.jdt.ls/archive/v0.38.0.tar.gz ; \
+    tar -zxvf v0.38.0.tar.gz ; mv eclipse.jdt.ls-0.38.0 eclipse.jdt.ls; \ 
+    cd eclipse.jdt.ls; \
+     ./mvnw clean verify -Dmaven.test.skip=true ;
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" ; \
+    php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" ; \
+    php composer-setup.php; \
+    php -r "unlink('composer-setup.php');" ; \
+    mv composer.phar /usr/local/bin/composer
+RUN cd /root; \
+    echo -e "{\"minimum-stability\": \"dev\",\"prefer-stable\": true}" > composer.json ; \
+    composer require felixfbecker/language-server ; \
+    composer run-script --working-dir=vendor/felixfbecker/language-server parse-stubs
 
 
 ENV BASH_ENV "/root/.bashrc"
