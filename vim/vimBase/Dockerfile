@@ -61,7 +61,8 @@ RUN export PATH=$PATH:/usr/local/go/bin; \
     cd ~/.vim/plugged/YouCompleteMe; \
     git submodule update --init --recursive ; \
     python2 ./install.py --clang-completer --gocode-completer --java-completer --js-completer;
-RUN wget https://github.com/eclipse/eclipse.jdt.ls/archive/v0.38.0.tar.gz ; \
+RUN cd root ; \
+    wget https://github.com/eclipse/eclipse.jdt.ls/archive/v0.38.0.tar.gz ; \
     tar -zxvf v0.38.0.tar.gz ; mv eclipse.jdt.ls-0.38.0 eclipse.jdt.ls; \ 
     cd eclipse.jdt.ls; \
      ./mvnw clean verify -Dmaven.test.skip=true ;
@@ -74,6 +75,10 @@ RUN cd /root; \
     echo -e "{\"minimum-stability\": \"dev\",\"prefer-stable\": true}" > composer.json ; \
     composer require felixfbecker/language-server ; \
     composer run-script --working-dir=vendor/felixfbecker/language-server parse-stubs
+RUN sudo yum install pylint -y
+RUN echo "version 1";\
+    cd /dotfiles; git pull; \
+    ./install.sh -i
 
 
 ENV BASH_ENV "/root/.bashrc"

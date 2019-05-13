@@ -5,8 +5,8 @@
 
 including vim8, eclim, YouCompleteMe, php, nodejs, java and golang
 
-## latest (vimbase:8.1.1)
 
+## latest (vimbase:8.1)
 - vim 8.1.1317
 - java jdk 11
 - go 1.11.4
@@ -17,17 +17,6 @@ including vim8, eclim, YouCompleteMe, php, nodejs, java and golang
 - java language server: eclipse.jdt.ls - https://github.com/eclipse/eclipse.jdt.ls
 - vim plugin: YouCompleteMe: https://github.com/Valloric/YouCompleteMe 
 - php language server : https://github.com/felixfbecker/php-language-server
-
-## vimbase:8.1
-
-- vim 8.1.0757
-- java jdk 11
-- go 1.11.4
-- php 7.2
-- clang
-- gradle
-- maven
-- vim plugin: YouCompleteMe
 
 ## vimbase:8
 
