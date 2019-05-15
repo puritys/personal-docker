@@ -44,6 +44,13 @@ The docker image support the following environments for customized vim.
 * VIM_PLUGIN_YouCompleteMe_auto_trigger
     Enable / Disable ycm_auto_trigger
 
+* VIM_PLUGIN_ALE
+  * Default will enable ALE lint, you can disable it by `-e VIM_PLUGIN_ALE=0`
+  * I suggest you to use ALE instead of YouCompletMe.
+
+* VIM_PLUGIN_ALE_AUTO_COMPLETE
+  * Default will enable ALE Auto Complete
+
 ## Directly edit file from docker
 
 docker run -ti -v $(pwd):/src  -w /src puritys/vim vim backup.sh
@@ -128,6 +135,7 @@ function vim_start() {
 - `Ctrl+p`: fuzzle find files
 - `Ctrl+e`: Execute this file
 - `Ctrl+g`: Goto defined function
+- `Ctrl+d`: Show Auto Complete
 
 ## Vim Plugins
 

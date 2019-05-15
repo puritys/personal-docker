@@ -11,6 +11,7 @@ including vim8, eclim, YouCompleteMe, php, nodejs, java and golang
 - java jdk 11
 - go 1.11.4
 - php 7.2
+- pylint
 - clang
 - gradle
 - maven
