@@ -60,7 +60,7 @@ echo -e $plugins > ~/.vimrc_customized
 
 
 # set environment for ssh login
-env="VIM_THEME=$VIM_THEME\nVIMRC_CUSTOMIZED=$VIMRC_CUSTOMIZED\nVIM_PLUGIN_LightLine=$VIM_PLUGIN_LightLine\nVIM_PLUGIN_YouCompleteMe=$VIM_PLUGIN_YouCompleteMe\nVIM_PLUGIN_Eclim=$VIM_PLUGIN_Eclim\nVIM_PLUGIN_YouCompleteMe_ENABLE_SYNTAX=$VIM_PLUGIN_YouCompleteMe_ENABLE_SYNTAX\nVIM_PLUGIN_YouCompleteMe_auto_trigger=$VIM_PLUGIN_YouCompleteMe_auto_trigger"
+env="VIM_THEME=$VIM_THEME\nVIMRC_CUSTOMIZED=$VIMRC_CUSTOMIZED\nVIM_PLUGIN_LightLine=$VIM_PLUGIN_LightLine\nVIM_PLUGIN_YouCompleteMe=$VIM_PLUGIN_YouCompleteMe\nVIM_PLUGIN_Eclim=$VIM_PLUGIN_Eclim\nVIM_PLUGIN_YouCompleteMe_ENABLE_SYNTAX=$VIM_PLUGIN_YouCompleteMe_ENABLE_SYNTAX\nVIM_PLUGIN_YouCompleteMe_auto_trigger=$VIM_PLUGIN_YouCompleteMe_auto_trigger\nVIM_PLUGIN_ALE=$VIM_PLUGIN_ALE\nVIM_PLUGIN_ALE_AUTO_COMPLETE=$VIM_PLUGIN_ALE_AUTO_COMPLETE"
 echo -e $env > /root/.ssh/environment
 
 #if [ "x" != "x$USER" ]; then
