@@ -21,6 +21,7 @@ RUN cd /root ; \
     mv /root/vim-8.1.1317 /root/vim; \
     cd /root/vim ; ./configure --enable-multibyte --enable-pythoninterp=yes --prefix=/usr; \
     cd /root/vim ; gmake ; gmake install ; cd /; rm -rf /root/vim* /root/v8*.gz
+RUN yum install nodejs npm -y
 RUN cd /root; \
     wget https://download.java.net/java/GA/jdk11/13/GPL/openjdk-11.0.1_linux-x64_bin.tar.gz ;\
     tar -zxvf openjdk-11.0.1_linux-x64_bin.tar.gz; \
@@ -41,11 +42,20 @@ RUN cd /root; \
     unzip gradle-5.2.1-bin.zip ; \
     rm gradle-5.2.1-bin.zip ; \
     mv gradle-5.2.1 /usr/local/gradle
+RUN sudo yum install pylint -y
 RUN yum install epel-release yum-utils -y ; \
     yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm -y ; \
     yum-config-manager --enable remi-php72 ; \
     yum install php php-common php-opcache php-mcrypt php-cli php-gd php-curl php-mysqlnd -y ;
-RUN yum install nodejs npm -y
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" ; \
+    php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" ; \
+    php composer-setup.php; \
+    php -r "unlink('composer-setup.php');" ; \
+    mv composer.phar /usr/local/bin/composer
+RUN cd /root; \
+    echo -e "{\"minimum-stability\": \"dev\",\"prefer-stable\": true}" > composer.json ; \
+    composer require felixfbecker/language-server ; \
+    composer run-script --working-dir=vendor/felixfbecker/language-server parse-stubs
 RUN wget https://dl.google.com/go/go1.11.4.linux-amd64.tar.gz; \
     tar -C /usr/local -zxf go1.11.4.linux-amd64.tar.gz;\
     rm go*.linux-amd64.tar.gz
@@ -61,25 +71,15 @@ RUN export PATH=$PATH:/usr/local/go/bin; \
     cd ~/.vim/plugged/YouCompleteMe; \
     git submodule update --init --recursive ; \
     python2 ./install.py --clang-completer --gocode-completer --java-completer --js-completer;
+COPY include_tmp/files/eclipse.jdt.ls-0.39.0.tar.gz /root/
 RUN cd root ; \
-    wget https://github.com/eclipse/eclipse.jdt.ls/archive/v0.38.0.tar.gz ; \
-    tar -zxvf v0.38.0.tar.gz ; mv eclipse.jdt.ls-0.38.0 eclipse.jdt.ls; \ 
-    cd eclipse.jdt.ls; \
-     ./mvnw clean verify -Dmaven.test.skip=true ;
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" ; \
-    php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" ; \
-    php composer-setup.php; \
-    php -r "unlink('composer-setup.php');" ; \
-    mv composer.phar /usr/local/bin/composer
-RUN cd /root; \
-    echo -e "{\"minimum-stability\": \"dev\",\"prefer-stable\": true}" > composer.json ; \
-    composer require felixfbecker/language-server ; \
-    composer run-script --working-dir=vendor/felixfbecker/language-server parse-stubs
-RUN sudo yum install pylint -y
-RUN echo "version 1";\
-    cd /dotfiles; git pull; \
+    tar -zxvf eclipse.jdt.ls-0.39.0.tar.gz; \
+    mv  Users/puritys/eclipse.jdt.ls/ /root/; \
+    rm -rf Users eclipse.jdt.ls*.gz;
+RUN echo "v1"; \
+    cd dotfiles; \
+    git pull; \
     ./install.sh -i
-
 
 ENV BASH_ENV "/root/.bashrc"
 ENV PATH "/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/usr/local/gradle/bin"
