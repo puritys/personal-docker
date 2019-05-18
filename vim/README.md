@@ -12,9 +12,9 @@
 
 ## Font
 
-You could install my customized font combined SFMono and Powerline for better experience. 
+You could install my customized font combined SFMono and Powerline for better UI display. 
 
-- https://github.com/puritys/dotfiles/blob/master/assets/CustFont-SFMono-Powerline.woff2
+- https://github.com/puritys/dotfiles/blob/master/assets/CustFont-SFMono-Powerline.otf
 
 ## Environments
 
