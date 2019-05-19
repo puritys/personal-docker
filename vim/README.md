@@ -14,7 +14,9 @@
 
 You could install my customized font combined SFMono and Powerline for better UI display. 
 
-- https://github.com/puritys/dotfiles/blob/master/assets/CustFont-SFMono-Powerline.otf
+https://github.com/puritys/dotfiles/blob/master/assets/CustSFMono-Regular.otf
+https://github.com/puritys/dotfiles/blob/master/assets/CustSFMonoPowerline-Regular.otf
+
 
 ## Environments
 
