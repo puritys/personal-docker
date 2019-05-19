@@ -20,6 +20,22 @@ if [ "x" != "x$VIM_THEME" ] && [ ! -f "/tmp/first_setenv" ]; then
     sudo sed "s/^colors [a-z0-9A-Z_-]*/colors $VIM_THEME/" -i ~/.vimrc_plugins
 fi
 
+declare -a custEnv
+custEnvFile="/root/.custEnv"
+custEnvList="enableCustFont"
+custEnvList=(${custEnvList// / });
+custEnv["enableCustFont"]=0
+if [ ! -z $CUST_FONT ]; then
+    custEnv["enableCustFont"]=1
+fi
+
+content=""
+for key in "${custEnvList[@]}"
+do
+    content="\n$key=${custEnv[$key]}"
+done
+echo -e $content > $custEnvFile
+
 
 # ======================
 # Build vimrc customized
@@ -60,7 +76,7 @@ echo -e $plugins > ~/.vimrc_customized
 
 
 # set environment for ssh login
-env="VIM_THEME=$VIM_THEME\nVIMRC_CUSTOMIZED=$VIMRC_CUSTOMIZED\nVIM_PLUGIN_LightLine=$VIM_PLUGIN_LightLine\nVIM_PLUGIN_YouCompleteMe=$VIM_PLUGIN_YouCompleteMe\nVIM_PLUGIN_Eclim=$VIM_PLUGIN_Eclim\nVIM_PLUGIN_YouCompleteMe_ENABLE_SYNTAX=$VIM_PLUGIN_YouCompleteMe_ENABLE_SYNTAX\nVIM_PLUGIN_YouCompleteMe_auto_trigger=$VIM_PLUGIN_YouCompleteMe_auto_trigger\nVIM_PLUGIN_ALE=$VIM_PLUGIN_ALE\nVIM_PLUGIN_ALE_AUTO_COMPLETE=$VIM_PLUGIN_ALE_AUTO_COMPLETE"
+env="VIM_THEME=$VIM_THEME\nVIMRC_CUSTOMIZED=$VIMRC_CUSTOMIZED\nVIM_PLUGIN_LightLine=$VIM_PLUGIN_LightLine\nVIM_PLUGIN_YouCompleteMe=$VIM_PLUGIN_YouCompleteMe\nVIM_PLUGIN_Eclim=$VIM_PLUGIN_Eclim\nVIM_PLUGIN_YouCompleteMe_ENABLE_SYNTAX=$VIM_PLUGIN_YouCompleteMe_ENABLE_SYNTAX\nVIM_PLUGIN_YouCompleteMe_auto_trigger=$VIM_PLUGIN_YouCompleteMe_auto_trigger\nVIM_PLUGIN_ALE=$VIM_PLUGIN_ALE\nVIM_PLUGIN_ALE_AUTO_COMPLETE=$VIM_PLUGIN_ALE_AUTO_COMPLETE\nCUST_FONT=$CUST_FONT"
 echo -e $env > /root/.ssh/environment
 
 #if [ "x" != "x$USER" ]; then

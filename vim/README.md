@@ -10,13 +10,6 @@
 
 ![vim example](https://www.puritys.me/filemanage/blog_files/docker_vim.png)
 
-## Font
-
-You could install my customized font combined SFMono and Powerline for better UI display. 
-
-https://github.com/puritys/dotfiles/blob/master/assets/CustSFMono-Regular.otf
-https://github.com/puritys/dotfiles/blob/master/assets/CustSFMonoPowerline-Regular.otf
-
 
 ## Environments
 
@@ -52,6 +45,12 @@ The docker image support the following environments for customized vim.
 
 * VIM_PLUGIN_ALE_AUTO_COMPLETE
   * Default will enable ALE Auto Complete
+
+* CUST_FONT: Use "Cust SF Mono" and "Cust SF Mono Powerline" fonts, you have to install the following fonts first.
+    `-e CUST_FONT=1`
+    * https://github.com/puritys/dotfiles/blob/master/assets/CustSFMono-Regular.otf
+    * https://github.com/puritys/dotfiles/blob/master/assets/CustSFMonoPowerline-Regular.otf
+
 
 ## Directly edit file from docker
 
