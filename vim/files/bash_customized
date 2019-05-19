@@ -24,7 +24,7 @@ declare -a custEnv
 custEnvFile="/root/.custEnv"
 custEnvList="enableCustFont"
 custEnvList=(${custEnvList// / });
-custEnv["enableCustFont"]=0
+custEnv["enableCustFont"]=""
 if [ ! -z $CUST_FONT ]; then
     custEnv["enableCustFont"]=1
 fi
