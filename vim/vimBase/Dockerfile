@@ -71,11 +71,17 @@ RUN export PATH=$PATH:/usr/local/go/bin; \
     cd ~/.vim/plugged/YouCompleteMe; \
     git submodule update --init --recursive ; \
     python2 ./install.py --clang-completer --gocode-completer --java-completer --js-completer;
-COPY include_tmp/files/eclipse.jdt.ls-0.39.0.tar.gz /root/
-RUN cd root ; \
+COPY include_tmp/files/eclipse /root/eclipse/
+RUN cd root/eclipse ; \
+    cat x* > eclipse.jdt.ls-0.39.0.tar.gz; \
     tar -zxvf eclipse.jdt.ls-0.39.0.tar.gz; \
     mv  Users/puritys/eclipse.jdt.ls/ /root/; \
-    rm -rf Users eclipse.jdt.ls*.gz;
+    rm -rf Users eclipse.jdt.ls*.gz; \
+    cd /root ; \
+    rm -rf eclipse
+
+COPY include_tmp/files/.vimrc_plugins /root/
+RUN echo "\n" | vim -u /root/.vimrc_plugins -c :PlugInstall +qall 
 RUN echo "v1"; \
     cd dotfiles; \
     git pull; \

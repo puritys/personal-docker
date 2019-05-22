@@ -114,11 +114,13 @@ COPY files/eclipse/ /root/eclipse/
 RUN cd root/eclipse ; \
     cat x* > eclipse.jdt.ls-0.39.0.tar.gz; \
     tar -zxvf eclipse.jdt.ls-0.39.0.tar.gz; \
-    mv  Users/puritys/eclipse.jdt.ls/ /root/; \
+    mv  Users/puritys/eclipse.jdt.ls /root/; \
     rm -rf Users eclipse.jdt.ls*.gz; \
     cd /root ; \
     rm -rf eclipse
 
+COPY files/.vimrc_plugins /root/
+RUN echo "\n" | vim -u /root/.vimrc_plugins -c :PlugInstall +qall 
 
 # update dotfile again
 RUN echo "v1"; \

@@ -1,0 +1,5 @@
+call plug#begin('~/.vim/plugged')
+
+Plug 'itchyny/lightline.vim'
+Plug 'w0rp/ale'
+call plug#end()
