@@ -11,6 +11,7 @@ including vim8, eclim, YouCompleteMe, php, nodejs, java and golang
 - java jdk 11
 - go 1.11.4
 - php 7.2
+- python 2.7.5
 - pylint
 - clang
 - gradle
@@ -22,6 +23,9 @@ including vim8, eclim, YouCompleteMe, php, nodejs, java and golang
     - path: /root/.vim/plugged/YouCompleteMe/
 - php language server : https://github.com/felixfbecker/php-language-server
     - path: /root/vendor/bin/php-language-server.php
+- nodejs v6.16.0
+- npm 3.10.10
+- Xvfb
 
 ## vimbase:8
 
@@ -31,3 +35,4 @@ including vim8, eclim, YouCompleteMe, php, nodejs, java and golang
 - php 5.4
 - go 1.11.2
 - node v6.14.3
+- Xvfb
