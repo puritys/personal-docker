@@ -15,9 +15,13 @@ including vim8, eclim, YouCompleteMe, php, nodejs, java and golang
 - clang
 - gradle
 - maven
-- java language server: eclipse.jdt.ls - https://github.com/eclipse/eclipse.jdt.ls
+- java language server: eclipse.jdt.ls 0.39.0
+    - https://github.com/eclipse/eclipse.jdt.ls
+    - path: /root/eclipse.jdt.ls
 - vim plugin: YouCompleteMe: https://github.com/Valloric/YouCompleteMe 
+    - path: /root/.vim/plugged/YouCompleteMe/
 - php language server : https://github.com/felixfbecker/php-language-server
+    - path: /root/vendor/bin/php-language-server.php
 
 ## vimbase:8
 
