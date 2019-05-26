@@ -6,8 +6,7 @@ RUN cd dotfiles; \
     git pull; \
     cp vim/javaPlugin/google_checks.xml /usr/local/etc/; \
     cp vim/javaPlugin/checkstyle.xml /usr/local/etc/ ; \
-    ./install.sh -p --ctags --javaImp
-#    rm -rf /root/.vim/JavaImp /root/openjdk/;
+    ./install.sh -p --ctags
 
 
 COPY files/sshd_config /etc/ssh/sshd_config
