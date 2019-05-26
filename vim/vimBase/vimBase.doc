@@ -120,10 +120,11 @@ RUN cd root/eclipse ; \
     rm -rf eclipse
 
 COPY files/.vimrc_plugins /root/
+COPY files/JavaImp/ /tmp/JavaImp/
 RUN echo "\n" | vim -u /root/.vimrc_plugins -c :PlugInstall +qall 
 
 # update dotfile again
-RUN echo "v1"; \
+RUN echo "v2"; \
     cd dotfiles; \
     git pull; \
     ./install.sh -i
