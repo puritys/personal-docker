@@ -4,8 +4,10 @@ RUN cd dotfiles; \
     git pull; \
     ./install.sh
 
-COPY include_tmp/files/.vimrc_plugins /root/
-COPY include_tmp/files/JavaImp /tmp/JavaImp/
+COPY files/.vimrc_plugins /root/
+COPY files/JavaImp/ /tmp/JavaImp/
+
+# update plugin
 RUN rm -rf /root/.vim/plugged/ale/
 RUN echo "\n" | vim -u /root/.vimrc_plugins -c :PlugInstall +qall 
 

@@ -49,6 +49,9 @@ The docker image support the following environments for customized vim.
 * VIM_PLUGIN_ALE_AUTO_COMPLETE
   * Default will enable ALE Auto Complete
 
+* VIM_PLUGIN_AIRLINE
+  * enable airline plugin
+
 * CUST_FONT: Use "Cust SF Mono" and "Cust SF Mono Powerline" fonts, you have to install the following fonts first.
     `-e CUST_FONT=1`
     * https://github.com/puritys/dotfiles/blob/master/assets/CustSFMono-Regular.otf

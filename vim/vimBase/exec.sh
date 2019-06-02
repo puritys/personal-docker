@@ -17,7 +17,9 @@ help () {
     echo "Usage:"
     echo "-c: command, start / stop / build / root."
     echo "-d: Enable debug"
-    echo "Example: ./exec.sh -c build"
+    echo "-v: Verions, -v 8.1.1"
+
+    echo "Example: ./exec.sh -c build -v 8.1.1"
 }
 
 while true; do
@@ -27,6 +29,7 @@ while true; do
     case "$1" in
       -c | --command   ) command=$2; shift 2 ;;
       -d | --debug ) DEBUG=true; shift 1 ;;
+      -v | --version ) VERSION=$2; shift 2 ;;
       -h | --help  ) 
           help
           shift 1 
@@ -38,6 +41,20 @@ while true; do
 done
 
 setDockerMachineEnv tool;
+
+build() {
+    if [ -z $VERSION ]; then
+        echo "Need verions: -v 8.x"
+        exit 1
+    fi
+    rm -rf include_tmp
+    docker_my_init
+    if [ "x1" == "x$enableNodeDockerfileInclude" ]; then
+        dockerfile-include  -i $dockername-$VERSION.doc -o Dockerfile
+    fi
+    docker build -t $imageName  .
+    docker tag $imageName:latest $imageName:$VERSION
+}
 
 if [ "x" != "x$command" ]; then
     $command

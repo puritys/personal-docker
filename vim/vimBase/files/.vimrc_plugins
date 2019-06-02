@@ -1,5 +1,6 @@
 call plug#begin('~/.vim/plugged')
-
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes' 
 Plug 'itchyny/lightline.vim'
 Plug 'w0rp/ale'
 Plug 'ervandew/supertab'
