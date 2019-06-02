@@ -1,4 +1,4 @@
-from puritys/vimbase:8.1
+from puritys/vimbase:8.1.1
 
 COPY include_tmp/files/vimrc_customized /root/.vimrc_customized 
 RUN yum install unzip -y
@@ -6,7 +6,7 @@ RUN cd dotfiles; \
     git pull; \
     cp vim/javaPlugin/google_checks.xml /usr/local/etc/; \
     cp vim/javaPlugin/checkstyle.xml /usr/local/etc/ ; \
-    ./install.sh -p --ctags --javaImp
+    ./install.sh -p --ctags
 
 
 COPY include_tmp/files/sshd_config /etc/ssh/sshd_config

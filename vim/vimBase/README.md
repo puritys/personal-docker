@@ -5,8 +5,13 @@
 
 including vim8, eclim, YouCompleteMe, php, nodejs, java and golang
 
+## vimbase:8.1.1
 
-## latest (vimbase:8.1)
+Add more plugins base on vimbase:8.1.
+
+- latest version of ale
+
+## vimbase:8.1
 - vim 8.1.1317
 - java jdk 11
 - go 1.11.4
