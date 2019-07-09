@@ -180,4 +180,5 @@ CONFIG proxy.config.diags.debug.tags STRING http.*|dns.*
 CONFIG proxy.config.dump_mem_info_frequency INT 0
 CONFIG proxy.config.http.slow.log.threshold INT 0
 
+CONFIG proxy.config.http_ui_enabled INT 1
 EOF
