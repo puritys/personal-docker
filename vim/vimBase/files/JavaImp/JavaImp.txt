@@ -1510,6 +1510,7 @@ CollectionCertStoreParameters java.security.cert.CollectionCertStoreParameters
 CollectionCertStore sun.security.provider.certpath.CollectionCertStore
 Collection java.util.Collection
 Collections java.util.Collections
+Collectors java.util.stream.Collectors
 ColorChooserComponentFactory javax.swing.colorchooser.ColorChooserComponentFactory
 ColorChooserPanel javax.swing.colorchooser.ColorChooserPanel
 ColorChooserUI javax.swing.plaf.ColorChooserUI
@@ -1563,6 +1564,7 @@ CompilerError sun.tools.java.CompilerError
 Compiler java.lang.Compiler
 CompilerMember sun.tools.javac.CompilerMember
 CompilerThreadStat sun.management.CompilerThreadStat
+CompletableFuture java.util.concurrent.CompletableFuture
 CompletedFuture sun.nio.ch.CompletedFuture
 CompletionHandler java.nio.channels.CompletionHandler
 CompletionService java.util.concurrent.CompletionService
