@@ -2,10 +2,14 @@ FROM puritys/vimbase:8.1
 
 RUN cd dotfiles; \
     git pull; \
-    ./install.sh
+    ./install.sh -p --ctags
 
 COPY files/.vimrc_plugins /root/.vimrc_plugins_tmp
 COPY files/JavaImp/ /root/.vim/JavaImp/
+
+# install eslint
+RUN npm install -g eslint
+COPY files/eslintrc.json /.eslintrc.json
 
 # update plugin
 RUN rm -rf /root/.vim/plugged/ale/

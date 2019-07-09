@@ -30,9 +30,9 @@ while true; do
       -c | --command   ) command=$2; shift 2 ;;
       -d | --debug ) DEBUG=true; shift 1 ;;
       -v | --version ) VERSION=$2; shift 2 ;;
-      -h | --help  ) 
+      -h | --help  )
           help
-          shift 1 
+          shift 1
           exit 0
           ;;
       --) echo "-- is not a correct option.";shift 1; ;;
@@ -41,6 +41,21 @@ while true; do
 done
 
 setDockerMachineEnv tool;
+
+rebuild() {
+    if [ -z $VERSION ]; then
+        echo "Need verions: -v 8.x"
+        exit 1
+    fi
+    rm -rf include_tmp
+    docker_my_init
+    if [ "x1" == "x$enableNodeDockerfileInclude" ]; then
+        dockerfile-include  -i $dockername-$VERSION.doc -o Dockerfile
+    fi
+    docker build --no-cache -t $imageName  .
+    docker tag $imageName:latest $imageName:$VERSION
+
+}
 
 build() {
     if [ -z $VERSION ]; then
@@ -58,8 +73,6 @@ build() {
 
 if [ "x" != "x$command" ]; then
     $command
-else 
+else
     help
 fi
-
-

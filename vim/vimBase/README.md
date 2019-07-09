@@ -9,6 +9,7 @@ including vim8, eclim, YouCompleteMe, php, nodejs, java and golang
 
 Add more plugins base on vimbase:8.1.
 
+- eslint
 - latest version of ale
 
 ## vimbase:8.1

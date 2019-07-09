@@ -2,14 +2,21 @@
 
 - https://hub.docker.com/r/puritys/vim
 - You could find vim settings from here https://github.com/puritys/dotfiles
-- Support language: Java / PHP / Javascript / golang / C / CPP
+- Support language: Java / PHP / Javascript / golang / C / CPP / Python
 
 # Quick Start
 - docker pull puritys/vim:stable
 - docker run -ti -v $(pwd):/src  -w /src puritys/vim vim xxx
 
-![vim example](https://www.puritys.me/filemanage/blog_files/docker_vim.png)
+# Theme
 
+## seoul256
+
+<img src="https://www.puritys.me/filemanage/blog_files/docker_vim.png" width=700/>
+
+## mystyle_white
+
+<img src="https://www.puritys.me/filemanage/blog_files/vim_my_theme.png" width=700/>
 
 ## Environments
 
