@@ -18,6 +18,8 @@
 
 <img src="https://www.puritys.me/filemanage/blog_files/vim_my_theme.png" width=700/>
 
+- You have to change the terminal background color to be "#F1E7D0"
+
 ## Environments
 
 The docker image support the following environments for customized vim.
@@ -83,7 +85,7 @@ function vim_fn() {
 ```
 
 ## vim a file via ssh
-We could not use job-control suspend [`Ctrl+z`] when we edit file at a container, one solution is connect into container from ssh then vim files. In order to solve the hotkey conflict of multiple-ssh connections I change the escape character to "`]`". 
+We could not use job-control suspend [`Ctrl+z`] when we edit file at a container, one solution is connect into container from ssh then vim files. In order to solve the hotkey conflict of multiple-ssh connections I change the escape character to "`]`".
 
 ```
 ssh -t -e ] root@localhost -p39901 "cd /src/workspace"
@@ -155,7 +157,7 @@ function vim_start() {
 
 Default enabled pluings: fzf, fzf-session, incsearch, snipmate, indentLine, YouCompleteMe, ALE, nerdtree
 
-### All installed plugin 
+### All installed plugin
 |plugin | shortcut| description|
 |:---|:---|:---|
 | jistr/vim-nerdtree-tabs        |          | Show file tree when you call ":tabe" to open a file |
@@ -189,4 +191,3 @@ I use Eclim for java synax check and youCompleteMe for autocomplete. You have to
     - for Maven project: You can save the pom.xml to trigger eclipse update .classpath and libraries.
     - for Gradle proecjt: You can save the .classpath to trigger eclipse update libraries.
 - You use `:ProjectImport ./ ` command to import project after restart container.
-
