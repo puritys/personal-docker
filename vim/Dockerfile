@@ -2,6 +2,8 @@ from puritys/vimbase:8.1.1
 
 COPY include_tmp/files/vimrc_customized /root/.vimrc_customized 
 COPY include_tmp/files/.vimrc_plugins /root/.vimrc_plugins_tmp2
+RUN rm -rf /root/.vim/plugged/ale/
+RUN echo "\n" | vim -u /root/.vimrc_plugins_tmp2 -c :PlugInstall +qall 
 
 RUN cd dotfiles; \
     git pull; \
