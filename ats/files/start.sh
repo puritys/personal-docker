@@ -10,7 +10,9 @@ rm /usr/local/var/trafficserver/server.lock
 
 while true
 do
-    tail -f /usr/local/var/log/trafficserver/squid.log
-    sleep 1 
+    if [ -f /usr/local/var/log/trafficserver/squid.log ]; then
+        tail -f /usr/local/var/log/trafficserver/squid.log
+    fi
+    sleep 3
 done
 
