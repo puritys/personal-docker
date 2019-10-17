@@ -4281,6 +4281,7 @@ MenuPeer java.awt.peer.MenuPeer
 MenuSelectionManager javax.swing.MenuSelectionManager
 MenuShortcut java.awt.MenuShortcut
 MergeCollation java.text.MergeCollation
+Instant java.time.Instant
 MessageDigestAlgorithm com.sun.org.apache.xml.internal.security.algorithms.MessageDigestAlgorithm
 MessageDigest java.security.MessageDigest
 MessageDigestSpi java.security.MessageDigestSpi
