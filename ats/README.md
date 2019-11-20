@@ -14,6 +14,15 @@ Settings
 - REMAP: You can define ats remap by  setting env "ATS_REMAP"
 - Port:   You can change the port by setting env "ATS_SERVER_PORTS",   -e ATS_SERVER_PORTS="80 443:ssl"
 
+Environment
+======
+
+### log format
+
+logFormat = rich
+
+- squid(default)
+- rich:
 
 directory
 ==========

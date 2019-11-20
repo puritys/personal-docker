@@ -1,3 +1,8 @@
+if [ -z $logFormat ] || [ ]"x" == "x$logFormat" ]; then
+    logFormat="squid"
+fi
+
+
 cat <<EOF
 
 -- Custom log configuration.
@@ -142,8 +147,12 @@ squid_seconds_only_timestamp = format {
 -- %<crc>/%<pssc>:  HIT/200
 -- sstc: The number of transactions between Traffic Server and the origin server from a single server session. A value greater than 0 indicates connection reuse.
 -- ttms: The time Traffic Server spends processing the client request; the number of milliseconds between the time the client establishes the connection with Traffic Server and the time Traffic Server sends the last byte of the response back to the client.
-squid = format {
+rich = format {
   Format = '%<cqtq> %<ttms> %<chi> %<stms> %<sstc> %<crc>/%<pssc> %<psql> %<cqhm> %<cquc> %<caun> %<phr>/%<pqsn> %<psct>'
+}
+
+squid = format {
+  Format = '%<cqtq> %<ttms> %<chi> %<crc>/%<pssc> %<psql> %<cqhm> %<cquc> %<caun> %<phr>/%<pqsn> %<psct>'
 }
 
 -- Common Log Format.
@@ -166,7 +175,7 @@ extended2 = format {
 --     Filename = 'squid'
 -- }
 log.ascii {
-  Format = squid,
+  Format = $logFormat,
   Filename = 'squid'
 }
 -- vim: set ft=lua :
