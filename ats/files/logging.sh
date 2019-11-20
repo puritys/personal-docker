@@ -133,9 +133,17 @@ squid_seconds_only_timestamp = format {
   Format = '%<cqts> %<ttms> %<chi> %<crc>/%<pssc> %<psql> %<cqhm> %<cquc> %<caun> %<phr>/%<pqsn> %<psct>'
 }
 
+-- https://docs.trafficserver.apache.org/en/6.2.x/admin-guide/monitoring/logging/log-formats.en.html#custom-logging-fields
+
 -- Squid Log Format.
+-- stms: The time spent accessing the origin (in milliseconds); the time is measured from the time the connection with the origin is established to the time the connection is closed.
+-- cqtq: The client request timestamp in Squid format. The time of the client request in seconds since January 1, 1970 UTC (with millisecond resolution).
+-- chi: The IP address of the client’s host machine.
+-- %<crc>/%<pssc>:  HIT/200
+-- sstc: The number of transactions between Traffic Server and the origin server from a single server session. A value greater than 0 indicates connection reuse.
+-- ttms: The time Traffic Server spends processing the client request; the number of milliseconds between the time the client establishes the connection with Traffic Server and the time Traffic Server sends the last byte of the response back to the client.
 squid = format {
-  Format = '%<cqtq> %<ttms> %<chi> %<crc>/%<pssc> %<psql> %<cqhm> %<cquc> %<caun> %<phr>/%<pqsn> %<psct>'
+  Format = '%<cqtq> %<ttms> %<chi> %<stms> %<sstc> %<crc>/%<pssc> %<psql> %<cqhm> %<cquc> %<caun> %<phr>/%<pqsn> %<psct>'
 }
 
 -- Common Log Format.
