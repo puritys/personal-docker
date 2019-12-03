@@ -22,15 +22,15 @@ fi
 
 declare -a custEnv
 custEnvFile="/root/.custEnv"
-custEnvList="enableCustFont"
-custEnvList=(${custEnvList// / });
+custEnvKeyList="enableCustFont"
+custEnvKeyList=(${custEnvKeyList// / });
 custEnv["enableCustFont"]=""
-if [ ! -z $CUST_FONT ]; then
+if [ ! -z $CUST_FONT ] && [ "1" == $CUST_FONT ]; then
     custEnv["enableCustFont"]=1
 fi
 
 content=""
-for key in "${custEnvList[@]}"
+for key in "${custEnvKeyList[@]}"
 do
     content="\n$key=${custEnv[$key]}"
 done
