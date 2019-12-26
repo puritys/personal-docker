@@ -153,6 +153,13 @@ function vim_start() {
 - `Ctrl+g`: Goto defined function
 - `Ctrl+d`: Show Auto Complete
 
+
+## Java compile issue
+
+#### class not found
+
+- you have to run ecliConfig & ecliUpdate on shell then restart vim agein. ecliUpdate will download all packages of pom.xml to ~/.m2/repository
+
 ## Vim Plugins
 
 Default enabled pluings: fzf, fzf-session, incsearch, snipmate, indentLine, YouCompleteMe, ALE, nerdtree
