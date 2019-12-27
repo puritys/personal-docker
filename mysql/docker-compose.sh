@@ -3,9 +3,13 @@
 # -----------------------
 # start docker compose
 # ./docker-compose.sh up
+#
+# restart one container
+# ./docker-compose.sh reup adminer
 # -----------------------
 
 MYSQL_ROOT_PASSWORD=test
+ADMINER_THEME=pepa-linha
 
 if [ "x`uname`" = "xDarwin" ] ; then
     addr=`ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '{print $2}'| head -n 1`
@@ -39,11 +43,18 @@ services:
     container_name: "adminer"
     image: adminer
     restart: always
+    environment:
+      - ADMINER_DESIGN="$ADMINER_THEME"
     ports:
       - "80:8080"
 
 TEXT
 
+if [ "reup" == "$1" ] && [ "x" != "x$2" ];then
+    docker-compose stop $2
+    docker-compose up -d $2
+    exit
+fi
 
 if [ "up" == "$1" ];then
     docker-compose pull
