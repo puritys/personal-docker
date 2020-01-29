@@ -114,6 +114,7 @@ getent passwd ats >/dev/null || useradd -r -u 176 -g ats -d / -s /sbin/nologin -
 %{_bindir}/tspush
 %{_bindir}/tsxs
 %dir %{_libdir}/trafficserver
+%dir /usr/local/var/trafficserver
 /usr/local/etc/trafficserver/*
 /usr/local/libexec/trafficserver/*.so
 /usr/local/include/*
@@ -130,5 +131,5 @@ getent passwd ats >/dev/null || useradd -r -u 176 -g ats -d / -s /sbin/nologin -
 %attr(0755, ats, ats) %dir /var/log/trafficserver
 %attr(0755, ats, ats) %dir /run/trafficserver
 %attr(0755, ats, ats) %dir /var/cache/trafficserver
-
+%attr(0755, ats, ats) %dir /var/trafficserver
 
