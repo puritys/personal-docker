@@ -5,7 +5,7 @@ bash /root/ssl_multicert.sh > /usr/local/etc/trafficserver/ssl_multicert.config
 bash /root/logging.sh > /usr/local/etc/trafficserver/logging.config
 
 /usr/local/bin/traffic_server -Cclear
-rm /usr/local/var/trafficserver/server.lock
+rm -f /usr/local/var/trafficserver/server.lock
 /usr/local/bin/traffic_manager start &
 
 while true

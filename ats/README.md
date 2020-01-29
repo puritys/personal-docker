@@ -9,6 +9,23 @@ Quickstart
 - docker pull puritys/ats
 - docker run -dti -p 443:443 -h $(hostname)  -e ATS_REMAP="map / http://$(hostname):4080/" --name ats puritys/ats
 
+Start on docker compose:
+
+```
+  ats:
+    container_name: ats
+    image: "puritys/ats"
+    ports:
+      - "443:443"
+      - "80:80"
+    environment:
+      - logFormat=rich
+      - |
+        ATS_REMAP=map http://zzz.com.tw/  http://service1/   @plugin=conf_remap.so @pparam=proxy.config.url_remap.pristine_host_
+hdr=1
+        map https://bbb.com.tw/           http://service2/
+```
+
 Settings
 =======
 - REMAP: You can define ats remap by  setting env "ATS_REMAP"
