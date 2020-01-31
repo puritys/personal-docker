@@ -4,8 +4,6 @@
 # start docker compose
 # ./docker-compose.sh up
 #
-# restart one container
-# ./docker-compose.sh reup redis
 # -----------------------
 
 if [ "x`uname`" = "xDarwin" ] ; then
