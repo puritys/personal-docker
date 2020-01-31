@@ -49,7 +49,6 @@ if [ "reup" == "$1" ] && [ "x" != "x$2" ];then
 fi
 
 if [ "up" == "$1" ];then
-    docker-compose pull
     docker-compose $1 -d
 else
     docker-compose $1
