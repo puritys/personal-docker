@@ -32,7 +32,7 @@ services:
     volumes:
       - ~/:/$me
       - `pwd`/data:/data
-      - `pwd`/conf /usr/local/etc/redis/
+      - `pwd`/conf:/usr/local/etc/redis/
     command:
       - bash
       - "-c"
