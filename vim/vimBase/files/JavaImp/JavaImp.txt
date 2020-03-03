@@ -7476,3 +7476,4 @@ JSONObject org.json.JSONObject
 JSONArray org.json.JSONArray
 Gson com.google.gson.Gson
 GsonBuilder com.google.gson.GsonBuilder
+TypeToken com.google.gson.reflect.TypeToken
