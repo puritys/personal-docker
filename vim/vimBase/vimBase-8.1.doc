@@ -57,6 +57,13 @@ RUN cd /root; \
     rm gradle-5.2.1-bin.zip ; \
     mv gradle-5.2.1 /usr/local/gradle
 
+# install java tools.jar to solve error : Could not find artifact com.sun:tools:jar:1.7.0
+RUN wget http://www.java2s.com/Code/JarDownload/tools/tools-1.7.0.jar.zip; \
+    unzip tools-1.7.0.jar.zip; \
+    rm tools*.zip; \
+    mkdir -p /root/lib; \
+    mv tools-1.7.0.jar /root/lib/tools.jar
+
 # ===============
 # Python
 # ===============
