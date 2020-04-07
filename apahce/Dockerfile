@@ -1,8 +1,8 @@
 FROM centos:7.4.1708
 
-
+RUN yum -y install epel-release
 RUN yum install -y httpd vim net-tools
-RUN yum install -y php-mysql php
+RUN yum install -y php-mysql php php-mcrypt
 RUN yum install -y mariadb-server mariadb telnet
 
 COPY files/start.sh /root/start.sh
