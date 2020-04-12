@@ -5,6 +5,14 @@
 
 including vim8, eclim, YouCompleteMe, php, nodejs, java and golang
 
+## vimbase:8.1.2
+
+- vim 8.2.0444
+- gradle 5.6.4 
+- nodejs 12.16.1
+- npm 6.13.4
+- java language server: eclipse.jdt.ls 0.52.1
+
 ## vimbase:8.1.1
 
 Add more plugins base on vimbase:8.1.

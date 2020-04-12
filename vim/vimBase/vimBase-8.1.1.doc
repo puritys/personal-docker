@@ -6,10 +6,10 @@ RUN cd dotfiles; \
 
 COPY files/.vimrc_plugins /root/.vimrc_plugins_tmp
 COPY files/JavaImp/ /root/.vim/JavaImp/
-
-# install eslint
-RUN npm install -g eslint
-COPY files/eslintrc.json /.eslintrc.json
+#
+## install eslint
+#RUN npm install -g eslint
+#COPY files/eslintrc.json /.eslintrc.json
 
 # update plugin
 RUN rm -rf /root/.vim/plugged/ale/
