@@ -1,4 +1,4 @@
-from puritys/vimbase:8.1.1
+from puritys/vimbase:8.1.2
 
 COPY files/vimrc_customized /root/.vimrc_customized 
 COPY files/.vimrc_plugins /root/.vimrc_plugins_tmp2
