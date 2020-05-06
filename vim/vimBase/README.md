@@ -7,6 +7,8 @@ including vim8, eclim, YouCompleteMe, php, nodejs, java and golang
 
 ## vimbase:8.1.2
 
+update packages' version base on vimbase:8.1.
+
 - vim 8.2.0444
 - gradle 5.6.4 
 - nodejs 12.16.1

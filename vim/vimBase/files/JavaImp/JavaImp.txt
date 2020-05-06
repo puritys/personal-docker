@@ -311,6 +311,7 @@ Array java.lang.reflect.Array
 Array java.sql.Array
 ArrayList java.util.ArrayList
 ArrayNotificationBuffer com.sun.jmx.remote.internal.ArrayNotificationBuffer
+ArrayNode com.fasterxml.jackson.databind.node.ArrayNode
 ArrayQueue com.sun.jmx.remote.internal.ArrayQueue
 ArrayReference com.sun.jdi.ArrayReference
 ArrayReferenceImpl com.sun.tools.jdi.ArrayReferenceImpl
@@ -1847,6 +1848,7 @@ DateTimeAtCompleted javax.print.attribute.standard.DateTimeAtCompleted
 DateTimeAtCreation javax.print.attribute.standard.DateTimeAtCreation
 DateTimeAtProcessing javax.print.attribute.standard.DateTimeAtProcessing
 DateTimeSyntax javax.print.attribute.DateTimeSyntax
+DateTimeFormatter java.time.format.DateTimeFormatter
 DebugGraphicsFilter javax.swing.DebugGraphicsFilter
 DebugGraphicsInfo javax.swing.DebugGraphicsInfo
 DebugGraphics javax.swing.DebugGraphics
@@ -3704,6 +3706,7 @@ JStack sun.tools.jstack.JStack
 Jstatd sun.tools.jstatd.Jstatd
 JStatLogger sun.tools.jstat.JStatLogger
 Jstat sun.tools.jstat.Jstat
+JsonNode com.fasterxml.jackson.databind.JsonNode 
 JTabbedPane javax.swing.JTabbedPane
 JTableHeader javax.swing.table.JTableHeader
 JTable javax.swing.JTable
@@ -4035,7 +4038,6 @@ ListDataListener javax.swing.event.ListDataListener
 ListenerNotFoundException javax.management.ListenerNotFoundException
 ListeningConnector com.sun.jdi.connect.ListeningConnector
 ListIterator java.util.ListIterator
-List java.awt.List
 List java.util.List
 ListModel javax.swing.ListModel
 ListPeer java.awt.peer.ListPeer
@@ -4169,7 +4171,6 @@ Manifest java.util.jar.Manifest
 Manifest javax.xml.crypto.dsig.Manifest
 Manifest sun.tools.jar.Manifest
 Map java.util.Map
-Map javax.swing.text.html.Map
 MappedByteBuffer java.nio.MappedByteBuffer
 MappedMXBeanType sun.management.MappedMXBeanType
 MappedReadBuffer com.sun.tools.hat.internal.parser.MappedReadBuffer

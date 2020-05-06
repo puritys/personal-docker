@@ -1,4 +1,5 @@
 FROM puritys/vimbase:8.1.1
+RUN yum install libatomic bind-utils jq -y
 RUN cd /root ; \
     wget https://github.com/vim/vim/archive/v8.2.0444.tar.gz; \
     tar -zxvf v8.2.0444.tar.gz ; \
@@ -23,6 +24,11 @@ RUN cd root/eclipse ; \
     rm -rf Users eclipse.jdt.ls*.gz; \
     cd /root ; \
     rm -rf eclipse
+RUN wget http://www.java2s.com/Code/JarDownload/tools/tools-1.7.0.jar.zip; \
+    unzip tools-1.7.0.jar.zip; \
+    rm tools*.zip; \
+    mkdir -p /root/lib; \
+    mv tools-1.7.0.jar /root/lib/tools.jar
 
 
 RUN cd dotfiles; \
