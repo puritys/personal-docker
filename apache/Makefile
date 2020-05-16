@@ -1,2 +1,2 @@
 build:
-	docker build -t apache .
+	docker build -t puritys-apache .
