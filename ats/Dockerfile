@@ -9,7 +9,7 @@ COPY include_tmp/files/ssl_multicert.sh /root/
 COPY include_tmp/files/logging.sh /root/
 COPY include_tmp/files/trafficserver-7.1.8-1.el7.centos.x86_64.rpm /root/
 COPY include_tmp/files/cert.pem /usr/local/etc/trafficserver/
-COPY include_tmp/files/ip_allow.config /usr/local/etc/trafficserver/
+COPY include_tmp/files/ip_allow.config /root/
 
 RUN rpm -ivh /root/trafficserver-7.1.8-1.el7.centos.x86_64.rpm
 
