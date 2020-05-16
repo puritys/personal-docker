@@ -34,7 +34,7 @@ The docker image support the following environments for customized vim.
 
 * VIM_PLUGIN_Eclim (only support in image vim:8.0)
 
-    Enable eclim I love eclim more than YouCompleteMe and ale, example: -e VIM_PLUGIN_Eclim=1
+    Enable eclim, example: -e VIM_PLUGIN_Eclim=1
     Maunal start eclim: `cd /dotfiles; sudo -u vim ./startEclim.sh `
 
 * VIM_PLUGIN_YouCompleteMe

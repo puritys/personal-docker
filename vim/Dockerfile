@@ -2,11 +2,7 @@ from puritys/vimbase:8.1.2
 
 COPY include_tmp/files/vimrc_customized /root/.vimrc_customized 
 COPY include_tmp/files/.vimrc_plugins /root/.vimrc_plugins_tmp2
-RUN wget http://www.java2s.com/Code/JarDownload/tools/tools-1.7.0.jar.zip; \
-    unzip tools-1.7.0.jar.zip; \
-    rm tools*.zip; \
-    mkdir -p /root/lib; \
-    mv tools-1.7.0.jar /root/lib/tools.jar
+COPY include_tmp/vimBase_files/JavaImp /root/.vim/JavaImp/
 RUN rm -rf /root/.vim/plugged/ale/
 RUN echo "\n" | vim -u /root/.vimrc_plugins_tmp2 -c :PlugInstall +qall 
 
