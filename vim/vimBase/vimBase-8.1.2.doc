@@ -18,6 +18,7 @@ RUN tar -xf  node-v12.16.1-linux-x64.tar.xz --directory /usr/local --strip-compo
 
 # install eslint
 RUN npm install -g eslint
+RUN npm install -g jsonlint -g
 COPY files/eslintrc.json /.eslintrc.json
 
 # ===============
