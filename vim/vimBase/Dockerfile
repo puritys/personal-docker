@@ -1,55 +1,45 @@
-FROM centos:7.6.1810
-
-RUN yum install -y sudo wget telnet openssh-server vim git ncurses-libs ncurses-term screen man
-RUN ldconfig
-
-RUN wget http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm
-RUN rpm -ivh epel-release-7-11.noarch.rpm
-
-RUN yum install gcc gcc-c++ make cmake -y
-RUN yum install ncurses-devel -y
-RUN yum upgrade  ncurses-libs ncurses-term ncurses-devel -y
-RUN yum install ntp -y ; \
-    ntpdate -s time.stdtime.gov.tw
-
-RUN yum install -y python-devel openssh-server
-RUN ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa; \
-    passwd -d root;
-
+FROM puritys/vimbase:8.1.1
+RUN yum install libatomic bind-utils jq -y
 RUN cd /root ; \
-    wget https://github.com/vim/vim/archive/v8.1.0757.tar.gz; \
-    tar -zxvf v8.1.0757.tar.gz ; \
-    mv /root/vim-8.1.0757 /root/vim; \
+    wget https://github.com/vim/vim/archive/v8.2.0444.tar.gz; \
+    tar -zxvf v8.2.0444.tar.gz ; \
+    mv /root/vim-8.2.0444 /root/vim; \
     cd /root/vim ; ./configure --enable-multibyte --enable-pythoninterp=yes --prefix=/usr; \
     cd /root/vim ; gmake ; gmake install ; cd /; rm -rf /root/vim* /root/v8*.gz
+RUN wget https://nodejs.org/dist/v12.16.1/node-v12.16.1-linux-x64.tar.xz
+RUN tar -xf  node-v12.16.1-linux-x64.tar.xz --directory /usr/local --strip-components 1
+RUN npm install -g eslint
+COPY include_tmp/files/eslintrc.json /.eslintrc.json
 RUN cd /root; \
-    wget https://download.java.net/java/GA/jdk11/13/GPL/openjdk-11.0.1_linux-x64_bin.tar.gz ;\
-    tar -zxvf openjdk-11.0.1_linux-x64_bin.tar.gz; \
-    rm *.gz; \
-    mv jdk-11.0.1 jdk; \
-    cp jdk ;\
-    alternatives --install /usr/bin/java java /root/jdk/bin/java  2 ; \
-    alternatives --install /usr/bin/javac javac /root/jdk/bin/javac  2 ; \
-    cd /root ;\
-    wget https://www-eu.apache.org/dist/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz ;\
-    tar -zxvf apache-maven-3.6.0-bin.tar.gz ; \
-    rm *.gz ; \
-    alternatives --install /usr/bin/mvn mvn /root/apache-maven-3.6.0/bin/mvn 2 ; \
-    alternatives --set mvn  /root/apache-maven-3.6.0/bin/mvn
-RUN yum install epel-release yum-utils -y ; \
-    yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm -y ; \
-    yum-config-manager --enable remi-php72 ; \
-    yum install php php-common php-opcache php-mcrypt php-cli php-gd php-curl php-mysqlnd -y ;
-RUN yum install nodejs-6.14.3-1.el7 npm-3.10.10-1.6.14.3.1.el7 -y
+    wget https://downloads.gradle.org/distributions/gradle-5.6.4-bin.zip ; \
+    unzip gradle-5.6.4-bin.zip ; \
+    rm gradle-5.6.4-bin.zip ; \
+    rm -rf /usr/local/gradle; \
+    mv gradle-5.6.4 /usr/local/gradle
+COPY include_tmp/files/eclipse /root/eclipse/
+RUN cd root/eclipse ; \
+    cat x* > eclipse.jdt.ls-0.52.1.tar.gz; \
+    tar -zxvf eclipse.jdt.ls-0.52.1.tar.gz; \
+    mv  Users/puritys/eclipse.jdt.ls /root/; \
+    rm -rf Users eclipse.jdt.ls*.gz; \
+    cd /root ; \
+    rm -rf eclipse
+RUN wget http://www.java2s.com/Code/JarDownload/tools/tools-1.7.0.jar.zip; \
+    unzip tools-1.7.0.jar.zip; \
+    rm tools*.zip; \
+    mkdir -p /root/lib; \
+    mv tools-1.7.0.jar /root/lib/tools.jar
 
-RUN wget https://dl.google.com/go/go1.11.4.linux-amd64.tar.gz; \
-    tar -C /usr/local -zxf go1.11.4.linux-amd64.tar.gz;\
-    rm go*.linux-amd64.tar.gz
 
-RUN git clone https://github.com/puritys/dotfiles.git; \
-    cd dotfiles; \
-    ./install.sh -i
+RUN cd dotfiles; \
+    git pull; \
+    ./install.sh -p --ctags
+
+COPY include_tmp/files/.vimrc_plugins /root/.vimrc_plugins_tmp
+COPY include_tmp/files/JavaImp /root/.vim/JavaImp/
+RUN rm -rf /root/.vim/plugged/ale/
+RUN echo "\n" | vim -u /root/.vimrc_plugins_tmp -c :PlugInstall +qall 
 
 
 ENV BASH_ENV "/root/.bashrc"
-
+ENV PATH "/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/usr/local/gradle/bin"

@@ -1,3 +1,7 @@
+echo "Execute start.sh\n"
+
+echo "Execcuter is `whoami`\n"
+
 . ~/.alias_common
 
 hasSSHD=`ps aux |grep 'sbin/sshd' |grep -v 'ag|grep' | wc -l`
@@ -6,7 +10,7 @@ if [ "x0" == "x$hasSSHD" ]; then
     sudo /usr/sbin/sshd -E /tmp/sshd.log
 fi
 
-if [ "x" != "x$VIM_PLUGIN_Eclim" ]; then
+if [ "x1" == "x$VIM_PLUGIN_Eclim" ]; then
     sudo rm -f /tmp/.X1-lock
     ps aux |grep -i Xvfb |grep -v grep | awk '{printf "kill -9 %s\n",$2}' | sudo sh
     sudo Xvfb :1 -screen 0 1024x768x24 &

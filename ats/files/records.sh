@@ -144,11 +144,12 @@ CONFIG proxy.config.cache.min_average_object_size INT 8000
 CONFIG proxy.config.log.logging_enabled INT 3
 CONFIG proxy.config.log.max_space_mb_for_logs INT 25000
 CONFIG proxy.config.log.max_space_mb_headroom INT 1000
-CONFIG proxy.config.log.rolling_enabled INT 1
+CONFIG proxy.config.log.rolling_enabled INT 0
 CONFIG proxy.config.log.rolling_interval_sec INT 86400
 CONFIG proxy.config.log.rolling_size_mb INT 10
-CONFIG proxy.config.log.auto_delete_rolled_files INT 1
+CONFIG proxy.config.log.auto_delete_rolled_files INT 0
 CONFIG proxy.config.log.periodic_tasks_interval INT 5
+CONFIG proxy.config.log.max_secs_per_buffer=1
 
 ##############################################################################
 # These settings control remapping, and if the proxy allows (open) forward proxy or not. Docs:
@@ -180,4 +181,5 @@ CONFIG proxy.config.diags.debug.tags STRING http.*|dns.*
 CONFIG proxy.config.dump_mem_info_frequency INT 0
 CONFIG proxy.config.http.slow.log.threshold INT 0
 
+CONFIG proxy.config.http_ui_enabled INT 1
 EOF

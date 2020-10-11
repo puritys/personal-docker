@@ -1,35 +1,71 @@
-# A docker image for vim-8
+# A docker image with vim 8
 
 - https://hub.docker.com/r/puritys/vim
 - You could find vim settings from here https://github.com/puritys/dotfiles
-- Support language: Java / PHP / Javascript / golang
+- Support language: Java / PHP / Javascript / golang / C / CPP / Python
 
 # Quick Start
-- docker pull puritys/vim
+- docker pull puritys/vim:stable
 - docker run -ti -v $(pwd):/src  -w /src puritys/vim vim xxx
 
-![vim example](https://www.puritys.me/filemanage/blog_files/docker_vim.png)
+# Theme
+
+## seoul256
+
+<img src="https://www.puritys.me/filemanage/blog_files/docker_vim.png" width=700/>
+
+## mystyle_white
+
+<img src="https://www.puritys.me/filemanage/blog_files/vim_my_theme.png" width=700/>
+
+- You have to change the terminal background color to be "#F1E7D0"
 
 ## Environments
 
 The docker image support the following environments for customized vim.
 
-*   VIMRC
+* VIMRC
 
     customized .vimrc , example :  -e VIMRC=/src/.vimrc
 
-*   VIM_THEME
+* VIM_THEME
 
     change theme , example :  -e VIM_THEME=dracula ,    options: dracula, seoul256, seoul256-light
 
-*   VIM_PLUGIN_Eclim (only support in image vim:8.0)
+* VIM_PLUGIN_Eclim (only support in image vim:8.0)
 
-    Enable eclim I love eclim more than YouCompleteMe and ale, example: -e VIM_PLUGIN_Eclim=1
+    Enable eclim, example: -e VIM_PLUGIN_Eclim=1
     Maunal start eclim: `cd /dotfiles; sudo -u vim ./startEclim.sh `
 
-*   VIM_PLUGIN_YouCompleteMe
+* VIM_PLUGIN_YouCompleteMe
+  * Enable YouCompleteMe, example: -e VIM_PLUGIN_YouCompleteMe=1
+  * YouCompleteMe will be loaded when switch to insert mode.
+  * To remove .project and .classpath if you used eclim to create project before.
 
-    Enable YouCompleteMe, example: -e VIM_PLUGIN_YouCompleteMe=1
+* VIM_PLUGIN_YouCompleteMe_ENABLE_SYNTAX
+    Enable YouCompleteMe java syntax, the default value is "0".
+
+* VIM_PLUGIN_YouCompleteMe_auto_trigger
+    Enable / Disable ycm_auto_trigger
+
+* VIM_PLUGIN_LightLine
+    Enable lightline, the default value is "0"
+
+* VIM_PLUGIN_ALE
+  * Default will enable ALE lint, you can disable it by `-e VIM_PLUGIN_ALE=0`
+  * I suggest you to use ALE instead of YouCompletMe.
+
+* VIM_PLUGIN_ALE_AUTO_COMPLETE
+  * Default will enable ALE Auto Complete
+
+* VIM_PLUGIN_AIRLINE
+  * enable airline plugin
+
+* CUST_FONT: Use "Cust SF Mono" and "Cust SF Mono Powerline" fonts, you have to install the following fonts first.
+    `-e CUST_FONT=1`
+    * https://github.com/puritys/dotfiles/blob/master/assets/CustSFMono-Regular.otf
+    * https://github.com/puritys/dotfiles/blob/master/assets/CustSFMonoPowerline-Regular.otf
+
 
 ## Directly edit file from docker
 
@@ -49,7 +85,7 @@ function vim_fn() {
 ```
 
 ## vim a file via ssh
-We could not use job-control suspend [`Ctrl+z`] when we edit file at a container, one solution is connect into container from ssh then vim files. In order to solve the hotkey conflict of multiple-ssh connections I change the escape character to "`]`". 
+We could not use job-control suspend [`Ctrl+z`] when we edit file at a container, one solution is connect into container from ssh then vim files. In order to solve the hotkey conflict of multiple-ssh connections I change the escape character to "`]`".
 
 ```
 ssh -t -e ] root@localhost -p39901 "cd /src/workspace"
@@ -107,16 +143,28 @@ function vim_start() {
 
 ```
 
-## Fonts
-- You could install the font SFMono + Powerline
-  - https://github.com/puritys/dotfiles/blob/master/assets/CustFont-SFMono-Powerline.woff2
+## Quick Command
 
+- `sc`: syntax check
+- `align|<Enter>`: use "|" to align all field, Use visual mode to select colums then type 'aling?<Enter>' to align by '?'
+- `ar`: async run
+- `Ctrl+p`: fuzzle find files
+- `Ctrl+e`: Execute this file
+- `Ctrl+g`: Goto defined function
+- `Ctrl+d`: Show Auto Complete
+
+
+## Java compile issue
+
+#### class not found
+
+- you have to run ecliConfig & ecliUpdate on shell then restart vim agein. ecliUpdate will download all packages of pom.xml to ~/.m2/repository
 
 ## Vim Plugins
 
 Default enabled pluings: fzf, fzf-session, incsearch, snipmate, indentLine, YouCompleteMe, ALE, nerdtree
 
-### All installed plugin 
+### All installed plugin
 |plugin | shortcut| description|
 |:---|:---|:---|
 | jistr/vim-nerdtree-tabs        |          | Show file tree when you call ":tabe" to open a file |
@@ -136,5 +184,17 @@ Default enabled pluings: fzf, fzf-session, incsearch, snipmate, indentLine, YouC
 | Yggdroot/indentLine        |               | Display indent line                       |
 | vim-scripts/PDV--phpDocumentor-for-Vim| doc | generate php document |
 |w0rp/ale|| Asynchronous Linting Engine|
-    
 
+
+## Java (vim:8.0 eclim)
+
+I use Eclim for java synax check and youCompleteMe for autocomplete. You have to create a project once if you want to see the synax error UI.
+
+
+- Create Eclipse Project:  `:ProjectCreate ./ -n java` , execute this command inside vim.
+- Start Maven Project: Just use last command to create project   will be fine.
+- Start gradle project: `gradle eclipse`, execute this command then create a project.
+- Update Maven Or gradle .classpath : `ecliUpdate`, execute this alias command on terminal.
+    - for Maven project: You can save the pom.xml to trigger eclipse update .classpath and libraries.
+    - for Gradle proecjt: You can save the .classpath to trigger eclipse update libraries.
+- You use `:ProjectImport ./ ` command to import project after restart container.

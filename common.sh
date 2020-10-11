@@ -58,6 +58,17 @@ start() {
     docker run -ti $port $volume $host --name $containerName $imageName
 }
 
+startIfNotFound() {
+    docker_my_init
+    r=`docker ps --filter="name=$containerName" 2>&1 | wc -l`
+    if [[ $r == *"1"* ]]; then
+        echo -e "The container $containerName is not existed.\n"
+        start
+    else
+        echo -e "The container $containerName is existed.\n"
+    fi
+}
+
 myStart() {
     host=""
     if [ "X" != "X$hostname" ]; then
