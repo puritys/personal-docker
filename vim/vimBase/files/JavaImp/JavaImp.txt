@@ -510,7 +510,7 @@ Base64 com.sun.org.apache.xml.internal.security.utils.Base64
 BASE64Decoder sun.misc.BASE64Decoder
 Base64DecodingException com.sun.org.apache.xml.internal.security.exceptions.Base64DecodingException
 BASE64Encoder sun.misc.BASE64Encoder
-Base64 java.util.prefs.Base64
+Base64 java.util.Base64
 BaseCalendar sun.util.calendar.BaseCalendar
 BaseLineInfo com.sun.tools.jdi.BaseLineInfo
 BaseLocale sun.util.locale.BaseLocale
