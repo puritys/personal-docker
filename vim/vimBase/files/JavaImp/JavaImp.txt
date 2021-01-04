@@ -3706,7 +3706,7 @@ JStack sun.tools.jstack.JStack
 Jstatd sun.tools.jstatd.Jstatd
 JStatLogger sun.tools.jstat.JStatLogger
 Jstat sun.tools.jstat.Jstat
-JsonNode com.fasterxml.jackson.databind.JsonNode 
+JsonNode com.fasterxml.jackson.databind.JsonNode
 JTabbedPane javax.swing.JTabbedPane
 JTableHeader javax.swing.table.JTableHeader
 JTable javax.swing.JTable
@@ -4924,6 +4924,7 @@ OptionLister sun.tools.jstat.OptionLister
 OptionListModel javax.swing.text.html.OptionListModel
 OptionOutputFormatter sun.tools.jstat.OptionOutputFormatter
 OptionPaneUI javax.swing.plaf.OptionPaneUI
+Optional java.util.Optional
 OQLEngine com.sun.tools.hat.internal.oql.OQLEngine
 OQLException com.sun.tools.hat.internal.oql.OQLException
 OQLHelp com.sun.tools.hat.internal.server.OQLHelp
