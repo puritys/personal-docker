@@ -94,7 +94,7 @@ GSSAPICleanupCredentials no
 # WARNING: 'UsePAM no' is not supported in Red Hat Enterprise Linux and may cause several
 # problems.
 UsePAM yes
-
+UseDNS no
 #AllowAgentForwarding yes
 #AllowTcpForwarding yes
 #GatewayPorts no
