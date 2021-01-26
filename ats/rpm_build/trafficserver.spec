@@ -24,7 +24,7 @@
 
 Summary:	Apache Traffic Server, a reverse, forward and transparent HTTP proxy cache
 Name:		trafficserver
-Version:	7.1.8
+Version:	7.1.12
 Release:	1%{?dist}
 License:	Apache Software License 2.0 (AL2)
 Group:		System Environment/Daemons
@@ -114,7 +114,7 @@ getent passwd ats >/dev/null || useradd -r -u 176 -g ats -d / -s /sbin/nologin -
 %{_bindir}/tspush
 %{_bindir}/tsxs
 %dir %{_libdir}/trafficserver
-%dir /usr/local/var/trafficserver
+%dir /usr/local/var/log/trafficserver
 /usr/local/etc/trafficserver/*
 /usr/local/libexec/trafficserver/*.so
 /usr/local/include/*
@@ -131,5 +131,5 @@ getent passwd ats >/dev/null || useradd -r -u 176 -g ats -d / -s /sbin/nologin -
 %attr(0755, ats, ats) %dir /var/log/trafficserver
 %attr(0755, ats, ats) %dir /run/trafficserver
 %attr(0755, ats, ats) %dir /var/cache/trafficserver
-%attr(0755, ats, ats) %dir /var/trafficserver
+#%attr(0755, ats, ats) %dir /var/trafficserver
 
