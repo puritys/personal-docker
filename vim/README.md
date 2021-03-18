@@ -198,3 +198,9 @@ I use Eclim for java synax check and youCompleteMe for autocomplete. You have to
     - for Maven project: You can save the pom.xml to trigger eclipse update .classpath and libraries.
     - for Gradle proecjt: You can save the .classpath to trigger eclipse update libraries.
 - You use `:ProjectImport ./ ` command to import project after restart container.
+
+
+## How to push multiple architecture
+- build image from different env
+- docker manifest create puritys/vimbase:8.2.0 --amend puritys/vimbase:8.2.0-amd64 --amend puritys/vimbase:8.2.0-arm64
+- docker manifest push puritys/vimbase:8.2.0

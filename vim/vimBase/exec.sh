@@ -15,13 +15,16 @@ port=""
 
 help () {
     echo "Usage:"
-    echo "-c: command, start / stop / build / root."
+    echo "-c: command, start / stop / build / root / buildx / dockerfile."
     echo "-d: Enable debug"
     echo "-v: Verions, -v 8.1.1"
+    echo "-a: arch, -a amd64 arm64"
 
     echo "Example: ./exec.sh -c build -v 8.1.1"
-}
+    echo "Example: ./exec.sh -c buildx -v 8.2.0 -a amd64 --push"
 
+}
+PUSH=""
 while true; do
     if [ "x$1" == "x" ];then
         break;
@@ -30,6 +33,9 @@ while true; do
       -c | --command   ) command=$2; shift 2 ;;
       -d | --debug ) DEBUG=true; shift 1 ;;
       -v | --version ) VERSION=$2; shift 2 ;;
+      -a | --arch) ARCH=$2; shift 2 ;;
+      --push) PUSH="--push"; shift 1 ;;
+
       -h | --help  )
           help
           shift 1
@@ -67,8 +73,40 @@ build() {
     if [ "x1" == "x$enableNodeDockerfileInclude" ]; then
         dockerfile-include  -i $dockername-$VERSION.doc -o Dockerfile
     fi
-    docker build -t $imageName  .
-    docker tag $imageName:latest $imageName:$VERSION
+    docker build -t $imageName:$VERSION  .
+}
+
+buildx() {
+    if [ -z $VERSION ]; then
+        echo "Need verions: -v 8.x"
+        exit 1
+    fi
+    if [ -z $ARCH ]; then
+        echo "Need arch: -a amd64 arm64"
+        exit 1
+    fi
+    ARCH_NAME="x64"
+    if [ $ARCH == "arm64" ];then
+        ARCH_NAME="arm64"
+    fi
+    rm -rf include_tmp
+    docker_my_init
+    if [ "x1" == "x$enableNodeDockerfileInclude" ]; then
+        dockerfile-include  -i $dockername-$VERSION.doc -o Dockerfile
+    fi
+    docker buildx build $PUSH --build-arg ARCH_NAME=$ARCH_NAME --platform linux/$ARCH -t $imageName:$VERSION-$ARCH .
+}
+
+dockerfile() {
+    if [ -z $VERSION ]; then
+        echo "Need verions: -v 8.x"
+        exit 1
+    fi
+    rm -rf include_tmp
+    docker_my_init
+    if [ "x1" == "x$enableNodeDockerfileInclude" ]; then
+        dockerfile-include  -i $dockername-$VERSION.doc -o Dockerfile
+    fi
 }
 
 if [ "x" != "x$command" ]; then
