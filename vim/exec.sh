@@ -17,9 +17,10 @@ rm -rf include_tmp/
 
 help () {
     echo "Usage:"
-    echo "-c: command, start / stop / build / root."
+    echo "-c: command, start / stop / build / buidx / root."
     echo "-d: Enable debug"
     echo "Example: ./exec.sh -c build"
+    echo "Example: ./exec.sh -c buildx -a amd64 --push"
 }
 
 while true; do
@@ -29,9 +30,11 @@ while true; do
     case "$1" in
       -c | --command   ) command=$2; shift 2 ;;
       -d | --debug ) DEBUG=true; shift 1 ;;
-      -h | --help  ) 
+      -a | --arch) ARCH=$2; shift 2 ;;
+      --push) PUSH="--push"; shift 1 ;;
+      -h | --help  )
           help
-          shift 1 
+          shift 1
           exit 0
           ;;
       --) echo "-- is not a correct option.";shift 1; ;;
@@ -43,8 +46,6 @@ setDockerMachineEnv tool;
 
 if [ "x" != "x$command" ]; then
     $command
-else 
+else
     help
 fi
-
-

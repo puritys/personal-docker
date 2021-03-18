@@ -202,5 +202,5 @@ I use Eclim for java synax check and youCompleteMe for autocomplete. You have to
 
 ## How to push multiple architecture
 - build image from different env
-- docker manifest create puritys/vimbase:8.2.0 --amend puritys/vimbase:8.2.0-amd64 --amend puritys/vimbase:8.2.0-arm64
-- docker manifest push puritys/vimbase:8.2.0
+- docker manifest create puritys/vim:latest --amend puritys/vim:latest-amd64 --amend puritys/vim:latest-arm64
+- docker manifest push puritys/vim:latest
