@@ -1,0 +1,101 @@
+FROM centos:8.3.2011
+
+RUN dnf install epel-release -y
+RUN dnf install -y sudo wget telnet openssh-server vim git ncurses-libs ncurses-term man glibc-langpack-en zip
+RUN dnf install -y gcc gcc-c++ clang make cmake ncurses-devel
+RUN ldconfig
+
+# protobuf need libatomic
+RUN dnf install libatomic bind-utils jq -y
+
+# install Xserver
+RUN dnf install -y openssh-server xorg-x11-server-Xvfb
+
+RUN dnf install -y passwd
+RUN ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa; \
+    passwd -d root;
+
+RUN mkdir -p /root/.ssh/; \
+    echo -e "StrictHostKeyChecking no\nUserKnownHostsFile=/dev/null" > /root/.ssh/config
+
+
+#
+# Install Programming language
+#
+
+# install python
+RUN dnf install -y python2 python3
+
+# install node
+RUN wget https://nodejs.org/dist/v12.16.1/node-v12.16.1-linux-arm64.tar.xz
+RUN tar -xf  node-v12.16.1-linux-arm64.tar.xz  --directory /usr/local --strip-components 1
+
+# install eslint
+RUN npm install -g eslint
+RUN npm install -g jsonlint -g
+COPY files/eslintrc.json /.eslintrc.json
+
+
+# ===============
+# Java
+# ===============
+
+RUN dnf install -y java
+
+# upgrade gradle
+RUN cd /root; \
+    wget https://downloads.gradle-dn.com/distributions/gradle-6.8.3-bin.zip; \
+    unzip gradle-6.8.3-bin.zip ; \
+    rm gradle-6.8.3-bin.zip ; \
+    rm -rf /usr/local/gradle; \
+    mv gradle-6.8.3 /usr/local/gradle
+
+
+## Upgrade eclipse-jdt for ale
+#RUN cd root ; \
+#    wget https://github.com/eclipse/eclipse.jdt.ls/archive/v0.38.0.tar.gz ; \
+#    tar -zxvf v0.38.0.tar.gz ; mv eclipse.jdt.ls-0.38.0 eclipse.jdt.ls; \
+#    cd eclipse.jdt.ls; \
+#     ./mvnw clean verify -Dmaven.test.skip=true ;
+#   tar -zcf eclipse.jdt.ls-0.52.1 eclipse.jdt.ls
+#   split -b 10M eclipse.jdt.ls-0.52.1.tar.gz
+COPY files/eclipse/ /root/eclipse/
+RUN cd /root/eclipse ; \
+    cat x* > eclipse.jdt.ls-0.52.1.tar.gz; \
+    tar -zxvf eclipse.jdt.ls-0.52.1.tar.gz; \
+    mv  /root/eclipse/eclipse.jdt.ls /root/; \
+    cd /root; \
+    rm -rf /root/eclipse /root/eclipse.jdt.ls*.gz
+
+# install java tools.jar to solve error : Could not find artifact com.sun:tools:jar:1.7.0
+RUN wget http://www.java2s.com/Code/JarDownload/tools/tools-1.7.0.jar.zip; \
+    unzip tools-1.7.0.jar.zip; \
+    rm tools*.zip; \
+    mkdir -p /root/lib; \
+    mv tools-1.7.0.jar /root/lib/tools.jar
+
+
+
+# install latest vim profile --with-features=huge
+RUN cd /root ; \
+    wget https://github.com/vim/vim/archive/v8.2.2566.tar.gz; \
+    tar -zxvf v8.2.2566.tar.gz ; \
+    mv /root/vim-8.2.2566 /root/vim; \
+    cd /root/vim ; ./configure --enable-multibyte --enable-pythoninterp=yes --prefix=/usr; \
+    cd /root/vim ; gmake ; gmake install ; cd /; rm -rf /root/vim* /root/v8*.gz
+
+RUN git clone https://github.com/puritys/dotfiles.git ; \
+    cd dotfiles; \
+    git pull; \
+    ./install.sh -i -p --ctags
+
+COPY files/.vimrc_plugins /root/.vimrc_plugins_tmp
+COPY files/JavaImp/ /root/.vim/JavaImp/
+
+# update plugin
+RUN rm -rf /root/.vim/plugged/ale/
+RUN echo "\n" | vim -u /root/.vimrc_plugins_tmp -c :PlugInstall +qall
+
+
+ENV BASH_ENV "/root/.bashrc"
+ENV PATH "/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/usr/local/gradle/bin"
