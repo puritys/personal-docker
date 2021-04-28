@@ -1,5 +1,7 @@
 FROM centos:8.3.2011
 
+ARG ARCH_NAME
+
 RUN dnf install epel-release -y
 RUN dnf install -y sudo wget telnet openssh-server vim git ncurses-libs ncurses-term man glibc-langpack-en zip
 RUN dnf install -y gcc gcc-c++ clang make cmake ncurses-devel
@@ -27,8 +29,8 @@ RUN mkdir -p /root/.ssh/; \
 RUN dnf install -y python2 python3
 
 # install node
-RUN wget https://nodejs.org/dist/v12.16.1/node-v12.16.1-linux-arm64.tar.xz
-RUN tar -xf  node-v12.16.1-linux-arm64.tar.xz  --directory /usr/local --strip-components 1
+RUN wget https://nodejs.org/dist/v12.16.1/node-v12.16.1-linux-$ARCH_NAME.tar.xz
+RUN tar -xf  node-v12.16.1-linux-$ARCH_NAME.tar.xz  --directory /usr/local --strip-components 1
 
 # install eslint
 RUN npm install -g eslint

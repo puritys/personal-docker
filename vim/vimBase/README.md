@@ -10,7 +10,7 @@ including vim8, eclim, YouCompleteMe, php, nodejs, java and golang
 update packages' version base on vimbase:8.1.
 
 - vim 8.2.0444
-- gradle 5.6.4 
+- gradle 5.6.4
 - nodejs 12.16.1
 - npm 6.13.4
 - java language server: eclipse.jdt.ls 0.52.1
@@ -35,7 +35,7 @@ Add more plugins base on vimbase:8.1.
 - java language server: eclipse.jdt.ls 0.39.0
     - https://github.com/eclipse/eclipse.jdt.ls
     - path: /root/eclipse.jdt.ls
-- vim plugin: YouCompleteMe: https://github.com/Valloric/YouCompleteMe 
+- vim plugin: YouCompleteMe: https://github.com/Valloric/YouCompleteMe
     - path: /root/.vim/plugged/YouCompleteMe/
 - php language server : https://github.com/felixfbecker/php-language-server
     - path: /root/vendor/bin/php-language-server.php
@@ -52,3 +52,8 @@ Add more plugins base on vimbase:8.1.
 - go 1.11.2
 - node v6.14.3
 - Xvfb
+
+## How to push multiple architecture
+- build image from different env
+- docker manifest create puritys/vimbase:8.2.0 --amend puritys/vimbase:8.2.0-amd64 --amend puritys/vimbase:8.2.0-arm64
+- docker manifest push puritys/vimbase:8.2.0

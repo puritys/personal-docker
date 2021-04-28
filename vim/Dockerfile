@@ -1,12 +1,12 @@
-from puritys/vimbase:8.1.2
+from puritys/vimbase:8.2.0
 
-COPY include_tmp/files/vimrc_customized /root/.vimrc_customized 
+COPY include_tmp/files/vimrc_customized /root/.vimrc_customized
 COPY include_tmp/files/.vimrc_plugins /root/.vimrc_plugins_tmp2
 COPY include_tmp/vimBase_files/JavaImp /root/.vim/JavaImp/
 
 RUN npm install -g jsonlint -g
 RUN rm -rf /root/.vim/plugged/ale/
-RUN echo "\n" | vim -u /root/.vimrc_plugins_tmp2 -c :PlugInstall +qall 
+RUN echo "\n" | vim -u /root/.vimrc_plugins_tmp2 -c :PlugInstall +qall
 
 RUN cd dotfiles; \
     git pull; \

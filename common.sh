@@ -27,6 +27,24 @@ build() {
     docker build -t $imageName  .
 }
 
+# build for multiple arch
+buildx() {
+    if [ -z $ARCH ]; then
+        echo "Need arch: -a amd64 arm64"
+        exit 1
+    fi
+    ARCH_NAME="x64"
+    if [ $ARCH == "arm64" ];then
+        ARCH_NAME="arm64"
+    fi
+    rm -rf include_tmp
+    docker_my_init
+    if [ "x1" == "x$enableNodeDockerfileInclude" ]; then
+        dockerfile-include  -i $dockerfile -o Dockerfile
+    fi
+    docker buildx build $PUSH --build-arg ARCH_NAME=$ARCH_NAME --platform linux/$ARCH -t $imageName:latest-$ARCH .
+}
+
 rebuild() {
     docker_my_init
     if [ "x1" == "x$enableNodeDockerfileInclude" ]; then
@@ -90,4 +108,3 @@ login () {
     docker_my_init
     docker exec -ti  $containerName /bin/bash
 }
-
