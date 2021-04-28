@@ -40,7 +40,7 @@ COPY files/eslintrc.json /.eslintrc.json
 # Java
 # ===============
 
-RUN dnf install -y java
+RUN dnf install -y java java-1.8.0-openjdk-devel
 
 # upgrade gradle
 RUN cd /root; \
@@ -66,14 +66,6 @@ RUN cd /root/eclipse ; \
     mv  /root/eclipse/eclipse.jdt.ls /root/; \
     cd /root; \
     rm -rf /root/eclipse /root/eclipse.jdt.ls*.gz
-
-# install java tools.jar to solve error : Could not find artifact com.sun:tools:jar:1.7.0
-RUN wget http://www.java2s.com/Code/JarDownload/tools/tools-1.7.0.jar.zip; \
-    unzip tools-1.7.0.jar.zip; \
-    rm tools*.zip; \
-    mkdir -p /root/lib; \
-    mv tools-1.7.0.jar /root/lib/tools.jar
-
 
 
 # install latest vim profile --with-features=huge
