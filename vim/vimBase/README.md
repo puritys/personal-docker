@@ -5,6 +5,18 @@
 
 including vim8, eclim, YouCompleteMe, php, nodejs, java and golang
 
+## vimbase:8.2.0
+- vim 8.2.2566
+- gradle 7.0
+- nodejs v12.16.1 , eslint
+- npm 6.13.4
+- java openjdk 1.8.0_292
+- java language server: eclipse.jdt.ls 0.52.1
+- python 2.7.17, 3.6.8 , pip2 , pip3
+- golang
+- php 7
+
+
 ## vimbase:8.1.2
 
 update packages' version base on vimbase:8.1.

@@ -26,13 +26,13 @@ RUN npm install -g eslint
 RUN npm install -g jsonlint -g
 COPY include_tmp/files/eslintrc.json /.eslintrc.json
 
-RUN dnf install -y java
+RUN dnf install -y java java-1.8.0-openjdk-devel
 RUN cd /root; \
-    wget https://downloads.gradle-dn.com/distributions/gradle-6.8.3-bin.zip; \
-    unzip gradle-6.8.3-bin.zip ; \
-    rm gradle-6.8.3-bin.zip ; \
+    wget https://downloads.gradle-dn.com/distributions/gradle-7.0-bin.zip; \
+    unzip gradle-7.0-bin.zip ; \
+    rm gradle-7.0-bin.zip ; \
     rm -rf /usr/local/gradle; \
-    mv gradle-6.8.3 /usr/local/gradle
+    mv gradle-7.0 /usr/local/gradle
 COPY include_tmp/files/eclipse /root/eclipse/
 RUN cd /root/eclipse ; \
     cat x* > eclipse.jdt.ls-0.52.1.tar.gz; \
@@ -40,17 +40,17 @@ RUN cd /root/eclipse ; \
     mv  /root/eclipse/eclipse.jdt.ls /root/; \
     cd /root; \
     rm -rf /root/eclipse /root/eclipse.jdt.ls*.gz
-RUN wget http://www.java2s.com/Code/JarDownload/tools/tools-1.7.0.jar.zip; \
-    unzip tools-1.7.0.jar.zip; \
-    rm tools*.zip; \
-    mkdir -p /root/lib; \
-    mv tools-1.7.0.jar /root/lib/tools.jar
+RUN yum install epel-release yum-utils -y ; \
+    yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm -y ; \
+    yum install php php-common php-opcache  php-cli php-gd php-curl php-mysqlnd -y ;
+RUN dnf install -y golang
 RUN cd /root ; \
     wget https://github.com/vim/vim/archive/v8.2.2566.tar.gz; \
     tar -zxvf v8.2.2566.tar.gz ; \
     mv /root/vim-8.2.2566 /root/vim; \
     cd /root/vim ; ./configure --enable-multibyte --enable-pythoninterp=yes --prefix=/usr; \
     cd /root/vim ; gmake ; gmake install ; cd /; rm -rf /root/vim* /root/v8*.gz
+
 
 RUN git clone https://github.com/puritys/dotfiles.git ; \
     cd dotfiles; \
