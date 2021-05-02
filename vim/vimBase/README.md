@@ -67,5 +67,6 @@ Add more plugins base on vimbase:8.1.
 
 ## How to push multiple architecture
 - build image from different env
+- docker manifest rm puritys/vimbase:8.2.0
 - docker manifest create puritys/vimbase:8.2.0 --amend puritys/vimbase:8.2.0-amd64 --amend puritys/vimbase:8.2.0-arm64
 - docker manifest push puritys/vimbase:8.2.0
