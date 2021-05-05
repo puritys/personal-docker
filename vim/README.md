@@ -205,3 +205,7 @@ I use Eclim for java synax check and youCompleteMe for autocomplete. You have to
 - docker manifest rm puritys/vim:latest
 - docker manifest create puritys/vim:latest --amend puritys/vim:latest-amd64 --amend puritys/vim:latest-arm64
 - docker manifest push puritys/vim:latest
+
+## login docker on Mac
+- security unlock-keychain
+- cat ~/.docker_paxx | docker login --username xxx --password-stdin
