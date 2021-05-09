@@ -43,6 +43,7 @@ buildx() {
         dockerfile-include  -i $dockerfile -o Dockerfile
     fi
     docker buildx build $PUSH --build-arg ARCH_NAME=$ARCH_NAME --platform linux/$ARCH -t $imageName:latest-$ARCH .
+    docker tag $imageName:latest-$ARCH $imageName:latest
 }
 
 rebuild() {
