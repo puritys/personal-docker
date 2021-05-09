@@ -95,6 +95,7 @@ buildx() {
         dockerfile-include  -i $dockername-$VERSION.doc -o Dockerfile
     fi
     docker buildx build $PUSH --build-arg ARCH_NAME=$ARCH_NAME --platform linux/$ARCH -t $imageName:$VERSION-$ARCH .
+    docker tag $imageName:$VERSION-$ARCH $imageName:$VERSION
 }
 
 dockerfile() {
