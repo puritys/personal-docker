@@ -80,6 +80,7 @@ if [ ! -f $IS_DOCKER_VIM_INIT_FILE ]; then
     plugins="$plugins let g:enablePluginAle =  $VIM_PLUGIN_ALE  \n"
     plugins="$plugins let g:enablePluginAleAutoComplete = $VIM_PLUGIN_ALE_AUTO_COMPLETE  \n"
     plugins="$plugins let g:enablePluginAirline =  $VIM_PLUGIN_AIRLINE  \n"
+    plugins="$plugins let g:enablePluginAleJavaagent = 1 \n"
 
     echo -e $plugins > ~/.vimrc_customized
 

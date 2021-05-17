@@ -3707,6 +3707,7 @@ Jstatd sun.tools.jstatd.Jstatd
 JStatLogger sun.tools.jstat.JStatLogger
 Jstat sun.tools.jstat.Jstat
 JsonNode com.fasterxml.jackson.databind.JsonNode
+JsonPath com.jayway.jsonpath.JsonPath
 JTabbedPane javax.swing.JTabbedPane
 JTableHeader javax.swing.table.JTableHeader
 JTable javax.swing.JTable
