@@ -42,7 +42,7 @@ buildx() {
     if [ "x1" == "x$enableNodeDockerfileInclude" ]; then
         dockerfile-include  -i $dockerfile -o Dockerfile
     fi
-    docker buildx build $PUSH --build-arg ARCH_NAME=$ARCH_NAME --platform linux/$ARCH -t $imageName:latest-$ARCH .
+    docker buildx build $noCache $PUSH --build-arg ARCH_NAME=$ARCH_NAME --platform linux/$ARCH -t $imageName:latest-$ARCH .
     docker tag $imageName:latest-$ARCH $imageName:latest
 }
 
