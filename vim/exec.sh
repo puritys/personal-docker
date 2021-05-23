@@ -17,12 +17,12 @@ rm -rf include_tmp/
 
 help () {
     echo "Usage:"
-    echo "-c: command, start / stop / build / buidx / root."
+    echo "-c: command, start / stop / build / buildx / root."
     echo "-d: Enable debug"
     echo "Example: ./exec.sh -c build"
-    echo "Example: ./exec.sh -c buildx -a amd64 --push"
+    echo "Example: ./exec.sh -c buildx -a amd64 --noCache --push"
 }
-
+noCache=""
 while true; do
     if [ "x$1" == "x" ];then
         break;
@@ -31,6 +31,8 @@ while true; do
       -c | --command   ) command=$2; shift 2 ;;
       -d | --debug ) DEBUG=true; shift 1 ;;
       -a | --arch) ARCH=$2; shift 2 ;;
+      --noCache) noCache="--no-cache"; shift 1 ;;
+
       --push) PUSH="--push"; shift 1 ;;
       -h | --help  )
           help
