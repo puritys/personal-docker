@@ -1,0 +1,35 @@
+FROM centos:7.4.1708
+include ../../common/centos_gcc.doc
+
+RUN yum install -y bzip2 openssl-devel tcl-devel wget rpm-build
+
+# install automake
+RUN wget http://ftp.gnu.org/gnu/automake/automake-1.16.1.tar.gz; \
+    tar -zxvf automake-1.16.1.tar.gz; \
+    cd automake-1.16.1; \
+    ./configure --prefix=/usr/; \
+    gmake install;
+
+RUN wget http://apache.mirrors.ovh.net/ftp.apache.org/dist/trafficserver/trafficserver-7.1.12.tar.bz2
+RUN tar -jxf trafficserver-7.1.12.tar.bz2
+
+# compile
+RUN mkdir -p ~/rpmbuild/{RPMS,SRPMS,BUILD,SOURCES,SPECS,tmp}; \
+    cp trafficserver-7.1.12.tar.bz2 ~/rpmbuild/SOURCES/; \
+    cp -r trafficserver-7.1.12 /root/rpmbuild/BUILD/; \
+    cd /root/rpmbuild/BUILD/trafficserver-7.1.12; \
+    ./configure
+
+RUN cd /root/rpmbuild/BUILD/trafficserver-7.1.12; \
+    gmake CFLAGS+=-w install;
+
+# build package
+RUN cd /root/rpmbuild/BUILD; \
+    tar -jcf /root/rpmbuild/SOURCES/trafficserver-7.1.12.tar.bz2  trafficserver-7.1.12; \
+
+
+# rpmbuild -bb /app/trafficserver.spec  --buildroot /root/rpmbuild/BUILDROOT/
+# /root/rpmbuild/RPMS/x86_64/trafficserver-7.1.12-1.el7.centos.x86_64.rpm
+
+ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/bin/
+

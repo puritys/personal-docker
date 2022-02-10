@@ -1,0 +1,9 @@
+RUN yum install zlib-devel -y
+RUN wget https://www.python.org/ftp/python/3.5.0/Python-3.5.0.tgz
+RUN tar -zxvf Python-3.5.0.tgz
+RUN cd Python-3.5.0; \
+    ./configure --prefix=/usr/local ; \
+    gmake
+RUN cd Python-3.5.0; sudo gmake install
+RUN wget https://bootstrap.pypa.io/get-pip.py
+RUN /usr/local/bin/python3.5 get-pip.py

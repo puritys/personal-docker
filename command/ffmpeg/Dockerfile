@@ -1,0 +1,21 @@
+FROM centos:6
+RUN yum install gcc gcc-c++ make cmake -y
+
+RUN yum install ncurses-devel -y
+RUN yum upgrade  ncurses-libs ncurses-term ncurses-devel -y
+RUN ldconfig
+
+RUN yum install -y sudo wget telnet openssh-server vim git ncurses-libs ncurses-term screen
+RUN yum install -y  libX11-devel xorg-x11-server-Xvfb
+RUN cd /root && wget http://pkgrepo.linuxtech.net/el6/release/x86_64/libfaac-devel-1.28-3.el6.x86_64.rpm
+RUN cd /root && wget http://pkgrepo.linuxtech.net/el6/release/x86_64/libfaac-1.28-3.el6.x86_64.rpm
+RUN cd /root && wget http://pkgrepo.linuxtech.net/el6/release/x86_64/libx264_125-0.125-0.20121107.1.el6.x86_64.rpm
+RUN cd /root && wget http://pkgrepo.linuxtech.net/el6/release/x86_64/libx264-devel-0.125-0.20121107.1.el6.x86_64.rpm
+RUN cd /root; rpm -ivh --force *.rpm
+
+RUN cd /root && wget http://ffmpeg.org/releases/ffmpeg-3.4.tar.gz
+RUN cd /root ; tar -zxvf ffmpeg-3.4.tar.gz
+RUN cd /root/ffmpeg-3.4; \
+    ./configure --prefix=/usr/local/ --disable-yasm --enable-avisynth  --enable-nonfree --enable-libx264 --enable-gpl ; \
+    make ;\
+    make install

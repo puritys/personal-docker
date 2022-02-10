@@ -1,0 +1,16 @@
+include ../common/centos7.doc
+include ../common/centos_gcc.doc
+
+RUN sudo yum install autoconf libcurl-devel expat-devel gcc gettext-devel kernel-headers openssl-devel perl-devel zlib-devel  openssl-devel  -y
+RUN curl --tlsv1.2 -O -L https://github.com/git/git/archive/v2.16.3.tar.gz
+RUN tar -zxvf v2.16.3.tar.gz
+RUN cd git-2.16.3; \
+    make clean; \
+    make configure; \
+    ./configure --prefix=/; \
+    make \
+
+RUN cd git-2.16.3; \
+    make install 
+
+

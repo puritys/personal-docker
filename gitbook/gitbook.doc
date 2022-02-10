@@ -1,0 +1,30 @@
+include ../common/centos7.doc
+include ../common/centos_gcc.doc
+include ../common/node8.doc
+
+RUN yum install xorg-x11-server-Xvfb hicolor-icon-theme qt5-qtbase-devel libXrender qt5-qtwebkit -y 
+RUN npm install gitbook-convert gitbook-cli -g
+RUN cd root ; gitbook init ./temp ; cd temp; gitbook build
+
+# install calibre for generate pdf
+RUN wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin
+
+ENV DISPLAY :2
+
+
+# Install chinese font
+RUN yum install unzip -y
+RUN wget https://noto-website-2.storage.googleapis.com/pkgs/NotoSansCJKsc-hinted.zip
+RUN unzip NotoSansCJKsc-hinted.zip
+RUN mkdir -p /usr/share/fonts/noto/ ; \
+    mv *.otf /usr/share/fonts/noto/ ; \
+    fc-cache -f -v
+
+
+COPY files/exec.sh /root/
+RUN chmod -x /root/exec.sh
+
+WORKDIR /gitbook
+EXPOSE 4000
+
+ENTRYPOINT ["sh", "/root/exec.sh"]

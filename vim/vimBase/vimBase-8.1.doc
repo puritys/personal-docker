@@ -1,0 +1,141 @@
+# Keep image, nevec build it agent.
+# Don't build FROM centos:7.6.1810
+
+RUN yum install -y sudo wget telnet openssh-server vim git ncurses-libs ncurses-term screen man unzip
+RUN ldconfig
+
+RUN wget http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm
+RUN rpm -ivh epel-release-7-11.noarch.rpm
+
+RUN yum install gcc gcc-c++ clang make cmake -y
+RUN yum install ncurses-devel -y
+RUN yum upgrade  ncurses-libs ncurses-term ncurses-devel -y
+
+# update system time
+RUN yum install ntp -y ; \
+    ntpdate -s time.stdtime.gov.tw
+
+RUN yum install -y python-devel openssh-server xorg-x11-server-Xvfb
+RUN ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa; \
+    passwd -d root;
+
+# vim profile --with-features=huge
+RUN cd /root ; \
+    wget https://github.com/vim/vim/archive/v8.1.1317.tar.gz; \
+    tar -zxvf v8.1.1317.tar.gz ; \
+    mv /root/vim-8.1.1317 /root/vim; \
+    cd /root/vim ; ./configure --enable-multibyte --enable-pythoninterp=yes --prefix=/usr; \
+    cd /root/vim ; gmake ; gmake install ; cd /; rm -rf /root/vim* /root/v8*.gz
+
+
+# install node
+RUN yum install nodejs npm -y
+
+
+# ===============
+# Java
+# ===============
+
+# install Java 11
+RUN cd /root; \
+    wget https://download.java.net/java/GA/jdk11/13/GPL/openjdk-11.0.1_linux-x64_bin.tar.gz ;\
+    tar -zxvf openjdk-11.0.1_linux-x64_bin.tar.gz; \
+    rm *.gz; \
+    mv jdk-11.0.1 jdk; \
+    cp jdk ;\
+    alternatives --install /usr/bin/java java /root/jdk/bin/java  2 ; \
+    alternatives --install /usr/bin/javac javac /root/jdk/bin/javac  2 ; \
+    alternatives --install /usr/bin/jar jar /root/jdk/bin/jar  2; \
+    alternatives --install /usr/bin/jlink jlink /root/jdk/bin/jlink  2; \
+    cd /root ;\
+    wget https://www-eu.apache.org/dist/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz ;\
+    tar -zxvf apache-maven-3.6.0-bin.tar.gz ; \
+    rm *.gz ; \
+    alternatives --install /usr/bin/mvn mvn /root/apache-maven-3.6.0/bin/mvn 2 ; \
+    alternatives --set mvn  /root/apache-maven-3.6.0/bin/mvn ; \
+    wget https://downloads.gradle.org/distributions/gradle-5.2.1-bin.zip ; \
+    unzip gradle-5.2.1-bin.zip ; \
+    rm gradle-5.2.1-bin.zip ; \
+    mv gradle-5.2.1 /usr/local/gradle
+
+# install java tools.jar to solve error : Could not find artifact com.sun:tools:jar:1.7.0
+RUN wget http://www.java2s.com/Code/JarDownload/tools/tools-1.7.0.jar.zip; \
+    unzip tools-1.7.0.jar.zip; \
+    rm tools*.zip; \
+    mkdir -p /root/lib; \
+    mv tools-1.7.0.jar /root/lib/tools.jar
+
+# ===============
+# Python
+# ===============
+
+# install pylint
+RUN sudo yum install pylint -y
+
+
+# install php7
+RUN yum install epel-release yum-utils -y ; \
+    yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm -y ; \
+    yum-config-manager --enable remi-php72 ; \
+    yum install php php-common php-opcache php-mcrypt php-cli php-gd php-curl php-mysqlnd -y ;
+
+# Install php composer
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" ; \
+    php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" ; \
+    php composer-setup.php; \
+    php -r "unlink('composer-setup.php');" ; \
+    mv composer.phar /usr/local/bin/composer
+
+# install php language server
+RUN cd /root; \
+    echo -e "{\"minimum-stability\": \"dev\",\"prefer-stable\": true}" > composer.json ; \
+    composer require felixfbecker/language-server ; \
+    composer run-script --working-dir=vendor/felixfbecker/language-server parse-stubs
+
+# install go
+RUN wget https://dl.google.com/go/go1.11.4.linux-amd64.tar.gz; \
+    tar -C /usr/local -zxf go1.11.4.linux-amd64.tar.gz;\
+    rm go*.linux-amd64.tar.gz
+
+RUN git clone https://github.com/puritys/dotfiles.git; \
+    cd dotfiles; \
+    ./install.sh -i
+
+# Install YouCompleteMe
+RUN npm install -g typescript
+RUN export PATH=$PATH:/usr/local/go/bin; \
+    yum -y install cmake python-devel; \
+    rm -rf ~/.vim/plugged/YouCompleteMe; \
+    git clone https://github.com/Valloric/YouCompleteMe.git ~/.vim/plugged/YouCompleteMe; \
+    cd ~/.vim/plugged/YouCompleteMe; \
+    git submodule update --init --recursive ; \
+    python2 ./install.py --clang-completer --gocode-completer --java-completer --js-completer;
+
+
+## Install eclipse-jdt for ale
+#RUN cd root ; \
+#    wget https://github.com/eclipse/eclipse.jdt.ls/archive/v0.38.0.tar.gz ; \
+#    tar -zxvf v0.38.0.tar.gz ; mv eclipse.jdt.ls-0.38.0 eclipse.jdt.ls; \ 
+#    cd eclipse.jdt.ls; \
+#     ./mvnw clean verify -Dmaven.test.skip=true ;
+COPY files/eclipse/ /root/eclipse/
+RUN cd root/eclipse ; \
+    cat x* > eclipse.jdt.ls-0.39.0.tar.gz; \
+    tar -zxvf eclipse.jdt.ls-0.39.0.tar.gz; \
+    mv  Users/puritys/eclipse.jdt.ls /root/; \
+    rm -rf Users eclipse.jdt.ls*.gz; \
+    cd /root ; \
+    rm -rf eclipse
+
+COPY files/.vimrc_plugins /root/.vimrc_plugins_tmp
+COPY files/JavaImp/ /root/.vim/JavaImp/
+RUN echo "\n" | vim -u /root/.vimrc_plugins_tmp -c :PlugInstall +qall 
+
+# update dotfile again
+RUN echo "v2"; \
+    cd dotfiles; \
+    git pull; \
+    ./install.sh -i
+
+ENV BASH_ENV "/root/.bashrc"
+ENV PATH "/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/usr/local/gradle/bin"

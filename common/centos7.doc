@@ -1,0 +1,7 @@
+FROM centos:7.9.2009
+
+RUN yum install -y sudo wget telnet openssh-server vim git ncurses-libs ncurses-term screen man
+RUN ldconfig
+
+RUN wget http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-14.noarch.rpm
+RUN rpm -ivh epel-release-7-14.noarch.rpm

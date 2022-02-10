@@ -1,0 +1,127 @@
+FROM centos:8.4.2105
+
+ARG ARCH_NAME
+
+RUN dnf install epel-release -y
+RUN dnf install -y sudo wget telnet openssh-server vim git ncurses-libs ncurses-term man glibc-langpack-en zip
+RUN dnf install -y gcc gcc-c++ clang make cmake ncurses-devel
+RUN ldconfig
+
+# protobuf need libatomic
+RUN dnf install libatomic bind-utils jq -y
+
+# install Xserver
+RUN dnf install -y openssh-server xorg-x11-server-Xvfb
+
+RUN dnf install -y passwd
+RUN ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa; \
+    passwd -d root;
+
+RUN mkdir -p /root/.ssh/; \
+    echo -e "StrictHostKeyChecking no\nUserKnownHostsFile=/dev/null" > /root/.ssh/config
+
+
+# install node
+RUN wget https://nodejs.org/dist/v12.16.1/node-v12.16.1-linux-$ARCH_NAME.tar.xz
+RUN tar -xf  node-v12.16.1-linux-$ARCH_NAME.tar.xz  --directory /usr/local --strip-components 1
+
+# install eslint
+RUN npm install -g eslint
+RUN npm install -g jsonlint -g
+COPY files/eslintrc.json /.eslintrc.json
+
+#
+# Install Programming language
+#
+
+# install python
+RUN dnf install -y python2 python3 python2-devel python3-devel
+
+# install python plugin
+RUN npm install -g pyright
+
+
+# ===============
+# Java
+# ===============
+
+RUN dnf install -y java-11-openjdk-devel maven
+RUN alternatives --set java /usr/lib/jvm/java-11-openjdk-11.0.12.0.7-0.el8_4.*/bin/java
+
+# upgrade gradle
+RUN cd /root; \
+    wget https://downloads.gradle-dn.com/distributions/gradle-7.0-bin.zip; \
+    unzip gradle-7.0-bin.zip ; \
+    rm gradle-7.0-bin.zip ; \
+    rm -rf /usr/local/gradle; \
+    mv gradle-7.0 /usr/local/gradle
+
+## Upgrade eclipse-jdt for ale
+#RUN cd root ; \
+#    wget https://github.com/eclipse/eclipse.jdt.ls/archive/v0.38.0.tar.gz ; \
+#    tar -zxvf v0.38.0.tar.gz ; mv eclipse.jdt.ls-0.38.0 eclipse.jdt.ls; \
+#    cd eclipse.jdt.ls; \
+#     ./mvnw clean verify -Dmaven.test.skip=true ;
+#   tar -zcf eclipse.jdt.ls-0.52.1.tar.gz eclipse.jdt.ls
+#   split -b 10M eclipse.jdt.ls-0.52.1.tar.gz
+#COPY files/eclipse/ /root/eclipse/
+#RUN cd /root/eclipse ; \
+#    cat x* > eclipse.jdt.ls-1.3.0.tar.gz; \
+#    tar -zxvf eclipse.jdt.ls-1.3.0.tar.gz; \
+#    mv  /root/eclipse/eclipse.jdt.ls /root/; \
+#    cd /root; \
+#    rm -rf /root/eclipse /root/eclipse.jdt.ls*.gz
+
+RUN mkdir -p /root/.config/coc/extensions/coc-java-data/server; \
+    wget https://download.eclipse.org/jdtls/snapshots/jdt-language-server-1.5.0-202110112143.tar.gz ;\
+    tar -zxvf jdt-language-server-1.5.0-202110112143.tar.gz ;\
+    rm -rf jdt-language-server-1.5.0-202110112143.tar.gz; \
+    ln -sf /root/.config/coc/extensions/coc-java-data/server /root/eclipse
+
+# install php7
+RUN yum install epel-release yum-utils -y ; \
+    yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm -y ; \
+    yum install php php-common php-opcache  php-cli php-gd php-curl php-mysqlnd php-json -y ;
+
+# install golang
+RUN dnf install -y golang
+
+# install gopls
+RUN export GOPATH=$(go env GOPATH)
+RUN GO111MODULE=on go get golang.org/x/tools/gopls@latest
+
+# install latest vim profile --with-features=huge
+RUN cd /root ; \
+    wget https://github.com/vim/vim/archive/v8.2.3401.tar.gz; \
+    tar -zxvf v8.2.3401.tar.gz ; \
+    mv /root/vim-8.2.3401 /root/vim; \
+    cd /root/vim ; ./configure --prefix=/usr  --enable-multibyte \
+         --enable-pythoninterp=yes --with-python2-config-dir=/usr/bin/ \
+        --enable-python3interp=yes --with-python3-config-dir=/usr/bin/;  \
+    cd /root/vim ; gmake ; gmake install ; cd /; rm -rf /root/vim* /root/v8*.gz
+
+RUN mkdir -p /root/.vim/JavaImp/cache
+
+RUN echo "update 1"
+RUN git clone https://github.com/puritys/dotfiles.git ; \
+    cd dotfiles; \
+    git pull; \
+    ./install.sh -i -p --ctags
+
+COPY files/.vimrc_plugins /root/.vimrc_plugins_tmp
+COPY files/JavaImp/ /root/.vim/JavaImp/
+
+# update plugin
+RUN rm -rf /root/.vim/plugged/ale/
+RUN echo "\n" | vim -u /root/.vimrc_plugins_tmp -c :PlugInstall +qall
+# install coc snippet
+RUN mkdir -p ~/.config/coc/extensions; \
+    cd ~/.config/coc/extensions; \
+    npm install coc-snippets --global-style --ignore-scripts --no-bin-links --no-package-lock --only=prod; \
+    if [ "$ARCH_NAME" == "x86_64" ]; then \
+        npm install coc-tabnine coc-snippets --global-style --ignore-scripts --no-bin-links --no-package-lock --only=prod; \
+    fi
+# coc-json coc-tsserver coc-java coc-pyright coc-phpls
+
+ENV BASH_ENV "/root/.bashrc"
+ENV PATH "/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/usr/local/gradle/bin"

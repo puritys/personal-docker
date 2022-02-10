@@ -1,0 +1,34 @@
+FROM centos:7.4.1708
+
+#include ../common/centos_gcc.doc
+#RUN yum install -y bzip2 openssl-devel tcl-devel wget
+#RUN wget http://apache.mirrors.ovh.net/ftp.apache.org/dist/trafficserver/trafficserver-7.1.5.tar.bz2
+#RUN tar -jxvf trafficserver-7.1.5.tar.bz2; \
+#    cd trafficserver-7.1.5; \
+#    ./configure; \
+#    gmake install; \
+#    rm -rf trafficserver-7.1.5 /*.bz2 /tmp
+
+RUN yum install -y hwloc openssl perl-URI tcl
+
+COPY files/start.sh     /root/
+COPY files/remap.sh     /root/
+COPY files/records.sh   /root/
+COPY files/ssl_multicert.sh /root/
+COPY files/logging.sh /root/
+COPY files/trafficserver-7.1.8-1.el7.centos.x86_64.rpm /root/
+COPY files/cert.pem /usr/local/etc/trafficserver/
+COPY files/ip_allow.config /root/
+
+RUN rpm -ivh /root/trafficserver-7.1.8-1.el7.centos.x86_64.rpm
+
+RUN mkdir -p /usr/local/etc/trafficserver/ /usr/local/var/log/trafficserver/ /usr/local/var/trafficserver
+RUN chown -R nobody /usr/local/etc/trafficserver/ /usr/local/var/log/trafficserver/ /usr/local/var/trafficserver; \
+    chmod -R 755 /usr/local/etc/trafficserver/ /usr/local/var/log/trafficserver/ /usr/local/var/trafficserver;
+
+RUN chmod +x /root/start.sh
+ENV ATS_REMAP="map / http://127.0.0.1:8080/"
+ENV ATS_SERVER_PORTS="80 443:ssl"
+ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/bin/
+CMD ["/root/start.sh"]
+

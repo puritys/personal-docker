@@ -1,0 +1,35 @@
+from puritys/vimbase:8
+
+RUN yum install unzip clang -y
+
+# install gradle
+RUN wget https://downloads.gradle.org/distributions/gradle-5.2.1-bin.zip ; \
+    unzip gradle-5.2.1-bin.zip ; \
+    rm gradle-5.2.1-bin.zip ; \
+    mv gradle-5.2.1 /usr/local/gradle
+
+# Update dotfiles
+RUN echo "update v36";
+COPY files/vimrc_customized /root/.vimrc_customized 
+RUN cd dotfiles; \
+    rm -rf /root/.vim/JavaImp /root/openjdk/; \
+    git pull; \
+    cp vim/javaPlugin/google_checks.xml /usr/local/etc/; \
+    cp vim/javaPlugin/checkstyle.xml /usr/local/etc/ ; \
+    mkdir -p /root/eclipse-workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/; \
+    cp vim/javaPlugin/eclim_settings /root/eclipse-workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclim.prefs ; \
+    sh vim/javaPlugin/eclipse_config/org.eclipse.jdt.core.prefs.sh > /root/eclipse-workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.jdt.core.prefs ; \
+    sudo chmod -R 777 /root/eclipse-workspace/ ; \
+    ./install.sh -p --javaImp --ctags ;\
+    rm /root/openjdk/*.zip
+
+COPY files/sshd_config /etc/ssh/sshd_config
+COPY files/pam.sshd /etc/pam.d/sshd
+COPY files/start.sh /root/start.sh
+COPY files/bash_customized /root/.bash_customized
+COPY files/bash_host       /root/.bash_host
+COPY files/startEclim.sh   /dotfiles/startEclim.sh
+COPY files/startEclim.sh   /root/startEclim.sh
+
+ENV BASH_ENV "/root/.bashrc"
+ENV PATH "/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/usr/local/gradle/bin"

@@ -1,0 +1,113 @@
+host="VIM"
+
+## Only execute this file once for initialize settings.
+
+IS_DOCKER_VIM_INIT_FILE=~/.IS_DOCKER_VIM_INIT
+
+if [ ! -f $IS_DOCKER_VIM_INIT_FILE ]; then
+    echo -e "=== initialize docker vim setting === \n\n"
+
+    # ==========
+    # Set default value
+    # ==========
+    if [ "x" == "x$VIM_THEME" ]; then
+        VIM_THEME="nord"
+    fi
+
+    # ==========
+    # Set customized style by enviroment settings
+    # ==========
+
+
+    if [ "x" != "x$VIMRC" ]; then
+        sudo cp $VIMRC ~/.vimrc
+    fi
+
+    if [ "x" != "x$VIM_THEME" ] && [ ! -f "/tmp/first_setenv" ]; then
+        sudo sed "s/^colors [a-z0-9A-Z_-]*/colors $VIM_THEME/" -i ~/.vimrc_plugins
+    fi
+
+    declare -a custEnv
+    custEnvFile="/root/.custEnv"
+    custEnvKeyList="enableCustFont"
+    custEnvKeyList=(${custEnvKeyList// / });
+    custEnv["enableCustFont"]=""
+    if [ ! -z $CUST_FONT ] && [ "1" == $CUST_FONT ]; then
+        custEnv["enableCustFont"]=1
+    fi
+
+    content=""
+    for key in "${custEnvKeyList[@]}"
+    do
+        content="\n$key=${custEnv[$key]}"
+    done
+    echo -e $content > $custEnvFile
+
+
+    # ======================
+    # Build vimrc customized
+    # ======================
+    if [ "x" == "x$VIM_PLUGIN_LightLine" ]; then
+        VIM_PLUGIN_LightLine=1
+    fi
+    if [ "x" == "x$VIM_PLUGIN_YouCompleteMe" ]; then
+        VIM_PLUGIN_YouCompleteMe=0
+    fi
+    if [ "x" == "x$VIM_PLUGIN_YouCompleteMe_ENABLE_SYNTAX" ]; then
+        VIM_PLUGIN_YouCompleteMe_ENABLE_SYNTAX=1
+    fi
+    if [ "x" == "x$VIM_PLUGIN_YouCompleteMe_auto_trigger" ]; then
+        VIM_PLUGIN_YouCompleteMe_auto_trigger=1
+    fi
+    if [ "x" == "x$VIM_PLUGIN_Eclim" ]; then
+        VIM_PLUGIN_Eclim=0
+    fi
+    if [ "x" == "x$VIM_PLUGIN_ALE" ]; then
+        VIM_PLUGIN_ALE=1
+    fi
+    if [ "x" == "x$VIM_PLUGIN_ALE_AUTO_COMPLETE" ]; then
+        VIM_PLUGIN_ALE_AUTO_COMPLETE=1
+    fi
+    if [ "x" == "x$VIM_PLUGIN_AIRLINE" ]; then
+        VIM_PLUGIN_AIRLINE=1
+    fi
+
+    plugins="let g:enablePluginLightLine = $VIM_PLUGIN_LightLine  \n"
+    plugins="$plugins let g:enablePluginYouCompleteMe = $VIM_PLUGIN_YouCompleteMe  \n"
+    plugins="$plugins let g:enablePluginYouCompleteMeSyntax =  $VIM_PLUGIN_YouCompleteMe_ENABLE_SYNTAX  \n"
+    plugins="$plugins let g:enablePluginEclim =  $VIM_PLUGIN_Eclim  \n"
+    plugins="$plugins let g:ycm_auto_trigger =  $VIM_PLUGIN_YouCompleteMe_auto_trigger  \n"
+    plugins="$plugins let g:enablePluginAle =  $VIM_PLUGIN_ALE  \n"
+    plugins="$plugins let g:enablePluginAleAutoComplete = $VIM_PLUGIN_ALE_AUTO_COMPLETE  \n"
+    plugins="$plugins let g:enablePluginAirline =  $VIM_PLUGIN_AIRLINE  \n"
+    plugins="$plugins let g:enablePluginAleJavaagent = 1 \n"
+
+    echo -e $plugins > ~/.vimrc_customized
+
+
+
+    # set environment for ssh login (Only run once for all settings this is useless now)
+    #env="VIM_THEME=$VIM_THEME\nVIMRC_CUSTOMIZED=$VIMRC_CUSTOMIZED\nVIM_PLUGIN_LightLine=$VIM_PLUGIN_LightLine\nVIM_PLUGIN_YouCompleteMe=$VIM_PLUGIN_YouCompleteMe\nVIM_PLUGIN_Eclim=$VIM_PLUGIN_Eclim\nVIM_PLUGIN_YouCompleteMe_ENABLE_SYNTAX=$VIM_PLUGIN_YouCompleteMe_ENABLE_SYNTAX\nVIM_PLUGIN_YouCompleteMe_auto_trigger=$VIM_PLUGIN_YouCompleteMe_auto_trigger\nVIM_PLUGIN_ALE=$VIM_PLUGIN_ALE\nVIM_PLUGIN_ALE_AUTO_COMPLETE=$VIM_PLUGIN_ALE_AUTO_COMPLETE\nCUST_FONT=$CUST_FONT\nVIM_PLUGIN_AIRLINE=$VIM_PLUGIN_AIRLINE"
+    #echo -e $env > /root/.ssh/environment
+
+    #if [ "x" != "x$USER" ]; then
+    #    hasUser=`grep "/home/puritys" /etc/passwd | wc -l`
+    #    if [ "x0" == "x$hasUser" ];then
+    #        passwd -d $USER
+    #        useradd -g root $USER
+    #        passwd -d $USER
+    #        sudo rm -rf /home/$USER
+    #        sudo ln -sf /root /home/$USER
+    #        sudo chown $USER /home/$USER/.ssh/*
+    #        echo "$USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+    #    fi
+    #fi
+
+    if [ -f /tmp/.fasd ]; then
+        sudo chmod 777 /tmp/.fasd
+    fi
+    touch $IS_DOCKER_VIM_INIT_FILE
+fi
+
+ln -sf /usr/lib/jvm/java-11-openjdk-11.0.* /usr/local/java_home
+export JAVA_HOME=/usr/local/java_home

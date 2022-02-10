@@ -1,0 +1,5 @@
+RUN yum install autoconf gcc gcc-c++ make cmake -y
+
+RUN yum install ncurses-devel -y
+RUN yum upgrade  ncurses-libs ncurses-term ncurses-devel -y
+RUN ldconfig

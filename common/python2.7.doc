@@ -1,0 +1,22 @@
+
+# Intsall Python 2.7
+RUN if [ -f "/usr/bin/python" ]; then cp /usr/bin/python /usr/bin/python_legacy; fi
+RUN sed -i 's/\/usr\/bin\/python/\/usr\/bin\/python_legacy/' /usr/bin/yum /usr/libexec/urlgrabber-ext-down
+RUN yum install -y zlib-devel openssl-devel
+RUN wget https://www.python.org/ftp/python/2.7.14/Python-2.7.14.tar.xz
+RUN tar -xvf Python-2.7.14.tar.xz
+RUN cd Python-2.7.14 ; \
+    ./configure --prefix=/usr/local/share/python2.7 --with-zlib=/usr/include --enable-unicode=ucs4; \
+    gmake 
+#--enable-optimizations;
+RUN cd Python-2.7.14; gmake install
+
+RUN ln -sf /usr/local/share/python2.7/bin/python2.7 /usr/local/bin/python2.7
+RUN ln -sf /usr/local/share/python2.7/bin/python2.7 /usr/bin/python2.7
+RUN cd Python-2.7.14; python2.7 setup.py install
+RUN wget https://bootstrap.pypa.io/get-pip.py
+RUN python2.7 get-pip.py
+RUN ln -sf /usr/local/share/python2.7/bin/pip /usr/local/bin/pip2.7
+RUN ln -sf /usr/local/share/python2.7/bin/pip /usr/bin/pip2.7
+
+RUN rm -rf Python-2.7.14 Python-2.7.14.tar.xz

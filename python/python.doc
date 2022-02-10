@@ -1,0 +1,9 @@
+
+include ../common/centos7.doc
+include ../common/centos_gcc.doc
+include ../common/python2.7.doc
+
+# copy /usr/local/share/python2.7/lib/site-packages/ to /www/python2.7_modules/
+#ENV PYTHONPATH /usr/local/share/python2.7/lib/site-packages/:/www/python2.7_modules/
+
+COPY files/start.sh /root/
