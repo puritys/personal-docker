@@ -16,12 +16,12 @@ RUN cd dotfiles; \
     ./install.sh -p
 
 
-COPY files/eclipseAnnotationProcessor/lombok.jar /usr/local/lib/lombok.jar
 COPY files/sshd_config /etc/ssh/sshd_config
 COPY files/pam.sshd /etc/pam.d/sshd
 COPY files/start.sh /root/start.sh
 COPY files/bash_customized /root/.bash_customized
 COPY files/bash_host       /root/.bash_host
 
+#ENV JAVA_HOME "/usr/lib/jvm/java-11-openjdk-11.0.13.0.8-4.el8_5.x86_64/"
 ENV BASH_ENV "/root/.bashrc"
 ENV PATH "/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/usr/local/gradle/bin"

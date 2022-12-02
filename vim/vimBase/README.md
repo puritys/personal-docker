@@ -3,16 +3,16 @@
 - https://hub.docker.com/r/puritys/vimbase
 - https://hub.docker.com/r/puritys/vim
 
-including vim8, eclim, YouCompleteMe, php, nodejs, java and golang
+including neovim, Coc, php, nodejs, java and golang
 
 ## vimbase:8.3.0
 
 use coc to replace most ale features
-- neovim 0.5.1, vim 8.4.2105
+- neovim 0.6.1
 - gradle 7.0
-- nodejs v12.16.1 , eslint
+- nodejs v16.18.1 , eslint
 - npm 6.13.4
-- java openjdk 1.8.0_292
+- java openjdk 1.8.0_292 & 11
 - python 2.7.17, 3.6.8 , pip2 , pip3, pyright
 - golang, gopls
 - php 7
