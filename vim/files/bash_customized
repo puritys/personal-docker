@@ -111,3 +111,5 @@ fi
 
 ln -sf /usr/lib/jvm/java-11-openjdk-11.0.* /usr/local/java_home
 export JAVA_HOME=/usr/local/java_home
+
+export FASD_TMP=/docker_tmp/.fasd_tmp

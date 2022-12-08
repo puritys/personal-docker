@@ -24,7 +24,11 @@ build() {
     if [ "x1" == "x$enableNodeDockerfileInclude" ]; then
         dockerfile-include  -i $dockerfile -o Dockerfile
     fi
-    docker build -t $imageName  .
+    if [ "x$isPodman" == "xtrue" ]; then
+        podman build -t $imageName .
+    else
+        docker build -t $imageName .
+    fi
 }
 
 # build for multiple arch
@@ -52,7 +56,11 @@ rebuild() {
     if [ "x1" == "x$enableNodeDockerfileInclude" ]; then
         dockerfile-include  -i $dockerfile -o Dockerfile
     fi
-    docker build --no-cache -t $imageName  .
+    if [ "x$isPodman" == "xtrue" ]; then
+        podman build --no-cache -t $imageName  .
+    else
+        docker build --no-cache -t $imageName  .
+    fi
 }
 
 stop() {
