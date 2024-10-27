@@ -1,9 +1,16 @@
+RUN mkdir -p /usr/local/lib/node_modules; \
+    rm -f /usr/local/bin/npm; \
+    rm -f /usr/bin/npm; \
+    rm -f /usr/local/bin/node; \
+    rm -f /usr/bin/node;
 
-RUN wget https://nodejs.org/dist/v8.9.4/node-v8.9.4-linux-x64.tar.xz
-RUN tar -xvf node-v8.9.4-linux-x64.tar.xz; rm node-v8.9.4-linux-x64.tar.xz
-RUN ln -sf /node-v8.9.4-linux-x64/bin/node /usr/bin/node
-RUN ln -sf /node-v8.9.4-linux-x64/bin/npm /usr/bin/npm
-RUN ln -sf /node-v8.9.4-linux-x64 /node
+RUN wget https://nodejs.org/dist/v8.9.4/node-v8.9.4-linux-$ARCH_NAME.tar.xz --output-document node.tar.xz ; \
+    tar -xf node.tar.xz;  \
+    mv node-* node ; \
+    cp -r node/lib/node_modules/npm/ /usr/local/lib/node_modules/npm; \
+    cp node/bin/node  /usr/local/bin/; \
+    ln -sf  /usr/local/lib/node_modules/npm/bin/npm-cli.js  /usr/local/bin/npm; \
+    rm -rf node node*.xz
 
-ENV NODE_PATH /node/lib/node_modules
-ENV PATH /usr/bin:/usr/local/bin:/node/lib/node_modules/bin:/node-v8.9.4-linux-x64/lib/node_modules/bin:/node-v8.9.4-linux-x64/bin/
+RUN ln -sf /usr/local/bin/node /usr/bin/node; \
+    ln -sf /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/bin/npm;

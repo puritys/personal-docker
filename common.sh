@@ -24,10 +24,14 @@ build() {
     if [ "x1" == "x$enableNodeDockerfileInclude" ]; then
         dockerfile-include  -i $dockerfile -o Dockerfile
     fi
+    ARCH_NAME="x64"
+    if [ ! -z $ARCH ] && [ $ARCH == "arm64" ];then
+        ARCH_NAME="arm64"
+    fi
     if [ "x$isPodman" == "xtrue" ]; then
-        podman build -t $imageName .
+        podman build -t $imageName --build-arg ARCH_NAME=$ARCH_NAME .
     else
-        docker build -t $imageName .
+        docker build -t $imageName --build-arg ARCH_NAME=$ARCH_NAME .
     fi
 }
 
@@ -37,9 +41,20 @@ buildx() {
         echo "Need arch: -a amd64 arm64"
         exit 1
     fi
+    platform="linux/x64"
     ARCH_NAME="x64"
-    if [ $ARCH == "arm64" ];then
+    if [ $ARCH == "amd64" ];then
+        ARCH_NAME="x64"
+        platform="linux/amd64"
+    elif [ $ARCH == "arm64" ];then
         ARCH_NAME="arm64"
+        platform="linux/arm64"
+    elif [ $ARCH == "arm64/v8" ];then
+        ARCH_NAME="arm64"
+        platform="linux/arm64/v8"
+    elif [ $ARCH == "arm64/v7" ];then
+        ARCH_NAME="arm64"
+        platform="linux/arm/v7"
     fi
 
     rm -rf include_tmp
@@ -47,8 +62,12 @@ buildx() {
     if [ "x1" == "x$enableNodeDockerfileInclude" ]; then
         dockerfile-include  -i $dockerfile -o Dockerfile
     fi
-    docker buildx build $noCache $PUSH --build-arg ARCH_NAME=$ARCH_NAME --platform linux/$ARCH -t $imageName:latest-$ARCH .
-    docker tag $imageName:latest-$ARCH $imageName:latest
+    if [ "x$isPodman" == "xtrue" ]; then
+        podman build -t $imageName --platform $platform --build-arg ARCH_NAME=$ARCH_NAME .
+    else
+        docker buildx build $noCache $PUSH --build-arg ARCH_NAME=$ARCH_NAME --platform $platform -t $imageName:latest-$ARCH .
+        docker tag $imageName:latest-$ARCH $imageName:latest
+    fi
 }
 
 rebuild() {
