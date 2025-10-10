@@ -12,7 +12,7 @@
  
 ## NORD
 
-<img src="https://puritys.github.io/gp-image/src/github/terminal_nord.png" width=700/>
+<img src="https://puritys.github.io/gp-image/src/github/vim_nord.png" width=700/>
 
 - You have to change the terminal background color to be "#3b4252"
 
