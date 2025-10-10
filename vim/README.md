@@ -14,7 +14,7 @@
 
 <img src="https://puritys.github.io/gp-image/src/github/terminal_nord.png" width=700/>
 
-- You have to change the terminal background color to be "#F1E7D0"
+- You have to change the terminal background color to be "#3b4252"
 
 ## Environments
 
