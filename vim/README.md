@@ -9,14 +9,10 @@
 - docker run -ti -v $(pwd):/src  -w /src puritys/vim vim xxx
 
 # Theme
+ 
+## NORD
 
-## seoul256
-
-<img src="https://www.puritys.me/filemanage/blog_files/docker_vim.png" width=700/>
-
-## mystyle_white
-
-<img src="https://www.puritys.me/filemanage/blog_files/vim_my_theme.png" width=700/>
+<img src="https://puritys.github.io/gp-image/src/github/terminal_nord.png" width=700/>
 
 - You have to change the terminal background color to be "#F1E7D0"
 
